@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intro — Mu Jiun Shie</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@300;400&family=Commissioner:wght@100..900&family=IBM+Plex+Mono:wght@400;500;600;700&family=Figtree:wght@500;600&display=block" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    :root {
+      --ease: cubic-bezier(1, 0.005, 0.015, 0.995);
+      --dur: 0.8s;
+      --intro-ink: #512E08;
+    }
+
+    /* ── VIEWPORT CONTAINER ── */
+    .stage {
+      position: relative;
+      flex: 1;
+      height: 100vh;
+      overflow: hidden;
+      container-type: inline-size;
+    }
+
+    /* ── LABEL ── */
+    .label {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 10;
+      padding: 32px 64px 0;
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--ink2);
+      pointer-events: none;
+    }
+    .page-counter {
+      font-weight: 400;
+      letter-spacing: 0;
+      color: var(--ink2);
+    }
+
+    /* ── TITLES ── */
+    .title {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .title-hello,
+    .title-mu {
+      position: absolute;
+      color: var(--intro-ink);
+      transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+      white-space: nowrap;
+      pointer-events: auto;
+    }
+    .stage.hide-intro .title-hello,
+    .stage.hide-intro .title-mu {
+      pointer-events: none !important;
+    }
+
+    .title-hello {
+      font-family: 'Figtree', sans-serif;
+      font-weight: 600;
+      font-size: clamp(200px, 46.25cqw, 888px);
+      line-height: 1.2;
+      opacity: 0.1;
+      transform: scale(1);
+    }
+
+    .title-mu {
+      font-family: 'Commissioner', sans-serif;
+      font-weight: 600;
+      font-size: clamp(36px, 4.58vw, 88px);
+      line-height: 1.2;
+      opacity: 0;
+      transform: scale(0.8);
+      pointer-events: none;
+    }
+
+    /* Slide 2+: Hello out, "This is Mu" in */
+    .stage.slide-2 .title-hello,
+    .stage.slide-3 .title-hello {
+      opacity: 0;
+      transform: scale(1.1);
+      pointer-events: none;
+    }
+
+    .stage.slide-2 .title-mu {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+
+    /* Slide 3+: "This is Mu" out */
+    .stage.slide-3 .title-mu {
+      opacity: 0;
+      transform: scale(1.1);
+      pointer-events: none;
+    }
+
+    /* ── BIO TEXT ── */
+    .bio {
+      position: absolute;
+      left: 0;
+      top: 44.44%;
+      width: 100%;
+      text-align: center;
+      color: var(--intro-ink);
+      font-size: clamp(18px, 1.8vw, 32px);
+      line-height: 1.4;
+      z-index: 5;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease-out, transform 0.3s ease-out, font-family 0.3s ease-out, font-weight 0.3s ease-out;
+      font-family: 'Commissioner', sans-serif;
+      font-weight: 400;
+    }
+
+    .stage.slide-3 .bio {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .stage.hide-intro .bio {
+      pointer-events: none !important;
+    }
+
+    /* ── LOCATION LABELS ── */
+    .loc {
+      position: absolute;
+      font-family: 'Commissioner', sans-serif;
+      font-weight: 400;
+      font-size: clamp(12px, 1.04vw, 20px);
+      color: var(--intro-ink);
+      z-index: 9;
+      opacity: 0;
+      transition: opacity 0.3s ease-out;
+      pointer-events: none;
+    }
+    .stage.slide-3 .loc {
+      pointer-events: auto;
+    }
+
+    .loc.vertical {
+      writing-mode: vertical-rl;
+    }
+
+    .stage.slide-3 .loc {
+      opacity: 1;
+    }
+
+    .loc[data-loc="yosemite"]      { left:  8.28%; top: 14.63%; }
+    .loc[data-loc="tokyo"]         { left: 13.85%; top: 91.76%; }
+    .loc[data-loc="san-francisco"] { left: 72.40%; top: 17.87%; }
+    .loc[data-loc="monterey"]      { left: 86.93%; top: 45.74%; }
+    .loc[data-loc="wharton"]       { left: 88.80%; top: 84.72%; }
+    .loc[data-loc="buffet"]        { left: 54.95%; top: 82.50%; }
+
+    /* ── IMAGE CARDS ── */
+    .card {
+      position: absolute;
+      background: transparent;
+      border-radius: clamp(16px, 2.67vw, 51px);
+      transition:
+        left var(--dur) var(--ease),
+        top var(--dur) var(--ease),
+        width var(--dur) var(--ease),
+        height var(--dur) var(--ease),
+        transform var(--dur) var(--ease);
+      will-change: left, top, width, height, transform;
+    }
+
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: inherit;
+      display: block;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    /* ── SLIDE 1: CLUSTERED (Hello) ── */
+    .card[data-i="1"] { left: 47.90%; top: 52.02%; width: 16%; height: 34.15%; transform: translate(-50%, -50%) rotate(  0.67deg); z-index: 8; }
+    .card[data-i="2"] { left: 48.98%; top: 52.69%; width: 16%; height: 34.15%; transform: translate(-50%, -50%) rotate(  5.70deg); z-index: 7; }
+    .card[data-i="3"] { left: 45.70%; top: 52.03%; width: 16%; height: 34.15%; transform: translate(-50%, -50%) rotate( -5.28deg); z-index: 6; }
+    .card[data-i="4"] { left: 44.97%; top: 52.68%; width: 16%; height: 34.15%; transform: translate(-50%, -50%) rotate(-14.88deg); z-index: 5; }
+    .card[data-i="5"] { left: 44.14%; top: 53.83%; width: 16%; height: 34.15%; transform: translate(-50%, -50%) rotate(-20.67deg); z-index: 4; }
+    .card[data-i="6"] { left: 50.02%; top: 52.95%; width: 16%; height: 34.15%; transform: translate(-50%, -50%) rotate( 14.60deg); z-index: 3; }
+    .card[data-i="7"] { left: 50.76%; top: 53.17%; width: 16%; height: 34.15%; transform: translate(-50%, -50%) rotate( 20.28deg); z-index: 2; }
+    .card[data-i="8"] { left: 51.37%; top: 53.92%; width: 16%; height: 34.15%; transform: translate(-50%, -50%) rotate( 24.63deg); z-index: 1; }
+
+    /* ── SLIDE 2+: EXPANDED (This is Mu / Bio) ── */
+    .stage.slide-2 .card[data-i="1"],
+    .stage.slide-3 .card[data-i="1"] { left: 31.09%; top: 84.51%; width: 18%; height: 39.84%; transform: translate(-50%, -50%) rotate( 10.40deg); }
+
+    .stage.slide-2 .card[data-i="2"],
+    .stage.slide-3 .card[data-i="2"] { left: 86.15%; top: 25.86%; width: 18%; height: 40.80%; transform: translate(-50%, -50%) rotate( -8.56deg); }
+
+    .stage.slide-2 .card[data-i="3"],
+    .stage.slide-3 .card[data-i="3"] { left: 18.68%; top: 26.62%; width: 18%; height: 43.79%; transform: translate(-50%, -50%) rotate( 20.41deg); }
+
+    .stage.slide-2 .card[data-i="4"],
+    .stage.slide-3 .card[data-i="4"] { left: 65.23%; top: 16.12%; width: 18%; height: 40.96%; transform: translate(-50%, -50%) rotate( 11.01deg); }
+
+    .stage.slide-2 .card[data-i="5"],
+    .stage.slide-3 .card[data-i="5"] { left: 14.19%; top: 69.78%; width: 18%; height: 43.75%; transform: translate(-50%, -50%) rotate(-11.91deg); }
+
+    .stage.slide-2 .card[data-i="6"],
+    .stage.slide-3 .card[data-i="6"] { left: 81.87%; top: 76.25%; width: 18%; height: 40.25%; transform: translate(-50%, -50%) rotate( 12.66deg); }
+
+    .stage.slide-2 .card[data-i="7"],
+    .stage.slide-3 .card[data-i="7"] { left: 65.61%; top: 87.37%; width: 18%; height: 40.25%; transform: translate(-50%, -50%) rotate( -9.18deg); }
+
+    .stage.slide-2 .card[data-i="8"],
+    .stage.slide-3 .card[data-i="8"] { left: 36.52%; top: 13.74%; width: 18%; height: 40.93%; transform: translate(-50%, -50%) rotate(-11.25deg); }
+
+    /* Slide 3: shrink cards and push to edges so bio text is clear */
+    .stage.slide-3 .card[data-i="1"] { left: 24%; top: 88%; width: 14%; height: 31%; }
+    .stage.slide-3 .card[data-i="2"] { left: 90%; top: 20%; width: 14%; height: 32%; }
+    .stage.slide-3 .card[data-i="3"] { left: 10%; top: 18%; width: 14%; height: 34%; }
+    .stage.slide-3 .card[data-i="4"] { left: 70%; top: 8%;  width: 14%; height: 32%; }
+    .stage.slide-3 .card[data-i="5"] { left: 6%;  top: 74%; width: 14%; height: 34%; }
+    .stage.slide-3 .card[data-i="6"] { left: 88%; top: 80%; width: 14%; height: 31%; }
+    .stage.slide-3 .card[data-i="7"] { left: 72%; top: 90%; width: 14%; height: 31%; }
+    .stage.slide-3 .card[data-i="8"] { left: 32%; top: 6%;  width: 14%; height: 32%; }
+
+    /* Slide 2→3 transition uses faster ease-out */
+    .stage.slide-3 .card {
+      transition-duration: 0.3s;
+      transition-timing-function: ease-out;
+    }
+
+    /* ── HIDE INTRO ELEMENTS ON SLIDE 4+ ── */
+    .stage.hide-intro .card,
+    .stage.hide-intro .title,
+    .stage.hide-intro .bio,
+    .stage.hide-intro .loc {
+      opacity: 0 !important;
+      pointer-events: none;
+      transition: none;
+    }
+
+    /* ── SLIDE PANELS (slides 4+) ── */
+    .slide-panel {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s ease;
+      z-index: 5;
+    }
+    .slide-panel[data-slide="4"] {
+      /* removed - slide 4 now in work-scroller */
+    }
+    .slide-panel.active {
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 15;
+    }
+
+    /* ── WORK SCROLLER (slides 8–16) ── */
+    .work-scroller {
+      position: absolute;
+      inset: 0;
+      overflow-y: auto;
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+      z-index: 5;
+      opacity: 0;
+      pointer-events: none;
+      scrollbar-width: none;
+    }
+    .work-scroller.active {
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 15;
+    }
+    .work-scroller::-webkit-scrollbar { display: none; }
+    .work-panel {
+      height: 100%;
+      min-height: 100%;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .work-panel[data-has-layers] {
+      display: block;
+    }
+
+    /* ── SECTION DIVIDER TITLES (slides 4, 7, 9, 19) ── */
+    .section-title {
+      font-family: 'Commissioner', sans-serif;
+      font-weight: 600;
+      font-size: 60px;
+      color: var(--intro-ink);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      text-align: center;
+    }
+
+    /* ── TIMELINE (inside work-scroller panel for slides 5-6) ── */
+    .timeline-wrap {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .timeline-heading {
+      font-family: 'Commissioner', sans-serif;
+      font-weight: 500;
+      font-size: clamp(36px, 3.2vw, 72px);
+      color: var(--intro-ink);
+      text-align: center;
+      position: absolute;
+      top: 32%;
+      left: 0;
+      right: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .timeline {
+      display: flex;
+      gap: 0;
+      justify-content: center;
+      width: 88%;
+      max-width: 1360px;
+      position: absolute;
+      top: 42%;
+      left: 50%;
+      transform: translateX(-50%);
+      transition: gap 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .stage.slide-6 .timeline { gap: 8px; }
+
+    .timeline-card {
+      flex: 0 0 0px;
+      min-width: 0;
+      overflow: hidden;
+      background: white;
+      border-radius: 20px;
+      transition: flex 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                  opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 2px solid transparent;
+      opacity: 0;
+      z-index: 1;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+    }
+    .timeline-card[data-tc="1"] { z-index: 2; }
+    .timeline-card .tc-inner {
+      min-width: 160px;
+      padding: 28px;
+    }
+    .timeline-card .tc-year {
+      font-family: 'Commissioner', sans-serif;
+      font-weight: 600;
+      font-size: clamp(14px, 1vw, 18px);
+      color: var(--intro-ink);
+      margin-bottom: 8px;
+    }
+    .timeline-card .tc-logo {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      font-size: 28px;
+    }
+    .timeline-card .tc-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .timeline-card[data-tc="2"] .tc-logo,
+    .timeline-card[data-tc="6"] .tc-logo {
+      width: 56px;
+      overflow: hidden;
+    }
+    .timeline-card[data-tc="2"] .tc-logo img,
+    .timeline-card[data-tc="6"] .tc-logo img {
+      width: 160%;
+      height: 160%;
+      object-fit: contain;
+      margin-left: -30%;
+      margin-top: 0%;
+    }
+    .timeline-card[data-tc="5"] .tc-logo img {
+      margin-left: -6px;
+    }
+    .timeline-card[data-tc="3"] .tc-logo img,
+    .timeline-card[data-tc="4"] .tc-logo img {
+      border-radius: 6px;
+    }
+    .timeline-card .tc-desc {
+      font-family: 'Commissioner', sans-serif;
+      font-weight: 400;
+      font-size: clamp(13px, 0.9vw, 17px);
+      color: var(--intro-ink);
+      line-height: 1.4;
+    }
+
+    /* Slide 5: only card 1 visible at fixed width */
+    .stage.slide-5 .timeline-card[data-tc="1"] {
+      flex: 0 0 160px;
+      opacity: 1;
+    }
+
+    /* Slide 6: all cards expand out at fixed width */
+    .stage.slide-6 .timeline-card {
+      flex: 0 0 160px;
+      opacity: 1;
+    }
+
+    /* Timeline highlight overlay */
+    .timeline-hl {
+      position: absolute;
+      z-index: 10;
+      border: 2px solid #B08C5A;
+      border-radius: 22px;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .timeline-hl.visible { opacity: 1; }
+
+    /* ── WORK DETAIL CARD (shared: slides 8, 10-18) ── */
+    .work-detail {
+      display: flex;
+      width: 94%;
+      max-width: 1400px;
+      height: 84%;
+      background: #fff;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 2px 24px rgba(0,0,0,0.03);
+    }
+    .wd-text {
+      flex: 0 0 44%;
+      padding: 48px 44px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+    .wd-year {
+      font-family: var(--mono);
+      font-weight: 400;
+      font-size: clamp(14px, 1vw, 18px);
+      color: var(--intro-ink);
+      opacity: 0.7;
+      margin-bottom: 8px;
+    }
+    .wd-logo {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+    }
+    .wd-focus-group {
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+    .wd-focus-label {
+      font-family: 'Commissioner', sans-serif;
+      font-weight: 400;
+      font-size: clamp(18px, 1.5vw, 26px);
+      color: var(--intro-ink);
+      margin-bottom: 0;
+    }
+    .wd-focus-title {
+      font-family: 'Commissioner', sans-serif;
+      font-weight: 700;
+      font-size: clamp(18px, 1.5vw, 26px);
+      color: var(--intro-ink);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .wd-desc {
+      font-family: 'Commissioner', sans-serif;
+      font-weight: 400;
+      font-size: clamp(18px, 1.6vw, 28px);
+      color: var(--intro-ink);
+      line-height: 1.35;
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+    .wd-desc strong { font-weight: 700; }
+    .wd-sub {
+      font-family: 'Commissioner', sans-serif;
+      font-weight: 400;
+      font-size: clamp(18px, 1.5vw, 26px);
+      color: var(--intro-ink);
+      opacity: 0.6;
+      line-height: 1.35;
+    }
+    .wd-focuses-list {
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .wd-focuses-item {
+      font-family: 'Commissioner', sans-serif;
+      font-weight: 600;
+      font-size: clamp(16px, 1.4vw, 24px);
+      color: var(--intro-ink);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .wd-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(81, 46, 8, 0.1);
+      color: var(--intro-ink);
+      font-size: 13px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .wd-img {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      overflow: hidden;
+      border-radius: 18px;
+      margin: 12px 12px 12px 0;
+      background: #E4E8EC;
+    }
+    .wd-img img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    /* Per-slide image background colors */
+    [data-slide="8"] .wd-img { background: #F3F7FF; }
+    [data-slide="10"] .wd-img { background: #F6F7F9; }
+    [data-slide="12"] .wd-img { background: #F3F7F5; }
+    [data-slide="14"] .wd-img { background: #FBF7FF; }
+    [data-slide="16"] .wd-img { background: #FBF8F8; }
+
+    /* ── FIXED LAYER (reusable sub-state system) ── */
+    .fl-wrap { position: relative; width: 100%; height: 100%; }
+    .fixed-layer {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+    .fixed-layer.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* ── TODAY'S FOCUS (slide 20) ── */
+    .focus-wrap {
+      text-align: center;
+      width: 88%;
+      max-width: 1200px;
+    }
+    .focus-headline {
+      font-family: 'Commissioner', sans-serif;
+      font-weight: 400;
+      font-size: clamp(18px, 1.8vw, 34px);
+      color: var(--intro-ink);
+      margin-bottom: 40px;
+    }
+    .focus-cards {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+    }
+    .focus-card {
+      flex: 1;
+      max-width: 500px;
+      text-align: center;
+    }
+    .fc-img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: linear-gradient(135deg, #FDF3E8, #F6D9A8);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .fc-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .fc-title {
+      font-family: 'Commissioner', sans-serif;
+      font-weight: 600;
+      font-size: clamp(15px, 1.3vw, 24px);
+      color: var(--intro-ink);
+      margin-bottom: 4px;
+    }
+    .fc-sub {
+      font-family: 'Commissioner', sans-serif;
+      font-weight: 400;
+      font-size: clamp(13px, 1.1vw, 18px);
+      color: #9A958E;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="shell">
+
+    <nav class="side">
+      <div class="side-section" style="margin-bottom: 20px;">
+        <p class="side-label">Page</p>
+        <div class="dropdown" id="pageDropdown">
+          <div class="dropdown-toggle" onclick="this.parentElement.classList.toggle('open')">Intro</div>
+          <div class="dropdown-menu">
+            <a class="dropdown-option current" href="intro.html">Intro</a>
+            <a class="dropdown-option" href="project1.html">Project 1</a>
+            <a class="dropdown-option" href="project2.html">Project 2</a>
+            <a class="dropdown-option" href="project3.html">Project 3</a>
+          </div>
+        </div>
+      </div>
+      <div class="side-section">
+        <p class="side-label">Agenda</p>
+        <a class="nav-item active" data-nav="about" data-go="0">About</a>
+        <div class="nav-sub" id="sub-about">
+          <a class="nav-item" data-idx="0">Hello</a>
+          <a class="nav-item" data-idx="1">This is Mu</a>
+          <a class="nav-item" data-idx="2">Bio</a>
+        </div>
+        <a class="nav-item" data-nav="journey" data-go="3">My design journey</a>
+        <a class="nav-item" data-nav="google" data-go="8">Works at Google</a>
+        <a class="nav-item" data-nav="meta" data-go="10">Works at Meta</a>
+        <div class="nav-sub" id="sub-meta">
+          <a class="nav-item" data-idx="11">Overview</a>
+          <a class="nav-item" data-idx="13">Focus 1</a>
+          <a class="nav-item" data-idx="15">Focus 2</a>
+          <a class="nav-item" data-idx="17">Focus 3</a>
+        </div>
+        <a class="nav-item" data-nav="today" data-go="20">Today's Focus</a>
+      </div>
+    </nav>
+
+  <div class="stage slide-1" id="stage">
+    <p class="label"><span class="page-counter" id="pageCounter">1/22</span> • <span id="labelText">Intro</span></p>
+
+    <div class="title">
+      <span class="title-hello">Hello</span>
+      <span class="title-mu">This is Mu</span>
+    </div>
+
+    <p class="bio">
+      I'm Mu from Taiwan and live in the Bay Area now. I love ✈️ traveling<br>
+      and 📷 documenting life through my Fujifilm camera<br>
+      <br>
+      I'm also a (Maine Coon) 🐱 cat person and a creator sharing<br>
+      my cat videos (@coon_buffet)
+    </p>
+
+    <!-- Render order: back (8) → front (1), matching Figma z-order -->
+    <div class="card" data-i="8"><img src="images/8.png" alt="" /></div>
+    <div class="card" data-i="7"><img src="images/7.png" alt="" /></div>
+    <div class="card" data-i="6"><img src="images/6.png" alt="" /></div>
+    <div class="card" data-i="5"><img src="images/5.png" alt="" /></div>
+    <div class="card" data-i="4"><img src="images/4.png" alt="" /></div>
+    <div class="card" data-i="3"><img src="images/3.png" alt="" /></div>
+    <div class="card" data-i="2"><img src="images/2.png" alt="" /></div>
+    <div class="card" data-i="1"><img src="images/1.png" alt="" /></div>
+
+    <!-- ══ WORK SCROLLER (slides 4–20) ══ -->
+    <div class="work-scroller" id="workScroller">
+
+    <!-- ══ SLIDE 4: My design journey (section title) ══ -->
+    <div class="work-panel" data-slide="4">
+      <span class="section-title">My design journey</span>
+    </div>
+
+    <!-- ══ SLIDES 5-6: Timeline ══ -->
+    <div class="work-panel" data-slide="5" style="display:block;">
+      <div class="timeline-wrap">
+        <h2 class="timeline-heading" id="tlHeading">My design journey</h2>
+        <div class="timeline" id="tlRow">
+          <div class="timeline-card" data-tc="1"><div class="tc-inner">
+            <div class="tc-year">2014</div>
+            <div class="tc-logo"><img src="images/logo/nationaltaipeiuniversityofeducation-logo.png" alt="" /></div>
+            <div class="tc-desc">BS, Industrial Design</div>
+          </div></div>
+          <div class="timeline-card" data-tc="2"><div class="tc-inner">
+            <div class="tc-year">2015</div>
+            <div class="tc-logo"><img src="images/logo/asus-logo.jpg" alt="" /></div>
+            <div class="tc-desc">GUI and tool design</div>
+          </div></div>
+          <div class="timeline-card" data-tc="3"><div class="tc-inner">
+            <div class="tc-year">2019</div>
+            <div class="tc-logo"><img src="images/logo/cmu-logo.png" alt="" /></div>
+            <div class="tc-desc">MS, Product Design</div>
+          </div></div>
+          <div class="timeline-card" data-tc="4"><div class="tc-inner">
+            <div class="tc-year">2020</div>
+            <div class="tc-logo"><img src="images/logo/enovational-logo.jpg" alt="" /></div>
+            <div class="tc-desc">Government portal and tool design</div>
+          </div></div>
+          <div class="timeline-card" data-tc="5"><div class="tc-inner">
+            <div class="tc-year">2021</div>
+            <div class="tc-logo"><img src="images/logo/google-logo.png" alt="" /></div>
+            <div class="tc-desc">Search ads</div>
+          </div></div>
+          <div class="timeline-card" data-tc="6"><div class="tc-inner">
+            <div class="tc-year">2023 - today</div>
+            <div class="tc-logo"><img src="images/logo/meta-logo.webp" alt="" /></div>
+            <div class="tc-desc">Business messaging and tool design</div>
+          </div></div>
+          <div class="timeline-hl" id="tlHl"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 7: Works at Google (section title) ══ -->
+    <div class="work-panel" data-slide="7">
+      <span class="section-title">Works at Google</span>
+    </div>
+
+    <!-- ══ SLIDE 8-9: Google detail → Meta title (2 sub-states) ══ -->
+    <div class="work-panel" data-slide="8" data-has-layers>
+      <div class="fl-wrap">
+        <div class="fixed-layer active">
+          <div class="work-detail">
+            <div class="wd-text">
+
+              <img class="wd-logo" src="images/logo/google-logo.png" alt="Google" />
+              <p class="wd-desc">Designed <strong>Ad Carousel</strong> for Google Search — scaled to multiple verticals and shopping use cases</p>
+            </div>
+            <div class="wd-img"><img src="images/workgoogle.gif" alt="" /></div>
+          </div>
+        </div>
+        <div class="fixed-layer">
+          <span class="section-title">Works at Meta</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 10: Meta overview (2 sub-states) ══ -->
+    <div class="work-panel" data-slide="10" data-has-layers>
+      <div class="fl-wrap">
+        <div class="fixed-layer active">
+          <div class="work-detail">
+            <div class="wd-text">
+
+              <img class="wd-logo" src="images/logo/meta-logo.webp" alt="Meta" />
+              <p class="wd-desc">Led strategy and design for <strong>business tools and ad products</strong>, 20+ launches across 6 platforms</p>
+            </div>
+            <div class="wd-img"><img src="images/meta-overview.png" alt="" /></div>
+          </div>
+        </div>
+        <div class="fixed-layer">
+          <div class="work-detail">
+            <div class="wd-text">
+
+              <img class="wd-logo" src="images/logo/meta-logo.webp" alt="Meta" />
+              <div class="wd-focus-group">
+                <p class="wd-desc" style="margin-top:0;margin-bottom:0;">Grew products and revenue through —</p>
+                <div class="wd-focuses-list">
+                  <div class="wd-focuses-item"><span class="wd-num">1</span> New Tools/Use Cases</div>
+                  <div class="wd-focuses-item"><span class="wd-num">2</span> Modular Framework</div>
+                  <div class="wd-focuses-item"><span class="wd-num">3</span> Upsells &amp; Onboarding Guide</div>
+                </div>
+              </div>
+            </div>
+            <div class="wd-img"><img src="images/meta-overview.png" alt="" /></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 12: Focus 1 — New Tools/Use Cases (2 sub-states) ══ -->
+    <div class="work-panel" data-slide="12" data-has-layers>
+      <div class="fl-wrap">
+        <div class="fixed-layer active">
+          <div class="work-detail">
+            <div class="wd-text">
+
+              <img class="wd-logo" src="images/logo/meta-logo.webp" alt="Meta" />
+              <div class="wd-focus-group">
+
+                <p class="wd-focus-title"><span class="wd-num">1</span> New Tools/Use Cases</p>
+                <p class="wd-sub">Simplified ad creation flows to increase adoption and revenue</p>
+              </div>
+            </div>
+            <div class="wd-img"><img src="images/meta-1.1.png" alt="" /></div>
+          </div>
+        </div>
+        <div class="fixed-layer">
+          <div class="work-detail">
+            <div class="wd-text">
+
+              <img class="wd-logo" src="images/logo/meta-logo.webp" alt="Meta" />
+              <div class="wd-focus-group">
+
+                <p class="wd-focus-title"><span class="wd-num">1</span> New Tools/Use Cases</p>
+                <p class="wd-sub">Built new tools to unlock additional use cases and revenue streams</p>
+              </div>
+            </div>
+            <div class="wd-img"><img src="images/meta-1.2.png" alt="" /></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 14: Focus 2 — Modular Framework (2 sub-states) ══ -->
+    <div class="work-panel" data-slide="14" data-has-layers>
+      <div class="fl-wrap">
+        <div class="fixed-layer active">
+          <div class="work-detail">
+            <div class="wd-text">
+
+              <img class="wd-logo" src="images/logo/meta-logo.webp" alt="Meta" />
+              <div class="wd-focus-group">
+
+                <p class="wd-focus-title"><span class="wd-num">2</span> Modular Framework</p>
+                <p class="wd-sub">Improved usability, reduced cost for fast-growing tools</p>
+              </div>
+            </div>
+            <div class="wd-img"><img src="images/meta-2.1.png" alt="" /></div>
+          </div>
+        </div>
+        <div class="fixed-layer">
+          <div class="work-detail">
+            <div class="wd-text">
+
+              <img class="wd-logo" src="images/logo/meta-logo.webp" alt="Meta" />
+              <div class="wd-focus-group">
+
+                <p class="wd-focus-title"><span class="wd-num">2</span> Modular Framework</p>
+                <p class="wd-sub">Designed a reusable component system to scale features faster and reduce dev cost</p>
+              </div>
+            </div>
+            <div class="wd-img"><img src="images/meta-2.2.png" alt="" /></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 16: Focus 3 — Upsells & Onboarding Guide (3 sub-states) ══ -->
+    <div class="work-panel" data-slide="16" data-has-layers>
+      <div class="fl-wrap">
+        <div class="fixed-layer active">
+          <div class="work-detail">
+            <div class="wd-text">
+
+              <img class="wd-logo" src="images/logo/meta-logo.webp" alt="Meta" />
+              <div class="wd-focus-group">
+
+                <p class="wd-focus-title"><span class="wd-num">3</span> Upsells &amp; Onboarding Guide</p>
+                <p class="wd-sub">Drove 3x adoption lift by connecting end-to-end user journeys</p>
+              </div>
+            </div>
+            <div class="wd-img"><img src="images/meta-3.1.png" alt="" /></div>
+          </div>
+        </div>
+        <div class="fixed-layer">
+          <div class="work-detail">
+            <div class="wd-text">
+
+              <img class="wd-logo" src="images/logo/meta-logo.webp" alt="Meta" />
+              <div class="wd-focus-group">
+
+                <p class="wd-focus-title"><span class="wd-num">3</span> Upsells &amp; Onboarding Guide</p>
+                <p class="wd-sub">Designed contextual upsell surfaces across 6 platforms</p>
+              </div>
+            </div>
+            <div class="wd-img"><img src="images/meta-3.2.png" alt="" /></div>
+          </div>
+        </div>
+        <div class="fixed-layer">
+          <div class="work-detail">
+            <div class="wd-text">
+
+              <img class="wd-logo" src="images/logo/meta-logo.webp" alt="Meta" />
+              <div class="wd-focus-group">
+
+                <p class="wd-focus-title"><span class="wd-num">3</span> Upsells &amp; Onboarding Guide</p>
+                <p class="wd-sub">Built unified onboarding guide to reduce drop-off and increase activation</p>
+              </div>
+            </div>
+            <div class="wd-img"><img src="images/meta-3.3.png" alt="" /></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SLIDE 19: Today's focus (section title) ══ -->
+    <div class="work-panel" data-slide="19">
+      <span class="section-title">Today's focus</span>
+    </div>
+
+    <!-- ══ SLIDE 20: Today's focus detail ══ -->
+    <div class="work-panel" data-slide="20">
+      <div class="focus-wrap">
+        <h2 class="focus-headline">Grew user adoption and revenue through <b>onboarding guide</b> and <b>new tool</b></h2>
+        <div class="focus-cards">
+          <div class="focus-card">
+            <div class="fc-img"><img src="img_project/10/1.jpg" alt="" /></div>
+            <p class="fc-title">Revamped Onboarding for WhatsApp Partner Platforms</p>
+            <p class="fc-sub">+9% onboarding completion, +19.7% revenue, scaled across ecosystem</p>
+          </div>
+          <div class="focus-card">
+            <div class="fc-img"><img src="images/placeholder.png" alt="" /></div>
+            <p class="fc-title">New Monetization Tool for Meta Business Inbox</p>
+            <p class="fc-sub">Turned ambiguous concept into feasible MVP, accelerated by AI</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div><!-- end .work-scroller -->
+
+  </div>
+
+  </div>
+
+  <script>
+    /* ── STATE MACHINE ── */
+    const STATES = [
+      // About
+      { slide: 1, nav: 'about', label: 'Hello' },
+      { slide: 2, nav: 'about', label: 'This is Mu' },
+      { slide: 3, nav: 'about', label: 'Bio' },
+      // My design journey
+      { slide: 4, nav: 'journey', label: 'Title' },
+      { slide: 5, nav: 'journey', label: 'Timeline' },
+      { slide: 6, nav: 'journey', sub: 0, label: 'My design journey',
+        tlTitle: 'My design journey', tlHl: null },
+      { slide: 6, nav: 'journey', sub: 1, label: '8 years',
+        tlTitle: '8 years in product design', tlHl: [2,6] },
+      { slide: 6, nav: 'journey', sub: 2, label: 'Monetization',
+        tlTitle: 'Monetization and business tools', tlHl: [5,6] },
+      // Works at Google
+      { slide: 7, nav: 'google', label: 'Title' },
+      { slide: 8, nav: 'google', sub: 0, label: 'Search ads' },
+      // Works at Meta
+      { slide: 8, nav: 'meta', sub: 1, label: 'Title' },
+      { slide: 10, nav: 'meta', sub: 0, label: 'Overview' },
+      { slide: 10, nav: 'meta', sub: 1, label: '3 Focuses' },
+      { slide: 12, nav: 'meta', sub: 0, label: 'Focus 1a' },
+      { slide: 12, nav: 'meta', sub: 1, label: 'Focus 1b' },
+      { slide: 14, nav: 'meta', sub: 0, label: 'Focus 2a' },
+      { slide: 14, nav: 'meta', sub: 1, label: 'Focus 2b' },
+      { slide: 16, nav: 'meta', sub: 0, label: 'Focus 3a' },
+      { slide: 16, nav: 'meta', sub: 1, label: 'Focus 3b' },
+      { slide: 16, nav: 'meta', sub: 2, label: 'Focus 3c' },
+      // Today's Focus
+      { slide: 19, nav: 'today', label: 'Title' },
+      { slide: 20, nav: 'today', label: 'Detail' },
+    ];
+
+    const stage = document.getElementById('stage');
+    const tlHeading = document.getElementById('tlHeading');
+    const tlHl = document.getElementById('tlHl');
+    const tlRow = document.getElementById('tlRow');
+    let stateIdx = 0;
+
+    /* ── NAV ELEMENTS ── */
+    const mainNavItems = document.querySelectorAll('.nav-item[data-nav]');
+    const subNavItems = document.querySelectorAll('.nav-sub .nav-item[data-idx]');
+    const subAbout = document.getElementById('sub-about');
+    const subMeta = document.getElementById('sub-meta');
+
+    let prevSlide = 1;
+    function goToState(idx) {
+      idx = Math.max(0, Math.min(idx, STATES.length - 1));
+      const prevSt = STATES[stateIdx];
+      stateIdx = idx;
+      const st = STATES[idx];
+
+      // Stage class
+      stage.className = 'stage slide-' + st.slide;
+      if (st.slide >= 4) stage.classList.add('hide-intro');
+
+      // Intro card timing
+      if (st.slide >= 3 && st.slide <= 3) {
+        stage.style.setProperty('--dur', '0.3s');
+        stage.style.setProperty('--ease', 'ease-out');
+      } else if (st.slide <= 2) {
+        stage.style.setProperty('--dur', '0.8s');
+        stage.style.setProperty('--ease', 'cubic-bezier(1, 0.005, 0.015, 0.995)');
+      }
+
+      // Slide panels (non-scroller)
+      document.querySelectorAll('.slide-panel').forEach(p => {
+        p.classList.toggle('active', parseInt(p.dataset.slide) === st.slide);
+      });
+
+      // Work scroller
+      const workSlides = [4, 5, 6, 7, 8, 10, 12, 14, 16, 19, 20];
+      const scroller = document.getElementById('workScroller');
+      const inWorkSection = workSlides.includes(st.slide);
+      const wasInWorkSection = workSlides.includes(prevSt.slide);
+      scroller.classList.toggle('active', inWorkSection);
+      if (inWorkSection) {
+        // Slide 6 shares panel with slide 5
+        const targetSlide = (st.slide === 6) ? 5 : st.slide;
+        const prevTargetSlide = (prevSt.slide === 6) ? 5 : prevSt.slide;
+        const target = scroller.querySelector('.work-panel[data-slide="' + targetSlide + '"]');
+        if (target) {
+          const scrollTop = target.offsetTop;
+          if (!wasInWorkSection) {
+            scroller.scrollTo({ top: scrollTop, behavior: 'instant' });
+          } else if (prevTargetSlide !== targetSlide) {
+            scroller.scrollTo({ top: scrollTop, behavior: 'smooth' });
+          }
+        }
+      }
+
+      // Fixed layers within active work-panel
+      const activePanel = document.querySelector('.work-panel[data-slide="' + st.slide + '"][data-has-layers]');
+      if (activePanel && st.sub !== undefined) {
+        const layers = activePanel.querySelectorAll('.fixed-layer');
+        layers.forEach((l, i) => l.classList.toggle('active', i === st.sub));
+      }
+
+      // Timeline (slides 5-6)
+      if (st.slide === 6) {
+        tlHeading.textContent = st.tlTitle || 'My design journey';
+        updateTimelineHl(st.tlHl);
+      } else {
+        tlHeading.textContent = 'My design journey';
+        updateTimelineHl(null);
+      }
+
+      // Nav highlights
+      mainNavItems.forEach(item => {
+        item.classList.toggle('active', item.dataset.nav === st.nav);
+      });
+      // Sub-nav: highlight by range (each item covers states up to next item's idx)
+      const subIdxList = Array.from(subNavItems).map(i => parseInt(i.dataset.idx));
+      subNavItems.forEach((item, i) => {
+        const start = parseInt(item.dataset.idx);
+        const end = (i < subIdxList.length - 1) ? subIdxList[i + 1] - 1 : Infinity;
+        item.classList.toggle('active', idx >= start && idx <= end);
+      });
+
+      // Sub-nav expand/collapse
+      const aboutOpen = st.nav === 'about';
+      const metaOpen = st.nav === 'meta';
+      subAbout.classList.toggle('open', aboutOpen);
+      subAbout.style.maxHeight = aboutOpen ? subAbout.scrollHeight + 'px' : '0';
+      subMeta.classList.toggle('open', metaOpen);
+      subMeta.style.maxHeight = metaOpen ? subMeta.scrollHeight + 'px' : '0';
+
+      // Page counter + label
+      document.getElementById('pageCounter').textContent = (idx + 1) + '/' + STATES.length;
+      const labelMap = { about: 'Intro', journey: 'Intro', google: 'Intro', meta: 'Intro', today: "Today's Focus" };
+      document.getElementById('labelText').textContent = labelMap[st.nav] || 'Intro';
+
+      history.replaceState(null, '', '#s-' + idx);
+    }
+
+    /* ── TIMELINE HIGHLIGHT ── */
+    function updateTimelineHl(range) {
+      if (!range) {
+        tlHl.classList.remove('visible');
+        return;
+      }
+      const cards = tlRow.querySelectorAll('.timeline-card');
+      const first = cards[range[0] - 1];
+      const last = cards[range[1] - 1];
+      if (!first || !last) return;
+
+      requestAnimationFrame(() => {
+        const rowRect = tlRow.getBoundingClientRect();
+        const fRect = first.getBoundingClientRect();
+        const lRect = last.getBoundingClientRect();
+        tlHl.style.left = (fRect.left - rowRect.left - 4) + 'px';
+        tlHl.style.top = (fRect.top - rowRect.top - 4) + 'px';
+        tlHl.style.width = (lRect.right - fRect.left + 8) + 'px';
+        tlHl.style.height = (lRect.bottom - fRect.top + 8) + 'px';
+        tlHl.classList.add('visible');
+      });
+    }
+
+    /* ── INIT ── */
+    const initMatch = location.hash.match(/s-(\d+)/);
+    if (initMatch) {
+      goToState(parseInt(initMatch[1]));
+    } else {
+      goToState(0);
+    }
+
+
+
+    /* ── NAV CLICKS ── */
+    mainNavItems.forEach(item => {
+      item.addEventListener('click', e => {
+        e.stopPropagation();
+        goToState(parseInt(item.dataset.go));
+      });
+    });
+    subNavItems.forEach(item => {
+      item.addEventListener('click', e => {
+        e.stopPropagation();
+        goToState(parseInt(item.dataset.idx));
+      });
+    });
+
+    /* ── BLOCK MANUAL SCROLL ON WORK SCROLLER ── */
+    document.getElementById('workScroller').addEventListener('wheel', e => e.preventDefault(), { passive: false });
+    document.getElementById('workScroller').addEventListener('touchmove', e => e.preventDefault(), { passive: false });
+
+    /* ── KEYBOARD ── */
+    document.addEventListener('keydown', e => {
+      if (e.key === 'r' || e.key === 'R') goToState(0);
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+        e.preventDefault();
+        if (stateIdx < STATES.length - 1) goToState(stateIdx + 1);
+      }
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (stateIdx > 0) goToState(stateIdx - 1);
+      }
+    });
+
+    /* ── DROPDOWN CLOSE ── */
+    document.addEventListener('click', e => {
+      const dd = document.getElementById('pageDropdown');
+      if (dd && !dd.contains(e.target)) dd.classList.remove('open');
+    });
+
+    /* ── RECALC HIGHLIGHT ON RESIZE ── */
+    window.addEventListener('resize', () => {
+      const st = STATES[stateIdx];
+      if (st.slide === 6 && st.tlHl) updateTimelineHl(st.tlHl);
+    });
+  </script>
+
+</body>
+</html>

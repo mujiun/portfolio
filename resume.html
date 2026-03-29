@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mu Jiun Shie — About</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@100..900&family=IBM+Plex+Mono:wght@400;500;600;700&display=block" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #FFFFFF;
+      --surface: #F6F6F6;
+      --ink: #35363A;
+      --ink2: #6e502e;
+      --ink3: #9A958E;
+      --accent: #D56C00;
+      --accent-light: #FDF3E8;
+      --border: rgba(67,67,67,0.1);
+      --border2: rgba(67,67,67,0.06);
+      --font: 'Commissioner', system-ui, sans-serif;
+      --mono: 'IBM Plex Mono', monospace;
+      --radius: 12px;
+    }
+
+    html { overflow-y: scroll; min-height: 100.1vh; }
+
+    html, body {
+      height: 100%;
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100dvh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 32px;
+      border-bottom: 1px solid var(--border2);
+      background: var(--bg);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+
+    .logo {
+      font-family: var(--font);
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--ink);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav { display: flex; gap: 8px; align-items: center; }
+
+    nav a {
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink2);
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: all 0.18s ease;
+      letter-spacing: 0.01em;
+    }
+
+    nav a:hover {
+      color: var(--ink);
+      border-color: var(--border);
+      background: rgba(26,24,21,0.04);
+    }
+
+    nav a.active {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: var(--accent-light);
+    }
+
+    /* ── PAGE ── */
+    .page {
+      max-width: 960px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 48px 32px 120px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      margin-bottom: 64px;
+    }
+
+    .hero-name {
+      font-family: var(--font);
+      font-weight: 300;
+      font-size: 40px;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 12px;
+      color: var(--ink);
+    }
+
+    .hero-name strong {
+      font-weight: 700;
+      letter-spacing: -0.025em;
+    }
+
+    .hero-headline {
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.3;
+      margin-bottom: 24px;
+    }
+
+    .hero-headline b {
+      font-weight: 700;
+    }
+
+    .hero-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .hero-links a {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink);
+      text-decoration: none;
+      padding: 8px 16px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      transition: all 0.18s ease;
+    }
+
+    .hero-links a:hover {
+      border-color: var(--ink3);
+      background: var(--surface);
+    }
+
+    .ext-icon {
+      width: 11px;
+      height: 11px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      margin-left: 4px;
+      vertical-align: -1px;
+    }
+
+    /* ── SECTION ── */
+    .section {
+      margin-bottom: 56px;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0;
+    }
+
+    .section-label--spaced {
+      margin-bottom: 20px;
+    }
+
+    /* ── JOB ── */
+    .job {
+      margin-bottom: 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .job:last-child {
+      border-bottom: none;
+    }
+
+    .job-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 0;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .job-toggle:hover .job-company {
+      color: var(--accent);
+    }
+
+    .job--static .job-toggle {
+      cursor: default;
+    }
+
+    .job--static .job-toggle:hover .job-company {
+      color: var(--ink);
+    }
+
+    .job-toggle-left {
+      display: flex;
+      align-items: baseline;
+      gap: 0;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .job-company {
+      font-family: var(--font);
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: 0;
+      line-height: 1.3;
+      transition: color 0.18s ease;
+      flex-shrink: 0;
+    }
+
+    .job-dot {
+      margin: 0 12px;
+      font-size: 18px;
+      color: var(--ink3);
+      flex-shrink: 0;
+    }
+
+    .job-role {
+      font-size: 17px;
+      font-weight: 400;
+      color: var(--ink2);
+      line-height: 1.4;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .job-toggle-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-shrink: 0;
+      margin-left: 16px;
+    }
+
+    .job-date {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--ink2);
+    }
+
+    .job-chevron {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.25s ease;
+      color: var(--ink3);
+      flex-shrink: 0;
+    }
+
+    .job-chevron svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .job.open .job-chevron {
+      transform: rotate(180deg);
+    }
+
+    .job-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, opacity 0.25s ease;
+      opacity: 0;
+    }
+
+    .job.open .job-content {
+      opacity: 1;
+    }
+
+    .job-content-inner {
+      padding-bottom: 32px;
+    }
+
+    .job-scope {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--ink2);
+      margin-bottom: 16px;
+    }
+
+    .job-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .job-bullets li {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.6;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .job-bullets li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 11px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--ink3);
+    }
+
+    .job-bullets li strong {
+      font-weight: 600;
+    }
+
+    /* ── INFO GRID ── */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    .info-block {}
+
+    .info-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    /* ── EDUCATION ── */
+    .edu-item {
+      margin-bottom: 16px;
+    }
+
+    .edu-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .edu-school {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.4;
+    }
+
+    .edu-school .flag {
+      font-size: 15px;
+      margin-right: 4px;
+    }
+
+    .edu-degree {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--ink3);
+      line-height: 1.5;
+    }
+
+    /* ── CONTACT ── */
+    .contact-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .contact-list li a {
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--ink2);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .contact-list li a:hover { color: var(--accent); }
+
+    /* ── SKILL TAGS ── */
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .skill-tag {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--ink2);
+      background: var(--surface);
+      border-radius: 999px;
+      padding: 5px 12px;
+      line-height: 1.4;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      header { padding: 16px 20px; }
+      nav a { display: none; }
+      .page { padding: 40px 20px 80px; }
+      .hero-name { font-size: 32px; }
+      .job-company { font-size: 20px; }
+      .info-grid { grid-template-columns: 1fr; gap: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a class="logo" href="index.html">Mu<span>.</span></a>
+    <nav>
+      <a href="index.html">Chat</a>
+      <a href="projects.html">Projects</a>
+      <a href="resume.html" class="active">About</a>
+      <a href="https://www.linkedin.com/in/mshie/" target="_blank">LinkedIn</a>
+    </nav>
+  </header>
+
+  <div class="page">
+
+    <!-- HERO -->
+    <div class="hero">
+      <h1 class="hero-name">Hi👋🏼 I'm <strong>Mu</strong>, Sr. Product Designer</h1>
+      <p class="hero-headline">8+ years in product design delivering <b>simple, scalable, user-focused</b> products <br><b>AI-native designer</b> building products 3–4× faster</p>
+      <div class="hero-links">
+        <a href="https://docs.google.com/document/d/1tAKrQeLZ3TPE_mDVejx2wmdKbb9UvKNu/edit" target="_blank">Download Resume <svg class="ext-icon" viewBox="0 0 14 14"><path d="M5 1h8v8M13 1L6 8"/></svg></a>
+        <a href="https://www.linkedin.com/in/mshie/" target="_blank">LinkedIn <svg class="ext-icon" viewBox="0 0 14 14"><path d="M5 1h8v8M13 1L6 8"/></svg></a>
+        <a href="mailto:mujiunshie@gmail.com">mujiunshie@gmail.com</a>
+      </div>
+    </div>
+
+    <!-- EXPERIENCE -->
+    <div class="section">
+      <p class="section-label">Experience</p>
+
+      <!-- Meta -->
+      <div class="job">
+        <div class="job-toggle">
+          <div class="job-toggle-left">
+            <p class="job-company">Meta</p>
+            <span class="job-dot">·</span>
+            <p class="job-role">Senior Product Designer</p>
+          </div>
+          <div class="job-toggle-right">
+            <span class="job-date">Aug 2023 — Present · 2y 7m</span>
+            <span class="job-chevron"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></span>
+          </div>
+        </div>
+        <div class="job-content">
+          <div class="job-content-inner">
+            <p class="job-scope">Monetization, Business Messaging</p>
+            <ul class="job-bullets">
+              <li><strong>Launched 20+ features/experiments</strong> — Shaped strategy and solutions across platforms including messaging apps (Messenger/Instagram/WhatsApp), API integrations, ad tools (Ads Manager, Meta Business Suite) to unlock $400M+ annual revenue potential.</li>
+              <li><strong>Built simple, scalable solutions for complex, growing products</strong> — Developed modular systems to unify and simplify WhatsApp template creation tools (desktop, 7 flows) and Instagram messaging tools (mobile, 5 tools), boosting adoption rate by 1.6x.</li>
+              <li><strong>Clarified ambiguous problems through structured analysis</strong> — Used structured analysis (dogfooding, UXR, data) to turn ambiguity into clear problems to solve.</li>
+              <li><strong>Delivered solutions to streamline end-to-end journeys</strong> — Built 0→1 products connecting steps of third-party/API adoption, lifting activation rate from 12% to 57%.</li>
+              <li><strong>Secured leadership buy-in for 0→1 new bets</strong> — Structured presentation with compelling context and design mocks, shared in multiple forums to gain support.</li>
+              <li><strong>Shaped short and long-term solutions</strong> — Skilled at building MVPs for rapid execution while defining long-term strategy and success metrics for iteration.</li>
+              <li><strong>Executed fast-paced, high-output design ideation</strong> — Excelled in rapid Figma prototyping to conceptualize ideas and contributed to 10+ design sprints for roadmapping.</li>
+              <li><strong>Collaborated with cross-functional members and 10+ teams</strong> — Led large projects partnering with engineering, product managers, and product designers across teams to connect dots and bring a bigger impact on product.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Google -->
+      <div class="job">
+        <div class="job-toggle">
+          <div class="job-toggle-left">
+            <p class="job-company">Google</p>
+            <span class="job-dot">·</span>
+            <p class="job-role">Interaction Designer</p>
+          </div>
+          <div class="job-toggle-right">
+            <span class="job-date">Nov 2021 — Jun 2023 · 1y 8m</span>
+            <span class="job-chevron"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></span>
+          </div>
+        </div>
+        <div class="job-content">
+          <div class="job-content-inner">
+            <p class="job-scope">Search Ads · Staffing via ScopusIT</p>
+            <ul class="job-bullets">
+              <li><strong>Launched 3 ad products/experiments</strong> — Identified opportunities and shipped new ad products for retail shopping, vehicle shopping, and a new vertical.</li>
+              <li><strong>Sped up product development process with rapid ideation</strong> — Accelerated project progress through rapid ideation, worked closely with the design manager to translate ambiguous needs into multiple product ideas through adaptability and fast execution.</li>
+              <li><strong>Delivered a new monetization product</strong> — Explored ad formats, content, and interactions for a new vertical, balancing user insights with cross-functional feedback.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Enovational -->
+      <div class="job">
+        <div class="job-toggle">
+          <div class="job-toggle-left">
+            <p class="job-company">Enovational</p>
+            <span class="job-dot">·</span>
+            <p class="job-role">Product Designer</p>
+          </div>
+          <div class="job-toggle-right">
+            <span class="job-date">Jul 2020 — Oct 2021 · 1y 4m</span>
+            <span class="job-chevron"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></span>
+          </div>
+        </div>
+        <div class="job-content">
+          <div class="job-content-inner">
+            <p class="job-scope">Government Portal</p>
+            <ul class="job-bullets">
+              <li><strong>Launched 10 features</strong> — Saved $65M for the Maryland government, streamlined 2M application reviews in 2020 by expanding form features, automating workflows, and designing a 0→1 license portal for a modern purchase experience.</li>
+              <li><strong>Convinced leadership on building a 0→1 product</strong> — Pitched and secured CEO buy-in to develop a wildlife license portal addressing critical user needs.</li>
+              <li><strong>Defined standards and best practices</strong> — Established design standards, presentation templates, and design documentation, resulting in improved work efficiency.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Earlier -->
+      <div class="job">
+        <div class="job-toggle">
+          <div class="job-toggle-left">
+            <p class="job-company">Earlier Roles</p>
+            <span class="job-dot">·</span>
+            <p class="job-role">UX / Product Designer</p>
+          </div>
+          <div class="job-toggle-right">
+            <span class="job-date">2015 — 2019 · 3y+</span>
+            <span class="job-chevron"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></span>
+          </div>
+        </div>
+        <div class="job-content">
+          <div class="job-content-inner">
+            <p class="job-scope">Based in Taiwan, building business tools</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EDUCATION -->
+    <div class="section">
+      <p class="section-label">Education</p>
+
+      <div class="job job--static">
+        <div class="job-toggle">
+          <div class="job-toggle-left">
+            <p class="job-company">Carnegie Mellon University</p>
+            <span class="job-dot">·</span>
+            <p class="job-role">Master of Integrated Innovation for Products & Services</p>
+          </div>
+          <div class="job-toggle-right">
+            <span class="job-date">🇺🇸 Pittsburgh, PA</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="job job--static">
+        <div class="job-toggle">
+          <div class="job-toggle-left">
+            <p class="job-company">National Taipei University of Education</p>
+            <span class="job-dot">·</span>
+            <p class="job-role">Bachelor of Art & Design</p>
+          </div>
+          <div class="job-toggle-right">
+            <span class="job-date">🇹🇼 Taipei, Taiwan</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SKILLS -->
+    <div class="section">
+      <p class="section-label section-label--spaced">Skills</p>
+      <div class="skill-tags">
+        <span class="skill-tag">Vibe Coding</span>
+        <span class="skill-tag">Product Strategy</span>
+        <span class="skill-tag">Product Design</span>
+        <span class="skill-tag">Product Development</span>
+        <span class="skill-tag">UX Design</span>
+        <span class="skill-tag">Interaction Design</span>
+        <span class="skill-tag">User Research</span>
+        <span class="skill-tag">User Testing</span>
+        <span class="skill-tag">A/B Testing</span>
+        <span class="skill-tag">Wireframing</span>
+        <span class="skill-tag">Rapid Prototyping</span>
+        <span class="skill-tag">Web Accessibility</span>
+        <span class="skill-tag">Design Systems</span>
+        <span class="skill-tag">Visual Design</span>
+        <span class="skill-tag">Illustration</span>
+        <span class="skill-tag">Front-End Coding</span>
+      </div>
+    </div>
+
+    <!-- TOOLS -->
+    <div class="section">
+      <p class="section-label section-label--spaced">Daily Tools</p>
+      <div class="skill-tags">
+        <span class="skill-tag">Figma</span>
+        <span class="skill-tag">VS Code</span>
+        <span class="skill-tag">Claude Code</span>
+        <span class="skill-tag">Adobe</span>
+        <span class="skill-tag">HTML</span>
+        <span class="skill-tag">CSS</span>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    document.querySelectorAll('.job-toggle').forEach(toggle => {
+      const job = toggle.closest('.job');
+      const content = job.querySelector('.job-content');
+
+      // Set initial max-height for open jobs
+      if (job.classList.contains('open')) {
+        content.style.maxHeight = content.scrollHeight + 'px';
+      }
+
+      toggle.addEventListener('click', () => {
+        if (job.classList.contains('open')) {
+          content.style.maxHeight = content.scrollHeight + 'px';
+          requestAnimationFrame(() => {
+            content.style.maxHeight = '0';
+          });
+          job.classList.remove('open');
+        } else {
+          job.classList.add('open');
+          content.style.maxHeight = content.scrollHeight + 'px';
+          content.addEventListener('transitionend', function handler() {
+            if (job.classList.contains('open')) {
+              content.style.maxHeight = 'none';
+            }
+            content.removeEventListener('transitionend', handler);
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

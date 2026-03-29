@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mu Jiun Shie — Projects</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@100..900&display=block" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #FFFFFF;
+      --surface: #F9F9F9;
+      --surface2: #F0EFED;
+      --ink: #434343;
+      --ink2: #6e502e;
+      --ink3: #9A958E;
+      --accent: #D56C00;
+      --accent-light: #FDF3E8;
+      --border: rgba(67,67,67,0.1);
+      --border2: rgba(67,67,67,0.06);
+      --font: 'Commissioner', system-ui, sans-serif;
+      --radius: 16px;
+      --radius-pill: 999px;
+    }
+
+    html {
+      overflow-y: scroll;
+      min-height: 100.1vh;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100dvh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 32px;
+      border-bottom: 1px solid var(--border2);
+      background: var(--bg);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+
+    .logo {
+      font-family: var(--font);
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--ink);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    nav a {
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink2);
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      border: 1px solid transparent;
+      transition: all 0.18s ease;
+      letter-spacing: 0.01em;
+    }
+
+    nav a:hover {
+      color: var(--ink);
+      border-color: var(--border);
+      background: var(--surface2);
+    }
+
+    nav a.active {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: var(--accent-light);
+    }
+
+    /* ── PAGE CONTENT ── */
+    .page {
+      max-width: 1440px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 48px 32px 80px;
+    }
+
+    .page-title {
+      font-family: var(--font);
+      font-weight: 700;
+      font-size: 40px;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+
+    .page-sub {
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--ink3);
+      margin-bottom: 36px;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+      min-height: 38px;
+    }
+
+    .filter-btn {
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink2);
+      background: var(--bg);
+      border: 1px solid rgba(67,67,67,0.2);
+      border-radius: 999px;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .filter-btn:hover {
+      background: var(--accent-light);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .filter-btn.active {
+      background: var(--accent-light);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ── PROJECT GRID ── */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+      gap: 20px;
+      min-height: 300px;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+      transition: border-color 0.22s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-card:hover {
+      border-color: var(--accent);
+    }
+
+    .project-card:hover .card-title {
+      color: var(--accent);
+    }
+
+    .card-img {
+      width: 100%;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .project-card:hover .card-img img {
+      transform: scale(1.04);
+    }
+
+    .card-body {
+      padding: 14px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card-company {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2px;
+    }
+
+    .card-title {
+      font-family: var(--font);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 6px;
+      line-height: 1.35;
+      letter-spacing: -0.0em;
+      transition: color 0.18s ease;
+    }
+
+    .card-summary {
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--ink2);
+      line-height: 1.35;
+      flex: 1;
+    }
+
+    .card-arrow {
+      color: var(--accent);
+      font-size: 16px;
+      font-weight: 700;
+      transition: transform 0.18s ease;
+      display: inline-block;
+    }
+
+    .project-card:hover .card-arrow { transform: translateX(3px); }
+
+
+
+    /* ── PROJECT MODAL ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      padding: 24px;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal {
+      background: var(--bg);
+      border-radius: var(--radius);
+      width: 100%;
+      max-width: 1280px;
+      height: 85vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.2);
+      transform: translateY(12px) scale(0.98);
+      transition: transform 0.25s ease;
+    }
+
+    .modal-overlay.open .modal {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .modal-title {
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .modal-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      background: var(--surface2);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: var(--ink2);
+      transition: all 0.15s ease;
+      font-family: var(--font);
+      line-height: 1;
+    }
+
+    .modal-close:hover {
+      background: var(--ink);
+      color: var(--bg);
+    }
+
+    .modal-body {
+      flex: 1;
+      min-height: 0;
+    }
+
+    .modal-body iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      header { padding: 16px 20px; }
+      nav a { display: none; }
+      .page { padding: 32px 16px 60px; }
+      .project-grid { grid-template-columns: 1fr; }
+      .modal-overlay { padding: 0; }
+      .modal { border-radius: 0; height: 100vh; max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a class="logo" href="index.html">Mu<span>.</span></a>
+    <nav>
+      <a href="index.html">Chat</a>
+      <a href="projects.html" class="active">Projects</a>
+      <a href="resume.html">About</a>
+      <a href="https://www.linkedin.com/in/mshie/" target="_blank">LinkedIn</a>
+    </nav>
+  </header>
+
+  <div class="page">
+    <h1 class="page-title">Projects</h1>
+    <div class="filters" id="filters"></div>
+    <div class="project-grid" id="projectGrid"></div>
+  </div>
+
+  <!-- PROJECT MODAL -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title" id="modalTitle"></span>
+        <button class="modal-close" id="modalClose">×</button>
+      </div>
+      <div class="modal-body">
+        <iframe id="modalIframe" src="" title="Project"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/projects-data.js"></script>
+  <script>
+    // PROJECTS loaded from js/projects-data.js
+
+    const FILTERS = [
+      { label: 'All', value: 'all' },
+      { label: 'Ad Products', value: 'ad' },
+      { label: 'Business Tools', value: 'business' },
+      { label: 'API/Developer Tools', value: 'developer' },
+      { label: 'Framework', value: 'framework' },
+      { label: 'Consumer Products', value: 'consumer' },
+      { label: 'Visuals', value: 'visuals' },
+    ];
+
+    // ── RENDER FILTERS ──
+    const filtersEl = document.getElementById('filters');
+    let activeFilter = 'all';
+
+    FILTERS.forEach(f => {
+      const btn = document.createElement('button');
+      btn.className = 'filter-btn' + (f.value === 'all' ? ' active' : '');
+      btn.textContent = f.label;
+      btn.addEventListener('click', () => {
+        activeFilter = f.value;
+        filtersEl.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderGrid();
+      });
+      filtersEl.appendChild(btn);
+    });
+
+    // ── RENDER GRID ──
+    const grid = document.getElementById('projectGrid');
+
+    function renderGrid() {
+      grid.innerHTML = '';
+      const list = activeFilter === 'all' ? PROJECTS : PROJECTS.filter(p => p.filters && p.filters.includes(activeFilter));
+      list.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'project-card';
+        card.addEventListener('click', () => {
+          if (p.external) {
+            window.open(p.url, '_blank');
+          } else {
+            openModal(p.url, p.title);
+          }
+        });
+        card.innerHTML = `
+          <div class="card-img">
+            <img src="${p.img}" alt="${p.title}" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <div class="card-company">${p.company}</div>
+            <div class="card-title">${p.title} <span class="card-arrow">→</span></div>
+            <div class="card-summary">${p.summary}</div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    renderGrid();
+
+    // ── MODAL ──
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalTitle   = document.getElementById('modalTitle');
+    const modalIframe  = document.getElementById('modalIframe');
+    const modalClose   = document.getElementById('modalClose');
+
+    function openModal(url, title) {
+      modalTitle.textContent = title;
+      modalIframe.src = url;
+      modalOverlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modalOverlay.classList.remove('open');
+      document.body.style.overflow = '';
+      setTimeout(() => { modalIframe.src = ''; }, 250);
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
+</body>
+</html>

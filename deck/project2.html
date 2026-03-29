@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New Monetization Tool for Meta Business Inbox — Mu Jiun Shie</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@100..900&family=IBM+Plex+Mono:wght@400;500;600;700&display=block" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    /* ── MAIN CONTENT ── */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .project-title {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      padding: 32px 64px 0;
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--ink2);
+      pointer-events: none;
+      height: 0;
+      overflow: visible;
+    }
+
+    .page-counter {
+      font-weight: 400;
+      letter-spacing: 0;
+      color: var(--ink2);
+    }
+
+    /* ── PANEL: exactly one screen ── */
+    .panel {
+      height: 100vh;
+      padding: 32px 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .panel-inner {
+      width: 100%;
+      max-width: 1080px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin: 0 auto;
+    }
+
+    /* ── OVERVIEW: 2-col layout ── */
+    .overview-header {
+      margin-bottom: 20px;
+    }
+
+    .overview-company {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .overview-title {
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .overview-subtitle {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--ink3);
+      line-height: 1.4;
+    }
+
+    .overview-body {
+      display: grid;
+      grid-template-columns: 2fr 3fr;
+      gap: 40px;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .overview-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .overview-right {
+      display: flex;
+      align-items: center;
+    }
+
+    .overview-right .slide-img {
+      margin: 0;
+      height: 75%;
+    }
+
+    .overview-right .slide-img img {
+      object-fit: cover;
+    }
+
+    /* ── Overview layers ── */
+    .overview-layer {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+
+    .overview-layer.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .overview-layer .meta-block {
+      padding: 16px 0;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .overview-layer.active .meta-block {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .overview-layer.active .meta-block:nth-child(1) { transition-delay: 0.1s; }
+    .overview-layer.active .meta-block:nth-child(2) { transition-delay: 0.2s; }
+    .overview-layer.active .meta-block:nth-child(3) { transition-delay: 0.3s; }
+
+    /* ── Role timeline ── */
+    .role-timeline {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 8px 0;
+    }
+
+    .role-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 5px 0;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1) 0s, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) 0s;
+    }
+
+    .overview-layer.active .role-item {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .role-icon {
+      font-size: 16px;
+      flex-shrink: 0;
+      width: 20px;
+      text-align: center;
+    }
+
+    .role-text {
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.35;
+    }
+
+    .overview-layer.active .role-timeline > .role-item:nth-child(1) { transition-delay: 0.1s; }
+    .overview-layer.active .role-timeline > .role-item:nth-child(2) { transition-delay: 0.15s; }
+    .overview-layer.active .role-timeline > .role-item:nth-child(3) { transition-delay: 0.2s; }
+    .overview-layer.active .role-timeline > .role-item:nth-child(4) { transition-delay: 0.25s; }
+    .overview-layer.active .role-timeline > .role-item:nth-child(5) { transition-delay: 0.3s; }
+
+    /* ── Stat numbers ── */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .stat-card {
+      padding: 0;
+      background: transparent;
+      border-radius: var(--radius);
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .overview-layer.active .stat-card {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .overview-layer.active .stat-card:nth-child(1) { transition-delay: 0.15s; }
+    .overview-layer.active .stat-card:nth-child(2) { transition-delay: 0.25s; }
+    .overview-layer.active .stat-card:nth-child(3) { transition-delay: 0.35s; }
+
+    .stat-number {
+      font-size: 56px;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.1;
+      margin-bottom: 6px;
+      letter-spacing: -0.02em;
+    }
+
+    .stat-desc {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.4;
+    }
+
+    .meta-block-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    /* ── CONTENT ELEMENTS ── */
+    .slide-img {
+      width: 100%;
+      background: var(--surface);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin: 16px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .slide-img img {
+      width: 100%;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* ── Divider slide ── */
+    .divider-page {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    .divider-title {
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .divider-desc {
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--ink2);
+      line-height: 1.4;
+      letter-spacing: -0.01em;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+    }
+
+    .divider-page.visible .divider-desc {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-title {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .content-h2 {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 24px 0 12px;
+    }
+
+    .content-h2:first-child { margin-top: 0; }
+
+    .content-p {
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.35;
+      max-width: 720px;
+    }
+
+    .content-desc {
+      font-size: 17px;
+      font-weight: 400;
+      color: var(--ink3);
+      line-height: 1.4;
+      padding-top: 16px;
+      letter-spacing: 0.01em;
+    }
+
+    .single-col .content-desc {
+      padding-top: 4px;
+    }
+
+    /* ── 2-COL PANEL LAYOUT ── */
+    .split {
+      display: grid;
+      grid-template-columns: 3fr 7fr;
+      gap: 40px;
+      height: 100%;
+      align-items: center;
+    }
+
+    .split-text { display: flex; flex-direction: column; justify-content: center; }
+
+    .split-img { display: flex; align-items: center; height: 75%; }
+
+    .split-img .slide-img {
+      margin: 0;
+      height: 100%;
+    }
+
+    .split-img .slide-img img {
+      object-fit: contain;
+    }
+
+    /* ── 1-col layout ── */
+    .single-col {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      justify-content: center;
+      gap: 36px;
+    }
+
+    .single-col .content-p {
+      max-width: none;
+    }
+
+    .single-col .slide-img {
+      margin: 0;
+    }
+
+    .single-col .slide-img img {
+      width: 100%;
+    }
+
+    /* ── Feedback ── */
+    .feedback {
+      margin-top: 24px;
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+    }
+    .feedback-title {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--ink3);
+      margin-bottom: 12px;
+    }
+    .feedback-composer {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .feedback-input {
+      flex: 1;
+      padding: 8px 12px;
+      font-family: var(--sans);
+      font-size: 13px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--ink);
+      outline: none;
+    }
+    .feedback-input:focus {
+      border-color: var(--ink3);
+    }
+    .feedback-input::placeholder {
+      color: var(--ink2);
+    }
+    .feedback-btn {
+      padding: 8px 16px;
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      background: var(--ink);
+      color: var(--bg);
+      cursor: pointer;
+    }
+    .feedback-btn:hover {
+      opacity: 0.85;
+    }
+    .feedback-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .feedback-item {
+      display: flex;
+      gap: 10px;
+      padding: 10px 12px;
+      background: var(--surface);
+      border-radius: 8px;
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--ink);
+    }
+    .feedback-avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--border);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--ink3);
+    }
+    .feedback-content {
+      flex: 1;
+    }
+    .feedback-author {
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--ink3);
+      margin-bottom: 2px;
+    }
+
+    /* ── Tab Card ── */
+    .page-header {
+      margin-bottom: 20px;
+    }
+    .page-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+    .page-desc {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--ink2);
+      line-height: 1.4;
+      max-width: 640px;
+    }
+    .tab-card {
+      background: var(--surface);
+      border-radius: 12px;
+      overflow: hidden;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .tab-bar {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .tab-btn {
+      padding: 12px 24px;
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink2);
+      background: none;
+      border: none;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+    }
+    .tab-btn.active {
+      color: var(--ink);
+      font-weight: 600;
+      border-bottom-color: var(--ink);
+    }
+    .tab-btn:hover {
+      color: var(--ink);
+    }
+    .tab-content {
+      display: none;
+      flex: 1;
+      padding: 24px;
+      align-items: center;
+      justify-content: center;
+    }
+    .tab-content.active {
+      display: flex;
+    }
+    .tab-content img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    .tab-placeholder {
+      font-size: 14px;
+      color: var(--ink2);
+    }
+
+    /* ── One-Pager PRD ── */
+    .prd {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow-y: auto;
+      padding: 60px 0 8px;
+      gap: 0;
+      max-width: 960px;
+    }
+
+    .prd-header {
+      border-bottom: none;
+    }
+
+    .prd-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+
+    .prd-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink2);
+    }
+
+    .prd-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .prd-meta-label {
+      font-weight: 600;
+      color: var(--ink3);
+      min-width: 60px;
+    }
+
+    .prd-meta-value {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .prd-step {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--ink3);
+      padding: 3px 8px;
+      background: var(--surface);
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .prd-step.active {
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .prd-step.done {
+      background: var(--accent);
+      color: #fff;
+      opacity: 0.5;
+    }
+
+    .prd-step-arrow {
+      font-size: 9px;
+      color: var(--ink3);
+    }
+
+    .prd-check {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .prd-body {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-top: 24px;
+    }
+
+    .prd-card {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 20px 24px;
+    }
+
+    .prd-section-title {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .prd-text {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.4;
+    }
+
+    .prd-text b {
+      font-weight: 600;
+    }
+
+    .prd-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .prd-metric {
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+
+    .prd-metric-number {
+      font-size: 36px;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .prd-metric-label {
+      font-size: 13px;
+      color: var(--ink2);
+      line-height: 1.4;
+    }
+
+    .prd-target-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .prd-target {
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+
+    .prd-target-number {
+      font-size: 36px;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .prd-target-label {
+      font-size: 13px;
+      color: var(--ink2);
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="shell">
+
+    <!-- ── LEFT NAV ── -->
+    <nav class="side">
+      <div class="side-section" style="margin-bottom: 20px;">
+        <p class="side-label">Page</p>
+        <div class="dropdown" id="pageDropdown">
+          <div class="dropdown-toggle" onclick="this.parentElement.classList.toggle('open')">Project 2</div>
+          <div class="dropdown-menu">
+            <a class="dropdown-option" href="intro.html">Intro</a>
+            <a class="dropdown-option" href="project1.html">Project 1</a>
+            <a class="dropdown-option current" href="project2.html">Project 2</a>
+            <a class="dropdown-option" href="project3.html">Project 3</a>
+          </div>
+        </div>
+      </div>
+      <div class="side-section">
+        <p class="side-label">Agenda</p>
+
+        <a class="nav-item active" data-target="overview-project">Overview</a>
+        <div class="nav-sub" data-parent="overview">
+          <a class="nav-item" data-target="overview-about">About</a>
+          <a class="nav-item" data-target="overview-role">My Role</a>
+          <a class="nav-item" data-target="overview-impact">Impact</a>
+        </div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--border);margin:12px 16px;">
+      <div class="side-section">
+        <p class="side-label">Co-work with AI</p>
+
+        <a class="nav-item" data-target="context-divider">Context</a>
+        <div class="nav-sub" data-parent="context">
+          <a class="nav-item" data-target="context-onepager">One-Pager</a>
+          <a class="nav-item" data-target="context-current">Current Experience</a>
+          <a class="nav-item" data-target="context-learnings">Learnings</a>
+        </div>
+
+        <a class="nav-item" data-target="design-divider">Design Exploration</a>
+        <div class="nav-sub" data-parent="design">
+          <a class="nav-item" data-target="design-baseline">Baseline</a>
+          <a class="nav-item" data-target="design-placement">Placement</a>
+          <a class="nav-item" data-target="design-layout">Tool Layout</a>
+          <a class="nav-item" data-target="design-flow">Setup Flow</a>
+          <a class="nav-item" data-target="design-iteration">Iteration</a>
+        </div>
+
+        <a class="nav-item" data-target="launch-divider">Launch</a>
+        <div class="nav-sub" data-parent="launch">
+          <a class="nav-item" data-target="launch-experiment">Experiment Setup</a>
+          <a class="nav-item" data-target="launch-upsells">Upsells</a>
+          <a class="nav-item" data-target="launch-metrics">Metrics</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ── MAIN CONTENT ── -->
+    <div class="main" id="main">
+
+      <p class="project-title"><span class="page-counter" id="pageCounter">1/20</span> • New Monetization Tool</p>
+
+      <!-- ═══ OVERVIEW ═══ -->
+      <section class="panel" id="overview-project" data-group="overview">
+        <div class="panel-inner">
+          <div class="overview-body">
+            <div class="overview-left" style="position:relative">
+              <!-- Layer 0: Overview -->
+              <div class="overview-layer active" id="layer-overview">
+                <div class="overview-header">
+                  <p class="overview-company">Meta · Business Inbox</p>
+                  <h1 class="overview-title">New Monetization Tool for Meta Business Inbox</h1>
+                  <p class="overview-subtitle">Ambiguous Concept, AI-Accelerated, MVP</p>
+                </div>
+              </div>
+
+              <!-- Layer 1: About -->
+              <div class="overview-layer" id="layer-about">
+                <div class="meta-block">
+                  <p class="meta-block-label">Problems</p>
+                  <p class="content-p" style="font-size:20px">Content coming soon</p>
+                </div>
+                <div class="meta-block">
+                  <p class="meta-block-label">Solutions</p>
+                  <p class="content-p" style="font-size:20px">Content coming soon</p>
+                </div>
+              </div>
+
+              <!-- Layer 2: My Role -->
+              <div class="overview-layer" id="layer-role">
+                <div class="meta-block">
+                  <p class="meta-block-label">My Role</p>
+                  <ul class="role-timeline">
+                    <li class="role-item"><span class="role-icon">🔍</span><span class="role-text">Context</span></li>
+                    <li class="role-item"><span class="role-icon">💡</span><span class="role-text">Insights</span></li>
+                    <li class="role-item"><span class="role-icon">🎨</span><span class="role-text">Design Exploration</span></li>
+                    <li class="role-item"><span class="role-icon">🚀</span><span class="role-text">Launch</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Layer 3: Impact -->
+              <div class="overview-layer" id="layer-impact">
+                <div class="meta-block">
+                  <p class="meta-block-label">Impact</p>
+                  <div class="stat-grid">
+                    <div class="stat-card" style="grid-column: 1 / -1">
+                      <p class="stat-number">—</p>
+                      <p class="stat-desc">Content coming soon</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="overview-right">
+              <div class="slide-img"><img src="images/placeholder.png" alt="Overview" /></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Hidden anchors for scroll-spy -->
+      <section class="panel" id="overview-about" data-group="overview" style="display:none"></section>
+      <section class="panel" id="overview-role" data-group="overview" style="display:none"></section>
+      <section class="panel" id="overview-impact" data-group="overview" style="display:none"></section>
+
+      <!-- ═══ CONTEXT ═══ -->
+      <section class="panel" id="context-divider" data-group="context">
+        <div class="panel-inner divider-page">
+          <p class="divider-title">Context</p>
+          <p class="divider-desc">Why this matters</p>
+        </div>
+      </section>
+
+      <section class="panel no-snap" id="context-onepager" data-group="context" style="align-items:flex-start;justify-content:flex-start;">
+        <div class="panel-inner" style="max-width:none;margin:0;">
+          <div class="prd">
+
+            <!-- Header -->
+            <div class="prd-header">
+              <p class="prd-title">Bulk Messaging Tool for Meta Business Inbox</p>
+              <div class="prd-meta">
+                <div class="prd-meta-row">
+                  <span class="prd-meta-label">POCs</span>
+                  <span class="prd-meta-value"><span>(PD) Mu Jiun Shie</span> <span>(CD) Sarah Chen</span> <span>(PM) David Park</span> <span>(Eng) Kevin Liu</span></span>
+                </div>
+                <div class="prd-meta-row">
+                  <span class="prd-meta-label">Progress</span>
+                  <span class="prd-meta-value">
+                    <span class="prd-step done">Understand</span><span class="prd-step-arrow">→</span>
+                    <span class="prd-step done">Concept</span><span class="prd-step-arrow">→</span>
+                    <span class="prd-step active">MVP Design</span><span class="prd-step-arrow">→</span>
+                    <span class="prd-step">Development</span><span class="prd-step-arrow">→</span>
+                    <span class="prd-step">Dogfood</span><span class="prd-step-arrow">→</span>
+                    <span class="prd-step">Launch</span>
+                  </span>
+                </div>
+                <div class="prd-meta-row">
+                  <span class="prd-meta-label">Review</span>
+                  <span class="prd-meta-value">
+                    <span class="prd-check">[&thinsp;] Design Review</span>
+                    <span class="prd-check">[&thinsp;] Content Review</span>
+                    <span class="prd-check">[&thinsp;] Pillar Review</span>
+                    <span class="prd-check">[V] Legal Review</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="prd-body">
+
+              <!-- Today's Problem -->
+              <div class="prd-card">
+                <p class="prd-section-title">Today's Problem</p>
+                <p class="prd-text">Businesses have <b>no way to message existing customers at scale</b> through Meta Business Inbox. They can only reply one by one — so most leads <b>never get a follow-up</b>, and businesses turn to third-party tools instead.</p>
+                <div class="prd-metrics">
+                  <div class="prd-metric">
+                    <p class="prd-metric-number">63%</p>
+                    <p class="prd-metric-label">conversations with no business follow-up within 24 hours</p>
+                  </div>
+                  <div class="prd-metric">
+                    <p class="prd-metric-number">2.4×</p>
+                    <p class="prd-metric-label">higher conversion when businesses follow up same day</p>
+                  </div>
+                  <div class="prd-metric">
+                    <p class="prd-metric-number">41%</p>
+                    <p class="prd-metric-label">of advertisers use third-party tools for re-engagement</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Proposal -->
+              <div class="prd-card">
+                <p class="prd-section-title">Proposal</p>
+                <p class="prd-text">Build a <b>bulk messaging tool</b> within Meta Business Inbox that enables businesses to easily re-engage existing customers through targeted follow-ups — driving conversations to conversion without leaving the platform.</p>
+              </div>
+
+              <!-- Target Metrics -->
+              <div class="prd-card">
+                <p class="prd-section-title">Target Metrics</p>
+                <div class="prd-target-metrics">
+                  <div class="prd-target">
+                    <p class="prd-target-number">12M+</p>
+                    <p class="prd-target-label">target businesses with active inbox conversations</p>
+                  </div>
+                  <div class="prd-target">
+                    <p class="prd-target-number">8%</p>
+                    <p class="prd-target-label">adoption rate within first 6 months</p>
+                  </div>
+                  <div class="prd-target">
+                    <p class="prd-target-number">$200M+</p>
+                    <p class="prd-target-label">incremental annual revenue</p>
+                  </div>
+                  <div class="prd-target">
+                    <p class="prd-target-number">3.2×</p>
+                    <p class="prd-target-label">message response rate vs. current baseline</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Feedback -->
+            <div class="feedback">
+              <p class="feedback-title">Feedback</p>
+              <div class="feedback-composer">
+                <input class="feedback-input" id="feedbackInput-onepager" type="text" placeholder="Leave a comment..." />
+                <button class="feedback-btn" onclick="addFeedback('onepager')">Add</button>
+              </div>
+              <div class="feedback-list" id="feedbackList-onepager"></div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <section class="panel no-snap" id="context-current" data-group="context" style="align-items:flex-start;justify-content:flex-start;">
+        <div class="panel-inner" style="max-width:none;margin:0;display:flex;flex-direction:column;padding-top:60px;">
+          <div class="page-header">
+            <p class="page-title">Current Experience</p>
+            <p class="page-desc">Businesses have no way to message existing customers at scale through Meta Business Inbox. They can only reply one by one — so most leads never get a follow-up.</p>
+          </div>
+          <div class="tab-card">
+            <div class="tab-bar">
+              <button class="tab-btn active" onclick="switchTab('current', 'core')">Core Surface</button>
+              <button class="tab-btn" onclick="switchTab('current', 'automation')">Automation Tools</button>
+              <button class="tab-btn" onclick="switchTab('current', 'multiselect')">Multi-Select</button>
+            </div>
+            <div class="tab-content active" id="tab-current-core">
+              <p class="tab-placeholder">Core Surface — image placeholder</p>
+            </div>
+            <div class="tab-content" id="tab-current-automation">
+              <p class="tab-placeholder">Automation Tools — image placeholder</p>
+            </div>
+            <div class="tab-content" id="tab-current-multiselect">
+              <p class="tab-placeholder">Multi-Select — image placeholder</p>
+            </div>
+          </div>
+
+          <!-- Feedback -->
+          <div class="feedback">
+            <p class="feedback-title">Feedback</p>
+            <div class="feedback-composer">
+              <input class="feedback-input" id="feedbackInput-current" type="text" placeholder="Leave a comment..." />
+              <button class="feedback-btn" onclick="addFeedback('current')">Add</button>
+            </div>
+            <div class="feedback-list" id="feedbackList-current"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel no-snap" id="context-learnings" data-group="context" style="align-items:flex-start;justify-content:flex-start;">
+        <div class="panel-inner" style="max-width:none;margin:0;display:flex;flex-direction:column;padding-top:60px;">
+          <div class="page-header">
+            <p class="page-title">Learnings</p>
+            <p class="page-desc">Native broadcast tool was tested before but saw low adoption — likely because admins lack the authority, budget, or habit to send marketing messages through an ad tool.</p>
+          </div>
+          <div class="tab-card">
+            <div class="tab-bar">
+              <button class="tab-btn active" onclick="switchTab('learnings', 'bc1')">Broadcast Tool #1</button>
+              <button class="tab-btn" onclick="switchTab('learnings', 'bc2')">Broadcast Tool #2</button>
+              <button class="tab-btn" onclick="switchTab('learnings', 'bulk')">Bulk Message Tool</button>
+            </div>
+            <div class="tab-content active" id="tab-learnings-bc1">
+              <p class="tab-placeholder">Broadcast Tool #1 — image placeholder</p>
+            </div>
+            <div class="tab-content" id="tab-learnings-bc2">
+              <p class="tab-placeholder">Broadcast Tool #2 — image placeholder</p>
+            </div>
+            <div class="tab-content" id="tab-learnings-bulk">
+              <p class="tab-placeholder">Bulk Message Tool — image placeholder</p>
+            </div>
+          </div>
+
+          <!-- Feedback -->
+          <div class="feedback">
+            <p class="feedback-title">Feedback</p>
+            <div class="feedback-composer">
+              <input class="feedback-input" id="feedbackInput-learnings" type="text" placeholder="Leave a comment..." />
+              <button class="feedback-btn" onclick="addFeedback('learnings')">Add</button>
+            </div>
+            <div class="feedback-list" id="feedbackList-learnings"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ DESIGN EXPLORATION ═══ -->
+      <section class="panel no-snap" id="design-divider" data-group="design">
+        <div class="panel-inner divider-page">
+          <p class="divider-title">Design Exploration</p>
+          <p class="divider-desc">Exploring directions</p>
+        </div>
+      </section>
+
+      <section class="panel no-snap" id="design-baseline" data-group="design" style="align-items:flex-start;justify-content:flex-start;">
+        <div class="panel-inner" style="max-width:none;margin:0;display:flex;flex-direction:column;padding-top:60px;">
+          <div class="page-header">
+            <p class="page-title">Baseline</p>
+            <p class="page-desc">Used Figma to build the first version as a baseline for AI to continue exploring.</p>
+          </div>
+          <div class="tab-card" style="flex:1;">
+            <iframe style="border:none;width:100%;height:100%;" src="https://embed.figma.com/proto/c8NWwnMGCJQNR1Wqnry82R/2026-Portfolio?page-id=380%3A7265&node-id=416-16511&viewport=18%2C-122%2C0.06&t=FP9ydiC8YLc5uuDV-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=416%3A16511&embed-host=share" allowfullscreen></iframe>
+          </div>
+          <div class="feedback">
+            <p class="feedback-title">Feedback</p>
+            <div class="feedback-composer">
+              <input class="feedback-input" id="feedbackInput-baseline" type="text" placeholder="Leave a comment..." />
+              <button class="feedback-btn" onclick="addFeedback('baseline')">Add</button>
+            </div>
+            <div class="feedback-list" id="feedbackList-baseline"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel no-snap" id="design-placement" data-group="design" style="align-items:flex-start;justify-content:flex-start;">
+        <div class="panel-inner" style="max-width:none;margin:0;display:flex;flex-direction:column;padding-top:60px;">
+          <div class="page-header">
+            <p class="page-title">Placement</p>
+            <p class="page-desc">Content coming soon</p>
+          </div>
+          <div class="tab-card">
+            <div class="tab-bar">
+              <button class="tab-btn active" onclick="switchTab('placement', 'tab1')">Tab 1</button>
+              <button class="tab-btn" onclick="switchTab('placement', 'tab2')">Tab 2</button>
+            </div>
+            <div class="tab-content active" id="tab-placement-tab1">
+              <p class="tab-placeholder">Tab 1 — image placeholder</p>
+            </div>
+            <div class="tab-content" id="tab-placement-tab2">
+              <p class="tab-placeholder">Tab 2 — image placeholder</p>
+            </div>
+          </div>
+          <div class="feedback">
+            <p class="feedback-title">Feedback</p>
+            <div class="feedback-composer">
+              <input class="feedback-input" id="feedbackInput-placement" type="text" placeholder="Leave a comment..." />
+              <button class="feedback-btn" onclick="addFeedback('placement')">Add</button>
+            </div>
+            <div class="feedback-list" id="feedbackList-placement"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel no-snap" id="design-layout" data-group="design" style="align-items:flex-start;justify-content:flex-start;">
+        <div class="panel-inner" style="max-width:none;margin:0;display:flex;flex-direction:column;padding-top:60px;">
+          <div class="page-header">
+            <p class="page-title">Tool Layout</p>
+            <p class="page-desc">Content coming soon</p>
+          </div>
+          <div class="tab-card">
+            <div class="tab-bar">
+              <button class="tab-btn active" onclick="switchTab('layout', 'tab1')">Tab 1</button>
+              <button class="tab-btn" onclick="switchTab('layout', 'tab2')">Tab 2</button>
+            </div>
+            <div class="tab-content active" id="tab-layout-tab1">
+              <p class="tab-placeholder">Tab 1 — image placeholder</p>
+            </div>
+            <div class="tab-content" id="tab-layout-tab2">
+              <p class="tab-placeholder">Tab 2 — image placeholder</p>
+            </div>
+          </div>
+          <div class="feedback">
+            <p class="feedback-title">Feedback</p>
+            <div class="feedback-composer">
+              <input class="feedback-input" id="feedbackInput-layout" type="text" placeholder="Leave a comment..." />
+              <button class="feedback-btn" onclick="addFeedback('layout')">Add</button>
+            </div>
+            <div class="feedback-list" id="feedbackList-layout"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel no-snap" id="design-flow" data-group="design" style="align-items:flex-start;justify-content:flex-start;">
+        <div class="panel-inner" style="max-width:none;margin:0;display:flex;flex-direction:column;padding-top:60px;">
+          <div class="page-header">
+            <p class="page-title">Setup Flow</p>
+            <p class="page-desc">Content coming soon</p>
+          </div>
+          <div class="tab-card">
+            <div class="tab-bar">
+              <button class="tab-btn active" onclick="switchTab('flow', 'tab1')">Tab 1</button>
+              <button class="tab-btn" onclick="switchTab('flow', 'tab2')">Tab 2</button>
+            </div>
+            <div class="tab-content active" id="tab-flow-tab1">
+              <p class="tab-placeholder">Tab 1 — image placeholder</p>
+            </div>
+            <div class="tab-content" id="tab-flow-tab2">
+              <p class="tab-placeholder">Tab 2 — image placeholder</p>
+            </div>
+          </div>
+          <div class="feedback">
+            <p class="feedback-title">Feedback</p>
+            <div class="feedback-composer">
+              <input class="feedback-input" id="feedbackInput-flow" type="text" placeholder="Leave a comment..." />
+              <button class="feedback-btn" onclick="addFeedback('flow')">Add</button>
+            </div>
+            <div class="feedback-list" id="feedbackList-flow"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel no-snap" id="design-iteration" data-group="design" style="align-items:flex-start;justify-content:flex-start;">
+        <div class="panel-inner" style="max-width:none;margin:0;display:flex;flex-direction:column;padding-top:60px;">
+          <div class="page-header">
+            <p class="page-title">Iteration</p>
+            <p class="page-desc">Content coming soon</p>
+          </div>
+          <div class="tab-card">
+            <div class="tab-bar">
+              <button class="tab-btn active" onclick="switchTab('iteration', 'tab1')">Tab 1</button>
+              <button class="tab-btn" onclick="switchTab('iteration', 'tab2')">Tab 2</button>
+            </div>
+            <div class="tab-content active" id="tab-iteration-tab1">
+              <p class="tab-placeholder">Tab 1 — image placeholder</p>
+            </div>
+            <div class="tab-content" id="tab-iteration-tab2">
+              <p class="tab-placeholder">Tab 2 — image placeholder</p>
+            </div>
+          </div>
+          <div class="feedback">
+            <p class="feedback-title">Feedback</p>
+            <div class="feedback-composer">
+              <input class="feedback-input" id="feedbackInput-iteration" type="text" placeholder="Leave a comment..." />
+              <button class="feedback-btn" onclick="addFeedback('iteration')">Add</button>
+            </div>
+            <div class="feedback-list" id="feedbackList-iteration"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ LAUNCH ═══ -->
+      <section class="panel no-snap" id="launch-divider" data-group="launch">
+        <div class="panel-inner divider-page">
+          <p class="divider-title">Launch</p>
+          <p class="divider-desc">Shipping to the world</p>
+        </div>
+      </section>
+
+      <section class="panel no-snap" id="launch-experiment" data-group="launch">
+        <div class="panel-inner">
+          <div class="single-col">
+            <div>
+              <h2 class="content-h2" style="margin-top:0">Experiment Setup</h2>
+              <p class="content-p">Content coming soon</p>
+            </div>
+            <div class="slide-img"><img src="images/placeholder.png" alt="Experiment Setup" /></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel no-snap" id="launch-upsells" data-group="launch">
+        <div class="panel-inner">
+          <div class="single-col">
+            <div>
+              <h2 class="content-h2" style="margin-top:0">Upsells</h2>
+              <p class="content-p">Content coming soon</p>
+            </div>
+            <div class="slide-img"><img src="images/placeholder.png" alt="Upsells" /></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel no-snap" id="launch-metrics" data-group="launch">
+        <div class="panel-inner">
+          <div class="single-col">
+            <div>
+              <h2 class="content-h2" style="margin-top:0">Metrics</h2>
+              <p class="content-p">Content coming soon</p>
+            </div>
+            <div class="slide-img"><img src="images/placeholder.png" alt="Metrics" /></div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script>
+    const main = document.getElementById('main');
+    const panels = document.querySelectorAll('.panel');
+    const parentNavItems = document.querySelectorAll('.side-section > .nav-item');
+    const allNavItems = document.querySelectorAll('.nav-item');
+    const navSubs = document.querySelectorAll('.nav-sub');
+
+    // ── Overview layer swap ──
+    const overviewLayers = ['overview', 'about', 'role', 'impact'];
+    const layerEls = {
+      overview: document.getElementById('layer-overview'),
+      about: document.getElementById('layer-about'),
+      role: document.getElementById('layer-role'),
+      impact: document.getElementById('layer-impact'),
+    };
+    let overviewLayerIdx = 0;
+    let overviewLayer = 'overview';
+
+    function setOverviewLayer(which) {
+      overviewLayer = which;
+      overviewLayerIdx = overviewLayers.indexOf(which);
+      Object.entries(layerEls).forEach(([key, el]) => {
+        el.classList.toggle('active', key === which);
+      });
+      navSubs.forEach(sub => {
+        if (sub.dataset.parent === 'overview') {
+          sub.querySelectorAll('.nav-item').forEach(si => {
+            si.classList.toggle('active', si.dataset.target === 'overview-' + which);
+          });
+        }
+      });
+      updatePageCounter();
+      history.replaceState(null, '', '#overview-' + which);
+    }
+
+    // ── Click nav item → scroll to panel or swap overview layer ──
+    allNavItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const target = item.dataset.target;
+        if (target && target.startsWith('overview-') && target !== 'overview-project') {
+          const el = document.getElementById('overview-project');
+          if (el) main.scrollTo({ top: el.offsetTop });
+          setOverviewLayer(target.replace('overview-', ''));
+          return;
+        }
+        const el = document.getElementById(target);
+        if (el) {
+          const beh = el.classList.contains('no-snap') ? 'instant' : 'smooth';
+          main.scrollTo({ top: el.offsetTop, behavior: beh });
+        }
+      });
+    });
+
+    // ── Scroll within overview panel → swap layers ──
+    const overviewPanel = document.getElementById('overview-project');
+
+    overviewPanel.addEventListener('wheel', (e) => {
+      const rect = overviewPanel.getBoundingClientRect();
+      const mainRect = main.getBoundingClientRect();
+      const isVisible = rect.top >= mainRect.top - 10 && rect.top <= mainRect.top + 10;
+      if (!isVisible) return;
+
+      if (e.deltaY > 0) {
+        e.preventDefault();
+        if (overviewLayerIdx < overviewLayers.length - 1) {
+          setOverviewLayer(overviewLayers[overviewLayerIdx + 1]);
+        } else {
+          let target = overviewPanel.nextElementSibling;
+          while (target && target.style.display === 'none') target = target.nextElementSibling;
+          if (target) main.scrollTo({ top: target.offsetTop, behavior: 'smooth' });
+        }
+      } else if (e.deltaY < 0 && overviewLayerIdx > 0) {
+        e.preventDefault();
+        setOverviewLayer(overviewLayers[overviewLayerIdx - 1]);
+      }
+    }, { passive: false });
+
+    // ── Keyboard arrow keys ──
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'r' || e.key === 'R') {
+        main.scrollTo({ top: overviewPanel.offsetTop, behavior: 'smooth' });
+        setOverviewLayer('overview');
+        return;
+      }
+      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+
+      const rect = overviewPanel.getBoundingClientRect();
+      const mainRect = main.getBoundingClientRect();
+      const isOverview = rect.top >= mainRect.top - 10 && rect.top <= mainRect.top + 10;
+
+      if (isOverview) {
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          if (overviewLayerIdx < overviewLayers.length - 1) {
+            setOverviewLayer(overviewLayers[overviewLayerIdx + 1]);
+          } else {
+            let target = overviewPanel.nextElementSibling;
+            while (target && target.style.display === 'none') target = target.nextElementSibling;
+            if (target) main.scrollTo({ top: target.offsetTop, behavior: 'smooth' });
+          }
+        } else if (e.key === 'ArrowUp' && overviewLayerIdx > 0) {
+          e.preventDefault();
+          setOverviewLayer(overviewLayers[overviewLayerIdx - 1]);
+        }
+      } else {
+        e.preventDefault();
+        const idx = currentVisiblePanelIdx;
+        if (e.key === 'ArrowDown' && idx < visiblePanels.length - 1) {
+          const target = visiblePanels[idx + 1];
+          const beh = target.classList.contains('no-snap') ? 'instant' : 'smooth';
+          main.scrollTo({ top: target.offsetTop, behavior: beh });
+        } else if (e.key === 'ArrowUp') {
+          if (idx > 0) {
+            const target = visiblePanels[idx - 1];
+            const beh = target.classList.contains('no-snap') ? 'instant' : 'smooth';
+            main.scrollTo({ top: target.offsetTop, behavior: beh });
+          }
+        }
+      }
+    });
+
+    // ── Page counter ──
+    const pageCounter = document.getElementById('pageCounter');
+    const visiblePanels = Array.from(panels).filter(p => p.style.display !== 'none');
+    const totalPages = overviewLayers.length + visiblePanels.length;
+
+    let currentVisiblePanelIdx = 0;
+    let activeGroup = 'overview';
+
+    function updatePageCounter() {
+      let page;
+      const idx = currentVisiblePanelIdx;
+      if (idx === 0) {
+        page = overviewLayerIdx + 1;
+      } else {
+        page = overviewLayers.length + idx;
+      }
+      pageCounter.textContent = page + '/' + totalPages;
+    }
+
+    // ── Scroll spy ──
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const panel = entry.target;
+          const id = panel.id;
+          const group = panel.dataset.group;
+
+          activeGroup = group;
+          currentVisiblePanelIdx = visiblePanels.indexOf(panel);
+          updatePageCounter();
+
+          // Update URL hash
+          const hashId = group === 'overview' ? 'overview-' + overviewLayer : id;
+          if (location.hash !== '#' + hashId) {
+            history.replaceState(null, '', '#' + hashId);
+          }
+
+          // Highlight parent nav items
+          parentNavItems.forEach(n => {
+            const nTarget = n.dataset.target;
+            const nPanel = document.getElementById(nTarget);
+            const nGroup = nPanel ? nPanel.dataset.group : null;
+            n.classList.toggle('active', nGroup === group);
+          });
+
+          // Show/hide sub-navs
+          navSubs.forEach(sub => {
+            const isActive = sub.dataset.parent === group;
+            if (isActive) {
+              sub.classList.add('open');
+              sub.style.maxHeight = sub.scrollHeight + 'px';
+            } else {
+              sub.classList.remove('open');
+              sub.style.maxHeight = '0';
+            }
+          });
+
+          // Highlight active sub-item
+          navSubs.forEach(sub => {
+            if (sub.dataset.parent === 'overview') {
+              if (group === 'overview') {
+                sub.querySelectorAll('.nav-item').forEach(si => {
+                  si.classList.toggle('active', si.dataset.target === 'overview-' + overviewLayer);
+                });
+              }
+            } else {
+              const navId = panel.dataset.nav || id;
+              sub.querySelectorAll('.nav-item').forEach(si => {
+                si.classList.toggle('active', si.dataset.target === navId);
+              });
+            }
+          });
+        }
+      });
+    }, {
+      root: main,
+      threshold: 0.5
+    });
+
+    panels.forEach(p => observer.observe(p));
+
+    // ── Close dropdown on outside click ──
+    document.addEventListener('click', e => {
+      const dd = document.getElementById('pageDropdown');
+      if (dd && !dd.contains(e.target)) dd.classList.remove('open');
+    });
+
+    // ── Tab switching ──
+    function switchTab(slide, tab) {
+      const section = document.getElementById('context-' + slide) || document.getElementById(slide);
+      if (!section) return;
+      section.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.toLowerCase().replace(/[\s-]/g, '').includes(tab));
+      });
+      section.querySelectorAll('.tab-content').forEach(tc => {
+        tc.classList.toggle('active', tc.id === 'tab-' + slide + '-' + tab);
+      });
+    }
+
+    // ── Feedback ──
+    function addFeedback(slideId) {
+      const input = document.getElementById('feedbackInput-' + slideId);
+      const list = document.getElementById('feedbackList-' + slideId);
+      const text = input.value.trim();
+      if (!text) return;
+
+      const item = document.createElement('div');
+      item.className = 'feedback-item';
+      item.innerHTML = `
+        <div class="feedback-avatar">G</div>
+        <div class="feedback-content">
+          <p class="feedback-author">Guest</p>
+          <p>${text}</p>
+        </div>
+      `;
+      list.prepend(item);
+      input.value = '';
+    }
+
+    // ── Restore position from URL hash on load ──
+    if (location.hash) {
+      const hash = location.hash.slice(1);
+      if (hash.startsWith('overview-')) {
+        const layer = hash.replace('overview-', '');
+        if (overviewLayers.includes(layer)) {
+          const el = document.getElementById('overview-project');
+          if (el) main.scrollTo({ top: el.offsetTop });
+          setOverviewLayer(layer);
+        }
+      } else {
+        const el = document.getElementById(hash);
+        if (el) main.scrollTo({ top: el.offsetTop });
+      }
+    }
+
+    // ── Divider page description fade-in ──
+    const dividerObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        } else {
+          entry.target.classList.remove('visible');
+        }
+      });
+    }, { root: main, threshold: 0.5 });
+    document.querySelectorAll('.divider-page').forEach(d => dividerObserver.observe(d));
+  </script>
+
+</body>
+</html>

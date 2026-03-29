@@ -1,0 +1,2622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Onboarding Guide for WhatsApp Partner Platforms — Mu Jiun Shie</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@100..900&family=IBM+Plex+Mono:wght@400;500;600;700&display=block" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    /* ── MAIN CONTENT ── */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      scroll-snap-type: y mandatory;
+    }
+
+    .project-title {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      padding: 32px 64px 0;
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--ink2);
+      pointer-events: none;
+      height: 0;
+      overflow: visible;
+    }
+
+    .page-counter {
+      font-weight: 400;
+      letter-spacing: 0;
+      color: var(--ink2);
+    }
+
+    /* ── FIXED LAYER: reusable pattern for split panels where image stays fixed and text transitions ── */
+    .fixed-layer {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+    .fixed-layer.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    /* ── PANEL: exactly one screen ── */
+    .panel {
+      height: 100vh;
+      scroll-snap-align: start;
+      padding: 32px 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .panel-inner {
+      width: 100%;
+      max-width: 1080px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin: 0 auto;
+    }
+
+    /* ── OVERVIEW: 2-col layout ── */
+    .overview-header {
+      margin-bottom: 20px;
+    }
+
+    .overview-company {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .overview-title {
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .overview-subtitle {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--ink3);
+      line-height: 1.4;
+    }
+
+    .overview-body {
+      display: grid;
+      grid-template-columns: 2fr 3fr;
+      gap: 40px;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .overview-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .overview-right {
+      display: flex;
+      align-items: center;
+    }
+
+    .overview-right .slide-img {
+      margin: 0;
+      height: 75%;
+    }
+
+    .overview-right .slide-img img {
+      object-fit: cover;
+    }
+
+    .overview-layer {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+
+    .overview-layer.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    /* Staggered children animation */
+    .overview-layer.active > *:nth-child(1) { transition-delay: 0s; }
+    .overview-layer.active > *:nth-child(2) { transition-delay: 0.05s; }
+
+    .overview-layer .meta-block {
+      padding: 16px 0;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .overview-layer.active .meta-block {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .overview-layer.active .meta-block:nth-child(1) { transition-delay: 0.1s; }
+    .overview-layer.active .meta-block:nth-child(2) { transition-delay: 0.2s; }
+    .overview-layer.active .meta-block:nth-child(3) { transition-delay: 0.3s; }
+
+
+    /* ── Highlight animation: starts as normal text, then bold + bg + thin underline ── */
+    .highlight {
+      font-weight: 400;
+      color: var(--ink);
+      text-decoration: underline;
+      text-decoration-color: transparent;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+      transition: font-weight 0.3s ease, color 0.3s ease, text-decoration-color 0.5s ease;
+    }
+
+    .overview-layer.active .highlight {
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration-color: var(--accent);
+      transition-delay: 0.6s;
+    }
+
+    /* ── Checkmark list ── */
+    .check-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 6px 0 12px;
+    }
+
+    .check-list li {
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.4;
+      padding-left: 28px;
+      position: relative;
+    }
+
+    .check-icon {
+      position: absolute;
+      left: 0;
+      top: 6px;
+      width: 16px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check-icon::after {
+      content: '';
+      width: 10px;
+      height: 5px;
+      border-left: 2px solid transparent;
+      border-bottom: 2px solid transparent;
+      transform: rotate(-45deg);
+      transition: border-color 0.3s ease;
+    }
+
+    .overview-layer.active .check-icon::after {
+      border-left-color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .overview-layer.active li:nth-child(1) .check-icon { transition-delay: 0.2s; }
+    .overview-layer.active li:nth-child(1) .check-icon::after { transition-delay: 0.2s; }
+    .overview-layer.active li:nth-child(2) .check-icon { transition-delay: 0.35s; }
+    .overview-layer.active li:nth-child(2) .check-icon::after { transition-delay: 0.35s; }
+    .overview-layer.active li:nth-child(3) .check-icon { transition-delay: 0.5s; }
+    .overview-layer.active li:nth-child(3) .check-icon::after { transition-delay: 0.5s; }
+
+    /* ── Role timeline ── */
+    .role-timeline {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 8px 0;
+    }
+
+    .role-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 5px 0;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1) 0s, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) 0s;
+    }
+
+    .overview-layer.active .role-item {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .role-icon {
+      font-size: 16px;
+      flex-shrink: 0;
+      width: 20px;
+      text-align: center;
+    }
+
+    .role-text {
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.35;
+    }
+
+    .role-group {
+      display: flex;
+      gap: 0;
+      padding-left: 9px;
+      list-style: none;
+    }
+
+    .role-line {
+      width: 2px;
+      background: var(--border);
+      flex-shrink: 0;
+      border-radius: 1px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .overview-layer.active .role-line {
+      opacity: 1;
+    }
+
+    .role-sub {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      padding-left: 10px;
+    }
+
+    .css-check {
+      position: relative;
+    }
+
+    .css-check::after {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 2px;
+      width: 8px;
+      height: 4px;
+      border-left: 1.5px solid var(--ink3);
+      border-bottom: 1.5px solid var(--ink3);
+      transform: rotate(-45deg);
+      transition: border-color 0.3s ease;
+    }
+
+    .overview-layer.active .css-check::after {
+      border-left-color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .overview-layer.active .role-indent .role-item:nth-child(1) .css-check::after { transition-delay: 0.2s; }
+    .overview-layer.active .role-indent .role-item:nth-child(2) .css-check::after { transition-delay: 0.3s; }
+    .overview-layer.active .role-indent .role-item:nth-child(3) .css-check::after { transition-delay: 0.4s; }
+
+    .role-sub .role-icon {
+      color: var(--ink2);
+      font-size: 14px;
+    }
+
+    .role-sub .role-text {
+      font-size: 16px;
+    }
+
+    /* Staggered entrance */
+    .overview-layer.active .role-timeline > .role-item:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.1s; }
+    .role-divider {
+      width: 1.5px;
+      height: 0;
+      background: var(--ink3);
+      opacity: 0;
+      margin: 0 0 0 9px;
+      list-style: none;
+      transition: opacity 0.4s ease, height 0.4s ease, margin 0.4s ease;
+    }
+
+    .overview-layer.active .role-divider {
+      opacity: 0.3;
+      height: 16px;
+      margin: 2px 0 2px 9px;
+    }
+
+    .role-indent {
+      display: block;
+      padding-left: 0;
+      list-style: none;
+      opacity: 0;
+      max-height: 0;
+      overflow: visible;
+      transform: translateY(8px);
+      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), max-height 0.5s ease;
+    }
+
+    .overview-layer.active .role-indent {
+      opacity: 1;
+      max-height: 200px;
+      transform: translateY(0);
+    }
+
+    .role-indent-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 10px 14px;
+      margin-left: -14px;
+    }
+
+    .role-indent-header {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink3);
+      margin-bottom: 4px;
+    }
+
+    .role-indent-list .role-item {
+      padding: 0;
+    }
+
+    .role-indent-list .role-text {
+      font-size: 16px;
+    }
+
+    .role-indent-list .role-icon {
+      font-size: 14px;
+    }
+
+    /* Staggered entrance: 6 main items show immediately */
+    .overview-layer.active .role-timeline > .role-item:nth-child(1) { transition-delay: 0.1s; }
+    .overview-layer.active .role-timeline > .role-item:nth-child(2) { transition-delay: 0.15s; }
+    .overview-layer.active .role-timeline > .role-item:nth-child(3) { transition-delay: 0.2s; }
+    .overview-layer.active .role-timeline > .role-item:nth-child(7) { transition-delay: 0.25s; }
+    .overview-layer.active .role-timeline > .role-item:nth-child(8) { transition-delay: 0.3s; }
+    .overview-layer.active .role-timeline > .role-item:nth-child(9) { transition-delay: 0.35s; }
+    /* 2s delay then dividers + box appear */
+    .overview-layer.active .role-timeline > .role-divider:nth-child(4) { transition-delay: 2.0s; }
+    .overview-layer.active .role-timeline > .role-divider:nth-child(6) { transition-delay: 2.0s; }
+    .overview-layer.active .role-timeline > .role-indent { transition-delay: 2.2s; }
+    /* Indent items stagger after box appears */
+    .overview-layer.active .role-indent .role-item:nth-child(1) { transition-delay: 2.4s; }
+    .overview-layer.active .role-indent .role-item:nth-child(2) { transition-delay: 2.6s; }
+    .overview-layer.active .role-indent .role-item:nth-child(3) { transition-delay: 2.8s; }
+
+    /* ── Stat numbers ── */
+    .stat-number {
+      font-size: 48px;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.1;
+      margin-bottom: 4px;
+      letter-spacing: -0.02em;
+      opacity: 0;
+      transform: translateY(8px) scale(0.95);
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .overview-layer.active .stat-number {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .overview-layer.active .stat-card:nth-child(1) .stat-number { transition-delay: 0.15s; }
+    .overview-layer.active .stat-card:nth-child(2) .stat-number { transition-delay: 0.3s; }
+    .overview-layer.active .stat-card:nth-child(3) .stat-number { transition-delay: 0.45s; }
+
+    .stat-desc {
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.4;
+    }
+
+    /* Impact grid */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .stat-card {
+      padding: 0;
+      background: transparent;
+      border-radius: var(--radius);
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .overview-layer.active .stat-card {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .overview-layer.active .stat-card:nth-child(1) { transition-delay: 0.15s; }
+    .overview-layer.active .stat-card:nth-child(2) { transition-delay: 0.25s; }
+    .overview-layer.active .stat-card:nth-child(3) { transition-delay: 0.35s; }
+
+    .stat-card .stat-number {
+      font-size: 56px;
+      margin-bottom: 6px;
+    }
+
+    .stat-card .stat-desc {
+      font-size: 16px;
+    }
+
+    /* ── CONTENT ELEMENTS ── */
+    .slide-img {
+      width: 100%;
+      background: var(--surface);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin: 16px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .slide-img img {
+      width: 100%;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .slide-video {
+      height: 100%;
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-top: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slide-video video {
+      height: 100%;
+      display: block;
+      border-radius: var(--radius);
+    }
+
+    .click-swap {
+      cursor: pointer;
+      position: relative;
+    }
+
+    .click-swap .swap-a,
+    .click-swap .swap-b {
+      transition: opacity 0.5s ease;
+    }
+
+    .click-swap .swap-b {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+    }
+
+    .click-swap.swapped .swap-a { opacity: 0; }
+    .click-swap.swapped .swap-b { opacity: 1; }
+
+    /* ── Image Carousel ── */
+    .slide-carousel {
+      width: 100%;
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--surface);
+      margin: 16px 0;
+    }
+
+    .slide-carousel .carousel-track {
+      position: relative;
+      width: 100%;
+    }
+
+    .slide-carousel .carousel-track img {
+      width: 100%;
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    .slide-carousel .carousel-track img.active {
+      opacity: 1;
+      position: relative;
+    }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 0;
+    }
+
+    .carousel-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .carousel-dot.active {
+      background: var(--ink3);
+    }
+
+    /* ── Divider slide ── */
+    .divider-page {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    .divider-title {
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .divider-desc {
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--ink2);
+      line-height: 1.4;
+      letter-spacing: -0.01em;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+    }
+
+    .divider-page.visible .divider-desc {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-title {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .content-h2 {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 24px 0 12px;
+    }
+
+    .content-h2:first-child { margin-top: 0; }
+
+    .content-p {
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.35;
+      max-width: 720px;
+    }
+
+    .content-desc {
+      font-size: 17px;
+      font-weight: 400;
+      color: var(--ink3);
+      line-height: 1.4;
+      padding-top: 16px;
+      letter-spacing: 0.01em;
+    }
+
+    .single-col .content-desc,
+    .context-layer .content-desc {
+      padding-top: 4px;
+    }
+
+    .content-p em {
+      font-style: italic;
+      color: var(--ink3);
+      font-size: 13px;
+    }
+
+    .content-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 6px 0 12px;
+    }
+
+    .content-list li {
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.4;
+      padding-left: 24px;
+      position: relative;
+    }
+
+    .content-list li::before {
+      content: '\2192';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    .meta-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin: 16px 0;
+    }
+
+    .meta-block-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    /* ── TABLE ── */
+    .compare-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin: 12px 0;
+      font-size: 15px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .compare-table th,
+    .compare-table td {
+      text-align: left;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    .compare-table tr:last-child td { border-bottom: none; }
+
+    .compare-table th {
+      font-weight: 600;
+      color: var(--ink);
+      background: var(--surface);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .compare-table td { color: var(--ink); line-height: 1.5; }
+
+    .compare-table tbody tr:hover { background: rgba(0,0,0,0.015); }
+
+    .compare-table .check { color: var(--accent); font-weight: 600; }
+
+    /* ── INSIGHT LIST ── */
+    .insight-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin: 8px 0;
+      max-width: 720px;
+    }
+
+    .insight-list li {
+      font-size: 15px;
+      color: var(--ink);
+      line-height: 1.6;
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .insight-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .insight-list li strong { font-weight: 600; }
+
+    /* ── 2-COL PANEL LAYOUT ── */
+    .split {
+      display: grid;
+      grid-template-columns: 2fr 3fr;
+      gap: 40px;
+      height: 100%;
+      align-items: center;
+    }
+
+    .split-text { display: flex; flex-direction: column; justify-content: center; }
+
+    /* ── 1-col layout ── */
+    .single-col {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      justify-content: center;
+      gap: 36px;
+    }
+
+    /* ── Funnel Diagram ── */
+    .funnel-diagram {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .funnel-step {
+      background: var(--ink2);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 500;
+      text-align: center;
+      padding: 14px 48px;
+      border-radius: 10px;
+      width: 320px;
+    }
+
+    .funnel-step.clickable {
+      cursor: pointer;
+      transition: background 0.5s ease, opacity 0.2s ease;
+    }
+
+    .funnel-step.clickable:hover {
+      opacity: 0.85;
+    }
+
+    .funnel-step.accent {
+      background: var(--accent);
+    }
+
+    .funnel-arrow {
+      color: var(--ink2);
+      font-size: 20px;
+      padding: 8px 0;
+      line-height: 1;
+      transition: color 0.5s ease;
+    }
+
+    .funnel-arrow.accent {
+      color: var(--accent);
+    }
+
+    .funnel-group {
+      background: rgba(0,0,0,0.04);
+      border-radius: 16px;
+      padding: 16px;
+      width: 320px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 0;
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      padding-top: 0;
+      padding-bottom: 0;
+      transition: opacity 0.5s ease, max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1), padding 0.5s ease, margin 0.5s ease;
+    }
+
+    .funnel-card {
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 14px 20px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink);
+      text-align: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Funnel group reveal on click */
+    .funnel-diagram.open .funnel-group {
+      opacity: 1;
+      max-height: 300px;
+      padding: 16px;
+      margin-top: 8px;
+    }
+
+    .funnel-diagram.open .funnel-group .funnel-card:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.2s; }
+    .funnel-diagram.open .funnel-group .funnel-card:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.35s; }
+    .funnel-diagram.open .funnel-group .funnel-card:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.5s; }
+    .funnel-diagram.open .funnel-group .funnel-card:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.65s; }
+
+
+    /* Goals diagram: independent group toggles */
+    #goalsGroupOnboard.open,
+    #goalsGroupActivate.open,
+    #pathGroupOnboard.open,
+    #pathGroupActivate.open {
+      opacity: 1;
+      max-height: 300px;
+      padding: 16px;
+      margin-top: 8px;
+    }
+
+    #goalsGroupOnboard.open .funnel-card:nth-child(1),
+    #goalsGroupActivate.open .funnel-card:nth-child(1),
+    #pathGroupOnboard.open .funnel-card:nth-child(1),
+    #pathGroupActivate.open .funnel-card:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.2s; }
+    #goalsGroupOnboard.open .funnel-card:nth-child(2),
+    #goalsGroupActivate.open .funnel-card:nth-child(2),
+    #pathGroupOnboard.open .funnel-card:nth-child(2),
+    #pathGroupActivate.open .funnel-card:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.35s; }
+    #goalsGroupOnboard.open .funnel-card:nth-child(3),
+    #goalsGroupActivate.open .funnel-card:nth-child(3),
+    #pathGroupOnboard.open .funnel-card:nth-child(3),
+    #pathGroupActivate.open .funnel-card:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.5s; }
+    #goalsGroupOnboard.open .funnel-card:nth-child(4),
+    #goalsGroupActivate.open .funnel-card:nth-child(4),
+    #pathGroupOnboard.open .funnel-card:nth-child(4),
+    #pathGroupActivate.open .funnel-card:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.65s; }
+
+    /* ── Findings Diagram (slide 14) ── */
+    .findings-diagram {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 320px;
+      transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .findings-diagram .funnel-step {
+      width: 320px;
+      transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .findings-diagram .funnel-group {
+      width: 320px;
+      cursor: pointer;
+      padding: 0;
+      margin: 0;
+      gap: 0;
+      background: transparent;
+      border-radius: 0;
+      transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease, max-height 0.6s ease, padding 0.5s ease, margin 0.5s ease, gap 0.5s ease, background 0.3s ease;
+    }
+
+    .findings-diagram .funnel-group:hover { opacity: 0.95; }
+
+    /* f-item: grid row with label + tasks */
+    .findings-diagram .f-item {
+      display: grid;
+      grid-template-columns: 288px;
+      gap: 0;
+      align-items: stretch;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .findings-diagram .f-arrow {
+      color: var(--ink2);
+      font-size: 18px;
+      text-align: center;
+      padding: 4px 0;
+      line-height: 1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    /* Step 1: auto-animate group items in progressively */
+    /* Children order: f-item(1), f-arrow(2), f-item(3), f-arrow(4), f-item(5) */
+    .findings-diagram.step1 .funnel-group { opacity: 1; max-height: 600px; padding: 16px; margin-top: 8px; gap: 10px; background: rgba(0,0,0,0.04); border-radius: 16px; }
+    .findings-diagram.step1 .funnel-group > :nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.2s; }
+    .findings-diagram.step1 .funnel-group > :nth-child(2) { opacity: 1; transition-delay: 0.5s; }
+    .findings-diagram.step1 .funnel-group > :nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.7s; }
+    .findings-diagram.step1 .funnel-group > :nth-child(4) { opacity: 1; transition-delay: 1.0s; }
+    .findings-diagram.step1 .funnel-group > :nth-child(5) { opacity: 1; transform: translateY(0); transition-delay: 1.2s; }
+
+    /* Step 2: widen and show tasks next to group items */
+    .findings-diagram.step2 { width: auto; }
+    .findings-diagram.step2 .funnel-step { width: 100%; }
+    .findings-diagram.step2 .funnel-group { width: auto; }
+    .findings-diagram.step2 .f-item,
+    .findings-diagram.step2 .f-arrow { opacity: 1; transform: none; transition-delay: 0s; }
+
+    .findings-diagram.step2 .f-item {
+      grid-template-columns: 288px 1fr;
+      gap: 8px;
+    }
+
+    .f-item-label {
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 14px 20px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink);
+      text-align: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 288px;
+      min-height: 48px;
+      transition: min-height 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* item 1: 3 tasks, item 3: 2 tasks, item 5: 1 task */
+    .findings-diagram.step2 .funnel-group > :nth-child(1) .f-item-label { min-height: 120px; }
+    .findings-diagram.step2 .funnel-group > :nth-child(3) .f-item-label { min-height: 82px; }
+    .findings-diagram.step2 .funnel-group > :nth-child(5) .f-item-label { min-height: 48px; }
+
+    .f-item-tasks {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      justify-content: center;
+      max-height: 0;
+      max-width: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), max-width 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease 0.2s;
+    }
+
+    .findings-diagram.step2 .f-item-tasks {
+      max-height: 200px;
+      max-width: 200px;
+      opacity: 1;
+    }
+
+    .f-task {
+      background: var(--bg);
+      color: var(--ink2);
+      font-size: 13px;
+      font-weight: 500;
+      text-align: center;
+      padding: 10px 12px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      white-space: nowrap;
+    }
+
+    .findings-diagram.step2 .funnel-group > :nth-child(5) .f-task { flex: 1; display: flex; align-items: center; justify-content: center; }
+
+    .single-col .content-p {
+      max-width: none;
+    }
+
+    .single-col .slide-img {
+      margin: 0;
+    }
+
+    .single-col .slide-img img {
+      width: 100%;
+    }
+
+    /* ── Context layers (messaging/partners toggle) ── */
+    .context-layer-wrap {
+      display: grid;
+    }
+    .context-layer {
+      grid-area: 1 / 1;
+      align-self: end;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .context-layer.active {
+      opacity: 1;
+    }
+
+    /* ── Impact Grid (slide 27) ── */
+    .impact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      width: 100%;
+    }
+
+    .impact-stats {
+      background: var(--bg);
+      border-radius: 16px;
+      padding: 32px;
+      border: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-content: center;
+    }
+
+    .impact-number {
+      font-size: 66px;
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .impact-label {
+      font-size: 14px;
+      color: var(--ink2);
+      margin-top: 6px;
+    }
+
+    .impact-quotes {
+      background: var(--bg);
+      border-radius: 16px;
+      padding: 28px 32px;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 24px;
+    }
+
+    .impact-quote + .impact-quote {
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+    }
+
+    .quote-text {
+      font-size: 17px;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+
+    .quote-author {
+      font-size: 14px;
+      color: var(--ink2);
+      margin-top: 6px;
+    }
+
+    /* ── Wireframe Compare (hub vs linear) ── */
+    .wireframe-compare {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      width: 100%;
+      padding: 20px;
+    }
+
+    .wireframe-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .wireframe-label {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--ink);
+      margin-top: 12px;
+      letter-spacing: -0.01em;
+      text-align: center;
+    }
+
+    .wireframe-arrow {
+      font-size: 24px;
+      color: var(--ink);
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    /* Browser wireframe */
+    .wf-browser {
+      border: 1.5px solid rgba(0,0,0,0.15);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--bg);
+      width: 100%;
+    }
+
+    .wf-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 10px;
+      background: var(--surface);
+      border-bottom: 1.5px solid rgba(0,0,0,0.15);
+    }
+
+    .wf-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.3);
+    }
+
+    .wf-url {
+      height: 10px;
+      flex: 1;
+      background: var(--bg);
+      border-radius: 4px;
+      margin-left: 6px;
+    }
+
+    .wf-body {
+      display: flex;
+      height: 220px;
+    }
+
+    .wf-sidebar {
+      width: 48px;
+      padding: 10px 8px;
+      border-right: 1.5px solid rgba(0,0,0,0.15);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .wf-sb-line {
+      height: 4px;
+      background: rgba(0,0,0,0.22);
+      border-radius: 2px;
+    }
+
+    .wf-content {
+      flex: 1;
+      padding: 14px;
+    }
+
+    .wf-line {
+      height: 5px;
+      background: rgba(0,0,0,0.25);
+      border-radius: 2px;
+      margin-bottom: 4px;
+    }
+
+    .w30 { width: 30%; } .w40 { width: 40%; } .w45 { width: 45%; }
+    .w50 { width: 50%; } .w55 { width: 55%; } .w60 { width: 60%; }
+    .w65 { width: 65%; } .w70 { width: 70%; }
+
+    /* Hub cards */
+    .wf-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .wf-card {
+      border: 1.5px solid rgba(0,0,0,0.15);
+      border-radius: 6px;
+      padding: 10px 6px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .wf-card-icon {
+      width: 20px;
+      height: 20px;
+      background: rgba(0,0,0,0.15);
+      border-radius: 4px;
+    }
+
+    .wf-card .wf-line { width: 80%; margin: 0; }
+
+    /* Linear tasks */
+    .wf-progress {
+      height: 3px;
+      background: var(--surface);
+      border-radius: 2px;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .wf-progress-fill {
+      width: 16%;
+      height: 100%;
+      background: #1B9C42;
+      border-radius: 2px;
+    }
+
+    .wf-tasks {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .wf-task {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 0;
+      border-top: 1px solid var(--border2);
+    }
+
+    .wf-circle {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid rgba(0,0,0,0.25);
+      flex-shrink: 0;
+    }
+
+    .wf-circle.done {
+      background: #1B9C42;
+      border-color: #1B9C42;
+    }
+
+    .wf-task .wf-line { margin: 0; }
+
+    .split-img { display: flex; align-items: center; height: 75%; }
+
+    .split-img .slide-img {
+      margin: 0;
+      height: 100%;
+    }
+
+    .split-img .slide-img img {
+      object-fit: contain;
+    }
+
+    .split-img .slide-carousel {
+      margin: 0;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .split-img .slide-carousel .carousel-track {
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .split-img .slide-carousel .carousel-track img {
+      object-fit: contain;
+    }
+
+    .split-img .slide-carousel .carousel-track img.active {
+      position: relative;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="shell">
+
+    <!-- ── LEFT NAV ── -->
+    <nav class="side">
+      <div class="side-section" style="margin-bottom: 20px;">
+        <p class="side-label">Page</p>
+        <div class="dropdown" id="pageDropdown">
+          <div class="dropdown-toggle" onclick="this.parentElement.classList.toggle('open')">Project 1</div>
+          <div class="dropdown-menu">
+            <a class="dropdown-option" href="intro.html">Intro</a>
+            <a class="dropdown-option current" href="project1.html">Project 1</a>
+            <a class="dropdown-option" href="project2.html">Project 2</a>
+            <a class="dropdown-option" href="project3.html">Project 3</a>
+          </div>
+        </div>
+      </div>
+      <div class="side-section">
+        <p class="side-label">Agenda</p>
+
+        <a class="nav-item active" data-target="overview-project">Overview</a>
+        <div class="nav-sub" data-parent="overview">
+          <a class="nav-item" data-target="overview-solutions">About</a>
+          <a class="nav-item" data-target="overview-role">My Role</a>
+          <a class="nav-item" data-target="overview-impact">Impact</a>
+        </div>
+
+        <a class="nav-item" data-target="context-divider">Context</a>
+        <div class="nav-sub" data-parent="context">
+          <a class="nav-item" data-target="context-messaging">WhatsApp Messaging</a>
+        </div>
+
+        <a class="nav-item" data-target="discover-divider">Discover Problems</a>
+        <div class="nav-sub" data-parent="discover">
+          <a class="nav-item" data-target="discover-insights">Data Insights</a>
+          <a class="nav-item" data-target="discover-focus">Pain Points</a>
+          <a class="nav-item" data-target="discover-user">Product Gap</a>
+          <a class="nav-item" data-target="discover-monetization">Monetization Gap</a>
+          <a class="nav-item" data-target="clarify-goals">Goals</a>
+        </div>
+
+        <a class="nav-item" data-target="clarify-divider">Clarify Ambiguity</a>
+        <div class="nav-sub" data-parent="clarify">
+          <a class="nav-item" data-target="clarify-path">Ambiguity → Clarity</a>
+          <a class="nav-item" data-target="clarify-insights">Outcomes</a>
+        </div>
+
+        <a class="nav-item" data-target="shape-divider">Shape Concepts</a>
+        <div class="nav-sub" data-parent="shape">
+          <a class="nav-item" data-target="shape-patterns">Structure</a>
+          <a class="nav-item" data-target="shape-experiences">Experiences</a>
+          <a class="nav-item" data-target="shape-placement">Placement</a>
+          <a class="nav-item" data-target="shape-navigation">Navigation</a>
+        </div>
+
+        <a class="nav-item" data-target="mvp-divider">Explored MVP</a>
+        <div class="nav-sub" data-parent="mvp">
+          <a class="nav-item" data-target="mvp-principles">Tasks & Sequence</a>
+          <a class="nav-item" data-target="mvp-layout">Layout</a>
+          <a class="nav-item" data-target="mvp-grouping">Grouping</a>
+          <a class="nav-item" data-target="mvp-options">Options</a>
+        </div>
+
+        <a class="nav-item" data-target="launch-divider">Launch</a>
+        <div class="nav-sub" data-parent="launch">
+          <a class="nav-item" data-target="launch-mvp">MVP Experience</a>
+          <a class="nav-item" data-target="launch-future">Future</a>
+        </div>
+
+        <a class="nav-item" data-target="impact-divider">Impact</a>
+        <div class="nav-sub" data-parent="impact">
+          <a class="nav-item" data-target="impact-goals">Product</a>
+          <a class="nav-item" data-target="impact-alignment">Collaboration</a>
+        </div>
+
+        <a class="nav-item" data-target="scale-divider">Scale</a>
+        <div class="nav-sub" data-parent="scale">
+          <a class="nav-item" data-target="scale-ecosystem">Ecosystem</a>
+          <a class="nav-item" data-target="scale-structure">Implementation</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ── MAIN CONTENT ── -->
+    <div class="main" id="main">
+
+      <p class="project-title"><span class="page-counter" id="pageCounter">1/22</span> • Revamped Onboarding for WhatsApp Partner Platforms</p>
+
+      <!-- ═══ OVERVIEW ═══ -->
+      <section class="panel" id="overview-project" data-group="overview">
+        <div class="panel-inner">
+          <div class="overview-body">
+            <div class="overview-left" style="position:relative">
+              <!-- Layer 0: Overview -->
+              <div class="overview-layer active" id="layer-overview">
+                <div class="overview-header">
+                  <p class="overview-company">Meta Partner Platforms</p>
+                  <h1 class="overview-title">Revamped Onboarding for WhatsApp Partner Platforms</h1>
+                  <p class="overview-subtitle">New Opportunity, 0-1 Product, Revenue Growth</p>
+                </div>
+              </div>
+
+              <!-- Layer 1: About -->
+              <div class="overview-layer" id="layer-solutions">
+                <div class="meta-block">
+                  <p class="meta-block-label">Problems</p>
+                  <p class="content-p" style="font-size:20px">60% of businesses failed to complete onboarding — <b>usable guidance didn't exist</b></p>
+                </div>
+                <div class="meta-block">
+                  <p class="meta-block-label">Solutions</p>
+                  <p class="content-p" style="font-size:20px">A 6-step linear guide from account setup to first message — 9% lift in onboarding completion and revenue growth</p>
+                </div>
+              </div>
+
+              <!-- Layer 2: My Role -->
+              <div class="overview-layer" id="layer-role">
+                <div class="meta-block">
+                  <p class="meta-block-label">My Role</p>
+                  <ul class="role-timeline">
+                    <li class="role-item"><span class="role-icon">🔍</span><span class="role-text">Discover Problems</span></li>
+                    <li class="role-item"><span class="role-icon">🧠</span><span class="role-text">Clarify Ambiguity</span></li>
+                    <li class="role-item"><span class="role-icon">🎨</span><span class="role-text">Shape Concepts</span></li>
+                    <li class="role-divider"></li>
+                    <li class="role-indent">
+                      <ul class="role-indent-list">
+                        <p class="role-indent-header" style="color:var(--accent)">Drove critical alignment to ensure a successful launch</p>
+                        <li class="role-item"><span class="role-icon">🤝</span><span class="role-text">Aligned with XFN, partner teams</span></li>
+                        <li class="role-item"><span class="role-icon">🧪</span><span class="role-text">Validated with end users</span></li>
+                        <li class="role-item"><span class="role-icon">💰</span><span class="role-text">Convinced leads to secure resources</span></li>
+                      </ul>
+                    </li>
+                    <li class="role-divider"></li>
+                    <li class="role-item"><span class="role-icon">🚀</span><span class="role-text">Explored MVP</span></li>
+                    <li class="role-item"><span class="role-icon">✅</span><span class="role-text">Launched with strong results</span></li>
+                    <li class="role-item"><span class="role-icon">📈</span><span class="role-text">More investment in 2026+</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Layer 3: Impact -->
+              <div class="overview-layer" id="layer-impact">
+                <div class="meta-block">
+                  <p class="meta-block-label">Impact</p>
+                  <div class="stat-grid">
+                    <div class="stat-card" style="grid-column: 1 / -1">
+                      <p class="stat-number" data-count-to="9" data-prefix="+" data-suffix="%">+0%</p>
+                      <p class="stat-desc">📈 onboarding completion rate</p>
+                    </div>
+                    <div class="stat-card" style="grid-column: 1 / -1">
+                      <p class="stat-number" data-count-to="19.7" data-prefix="+" data-suffix="%" data-decimals="1">+0%</p>
+                      <p class="stat-desc">🏆 revenue growth</p>
+                    </div>
+                    <div class="stat-card" style="grid-column: 1 / -1; margin-top: 12px;">
+                      <p class="stat-number" data-count-to="107" data-prefix="$43M-$" data-suffix="M">$43M-$0M</p>
+                      <p class="stat-desc">💰 annual impact est.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="overview-right">
+              <div class="slide-img"><img src="img_project/10/1.jpg" alt="Overview" /></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Hidden anchors for scroll-spy -->
+      <section class="panel" id="overview-solutions" data-group="overview" style="display:none"></section>
+      <section class="panel" id="overview-role" data-group="overview" style="display:none"></section>
+      <section class="panel" id="overview-impact" data-group="overview" style="display:none"></section>
+
+      <!-- ═══ CONTEXT ═══ -->
+      <section class="panel" id="context-divider" data-group="context">
+        <div class="panel-inner divider-page">
+          <p class="divider-title">Context</p>
+          <p class="divider-desc">Why this matters</p>
+        </div>
+      </section>
+
+      <section class="panel" id="context-messaging" data-group="context">
+        <div class="panel-inner" style="display:flex;flex-direction:column;justify-content:center;height:100%;gap:36px;max-width:none;width:100%">
+          <div class="context-layer-wrap" style="max-width:none">
+            <div id="contextLayerMessaging" class="context-layer active">
+              <h2 class="content-h2" style="margin-top:0">WhatsApp Messaging</h2>
+              <p class="content-p" style="max-width:none"><b>4 ways</b> businesses can send WhatsApp messages</p>
+            </div>
+            <div id="contextLayerPartners" class="context-layer">
+              <h2 class="content-h2" style="margin-top:0">WhatsApp Messaging</h2>
+              <p class="content-p" style="max-width:none">500K businesses use <b>partner platforms</b> to manage customers and drive <b>major revenue</b></p>
+            </div>
+          </div>
+          <!-- Shared image grid -->
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <div id="p1CtxCard1" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:12px;transition:opacity 0.3s">
+              <div class="slide-img" style="margin:0;padding:20px"><img src="img_project/10/wa-business-app.svg" alt="WhatsApp Business App" style="max-height:240px;width:auto;margin:0 auto" /></div>
+              <p style="font-family:var(--font);font-size:16px;font-weight:600;color:var(--ink);text-align:center">WhatsApp Business App</p>
+              <p style="font-family:var(--font);font-size:14px;color:var(--ink2);text-align:center;margin-top:-6px">Mobile app for small businesses</p>
+            </div>
+            <div id="p1CtxCard2" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:12px;transition:opacity 0.3s">
+              <div class="slide-img" style="margin:0;padding:20px"><img src="img_project/10/meta-business-suite.svg" alt="Meta Business Suite" style="max-height:240px;width:auto;margin:0 auto" /></div>
+              <p style="font-family:var(--font);font-size:16px;font-weight:600;color:var(--ink);text-align:center">Meta Business Inbox</p>
+              <p style="font-family:var(--font);font-size:14px;color:var(--ink2);text-align:center;margin-top:-6px">Web-based inbox tools</p>
+            </div>
+            <div id="p1CtxCard3" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:12px">
+              <div class="slide-img" style="margin:0;padding:20px"><img src="img_project/10/partner-platforms.svg" alt="Partner Platforms" style="max-height:240px;width:auto;margin:0 auto" /></div>
+              <p style="font-family:var(--font);font-size:16px;font-weight:600;color:var(--ink);text-align:center">Partner Platforms</p>
+              <p style="font-family:var(--font);font-size:14px;color:var(--ink2);text-align:center;margin-top:-6px">Inbox, broadcast tool (i.e. Twilio, AiSensy)</p>
+            </div>
+            <div id="p1CtxCard4" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:12px;transition:opacity 0.3s">
+              <div class="slide-img" style="margin:0;padding:20px"><img src="img_project/10/api-integration.svg" alt="API Integration" style="max-height:240px;width:auto;margin:0 auto" /></div>
+              <p style="font-family:var(--font);font-size:16px;font-weight:600;color:var(--ink);text-align:center">Internal Tools with API</p>
+              <p style="font-family:var(--font);font-size:14px;color:var(--ink2);text-align:center;margin-top:-6px">Custom-built with WhatsApp Cloud API</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ DISCOVER PROBLEMS ═══ -->
+      <section class="panel" id="discover-divider" data-group="discover">
+        <div class="panel-inner divider-page">
+          <p class="divider-title">Discover Problems</p>
+          <p class="divider-desc">What we found</p>
+        </div>
+      </section>
+
+      <section class="panel" id="discover-insights" data-group="discover" data-fixed-layers>
+        <div class="panel-inner">
+          <div class="split">
+            <div class="split-text" style="position:relative;height:100%;">
+              <div class="fixed-layer active" data-layer="0">
+                <h2 class="content-h2" style="margin-top:0">Data Insights</h2>
+                <p class="content-p">After signing up, 60% of businesses <b>never send a single WhatsApp message</b> through partner tools</p>
+              </div>
+              <div class="fixed-layer" data-layer="1">
+                <h2 class="content-h2" style="margin-top:0">Data Insights</h2>
+                <p class="content-p">No message sent = onboarding incomplete = not yet a user</p>
+                <p class="content-desc">Think first Uber ride or first TikTok publish — the moment a new signup becomes a real user</p>
+              </div>
+            </div>
+            <div class="split-img">
+              <div class="slide-img"><img src="img_project/10/22.jpg" alt="Data Insights" /></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="discover-focus" data-group="discover">
+        <div class="panel-inner">
+          <div class="split">
+            <div class="split-text">
+              <h2 class="content-h2" style="margin-top:0">Pain Points</h2>
+              <p class="content-p">Identified <b>7 onboarding frictions</b> through user research — prioritized <b>3 to solve first</b></p>
+              <p class="content-desc">Informed decision with XFN and x-team — considered impact, eng cost, and dependency</p>
+            </div>
+            <div class="split-img">
+              <div class="slide-img" style="display:flex;align-items:center;padding:32px">
+                <ol style="list-style:none;display:flex;flex-direction:column;gap:10px;width:100%">
+                  <li style="font-size:14px;line-height:1.5;color:var(--ink);background:#fff;border-radius:8px;padding:8px 12px"><b>Budget:</b> Pricing concerns or internal approval needed</li>
+                  <li style="font-size:14px;line-height:1.5;color:var(--ink);background:var(--accent-light);border-radius:8px;padding:8px 12px;border:1px solid var(--accent)"><b>Tools:</b> Features don't meet business needs</li>
+                  <li style="font-size:14px;line-height:1.5;color:var(--ink);background:var(--accent-light);border-radius:8px;padding:8px 12px;border:1px solid var(--accent)"><b>Guidance:</b> No onboarding guide or partner support</li>
+                  <li style="font-size:14px;line-height:1.5;color:var(--ink);background:var(--accent-light);border-radius:8px;padding:8px 12px;border:1px solid var(--accent)"><b>Awareness:</b> Unclear on WhatsApp use cases</li>
+                  <li style="font-size:14px;line-height:1.5;color:var(--ink);background:#fff;border-radius:8px;padding:8px 12px"><b>Account:</b> Blocked accounts or failed verification</li>
+                  <li style="font-size:14px;line-height:1.5;color:var(--ink);background:#fff;border-radius:8px;padding:8px 12px"><b>Integration:</b> Third-party app setup issues</li>
+                  <li style="font-size:14px;line-height:1.5;color:var(--ink);background:#fff;border-radius:8px;padding:8px 12px"><b>Sign up:</b> Permission or phone registration errors</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="discover-user" data-group="discover">
+        <div class="panel-inner">
+          <div class="split">
+            <div class="split-text">
+              <h2 class="content-h2" style="margin-top:0">Product Gap</h2>
+              <p class="content-p">Users struggle with <b>non-linear onboarding resources</b>, which most WhatsApp partners offer</p>
+              <p class="content-desc">9 out of 10 partners offer onboarding resources this way</p>
+            </div>
+            <div class="split-img">
+              <div class="slide-carousel" data-autoplay="4000">
+                <div class="carousel-track">
+                  <img src="img_project/10/19.jpg" alt="User Problems 1" class="active" />
+                  <img src="img_project/10/20.jpg" alt="Discover Insights 2" />
+                </div>
+                <div class="carousel-dots">
+                  <button class="carousel-dot active"></button>
+                  <button class="carousel-dot"></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="discover-user-2" data-group="discover" data-nav="discover-user">
+        <div class="panel-inner">
+          <div class="split">
+            <div class="split-text">
+              <h2 class="content-h2" style="margin-top:0">Product Gap</h2>
+              <p class="content-p">Users want <b>linear guidance showing sequential steps</b> to guide their account and tool setup</p>
+              <p class="content-desc">Example of TikTok Shop onboarding guide on Shopify</p>
+            </div>
+            <div class="split-img">
+              <div class="slide-img"><img src="img_project/10/3.jpg" alt="User Problems" /></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="discover-monetization" data-group="discover">
+        <div class="panel-inner">
+          <div class="split">
+            <div class="split-text">
+              <h2 class="content-h2" style="margin-top:0">Monetization Gap</h2>
+              <p class="content-p">Onboarded businesses mostly use free messaging <b>not paid products</b>, leading to a monetization gap</p>
+            </div>
+            <div class="split-img">
+              <div class="slide-img" style="display:flex;align-items:center;justify-content:center;padding:32px">
+              <div class="funnel-diagram">
+                <div class="funnel-step">Sign up</div>
+                <div class="funnel-arrow">↓</div>
+                <div class="funnel-step">Onboarding</div>
+                <div class="funnel-arrow">↓</div>
+                <div class="funnel-step clickable" id="funnelTrigger">Activate / Retain</div>
+                <div class="funnel-group">
+                  <div class="funnel-card">Free messaging</div>
+                  <div class="funnel-card">💰 Paid messaging</div>
+                  <div class="funnel-card">💰 Ad products</div>
+                  <div class="funnel-card">Other features</div>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="clarify-goals" data-group="discover">
+        <div class="panel-inner">
+          <div class="split">
+            <div class="split-text">
+              <h2 class="content-h2" style="margin-top:0">Goals</h2>
+              <p class="content-p">Build a linear onboarding guide to connect <b>account/tool setup</b> and <b>paid product adoption</b></p>
+            </div>
+            <div class="split-img">
+              <div class="slide-img" style="display:flex;align-items:center;justify-content:center;padding:32px;overflow-y:auto">
+              <div class="funnel-diagram" id="funnelGoals">
+                <div class="funnel-step">Sign up</div>
+                <div class="funnel-arrow" id="goalsArrow1">↓</div>
+                <div class="funnel-step clickable" id="goalsTriggerOnboard">Onboarding</div>
+                <div class="funnel-group" id="goalsGroupOnboard">
+                  <div class="funnel-card">Account setup</div>
+                  <div class="funnel-card">Verify business</div>
+                  <div class="funnel-card">Integrity checks</div>
+                  <div class="funnel-card">Tool testing</div>
+                </div>
+                <div class="funnel-arrow" id="goalsArrow2">↓</div>
+                <div class="funnel-step clickable" id="goalsTriggerActivate">Activate / Retain</div>
+                <div class="funnel-group" id="goalsGroupActivate">
+                  <div class="funnel-card">Free messaging</div>
+                  <div class="funnel-card">💰 Paid messaging</div>
+                  <div class="funnel-card">💰 Ad products</div>
+                  <div class="funnel-card">Other features</div>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ CLARIFY AMBIGUITY ═══ -->
+      <section class="panel" id="clarify-divider" data-group="clarify">
+        <div class="panel-inner divider-page">
+          <p class="divider-title">Clarify Ambiguity</p>
+          <p class="divider-desc">Mapping the unknown</p>
+        </div>
+      </section>
+
+      <section class="panel" id="clarify-path" data-group="clarify">
+        <div class="panel-inner">
+          <div class="single-col" style="gap:36px;">
+            <div>
+              <h2 class="content-h2" style="margin-top:0">Ambiguity</h2>
+              <p class="content-p"><b>Lacked understanding of end-to-end journey</b> due to fragmented, task-focused ownership</p>
+              <p class="content-desc">Key unknowns: tasks, tools, sequence</p>
+            </div>
+            <div class="slide-img"><img src="img_project/10/34.jpg" alt="Partner Teams" /></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="clarify-clarity" data-group="clarify" data-nav="clarify-path">
+        <div class="panel-inner">
+          <div class="single-col" style="gap:36px;">
+            <div>
+              <h2 class="content-h2" style="margin-top:0">Clarity</h2>
+              <p class="content-p">Drove <b>clear and aligned understanding</b> of end-to-end journey with partner teams</p>
+              <p class="content-desc">Today, AI could compress this 2-month effort into a single week</p>
+            </div>
+            <div class="slide-img"><img src="img_project/10/5.jpg" alt="Workstream" /></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="clarify-insights" data-group="clarify">
+        <div class="panel-inner">
+          <div class="split">
+            <div class="split-text">
+              <h2 class="content-h2" style="margin-top:0">Outcomes</h2>
+              <p class="content-p">Defined onboarding path that <b>prioritizes user needs</b> over company priority for a smooth journey</p>
+              <p class="content-desc">(1) More account setting support (2) Test both free and paid messaging (3) Verify business in the end</p>
+            </div>
+            <div class="split-img">
+              <div class="slide-img" style="display:flex;align-items:center;justify-content:center;padding:24px">
+                <div class="findings-diagram" id="findingsDiagram">
+                  <div class="funnel-step">Onboarding</div>
+                  <div class="funnel-group clickable" id="findingsTrigger">
+                    <div class="f-item">
+                      <div class="f-item-label">Account creation + integrity checks</div>
+                      <div class="f-item-tasks">
+                        <div class="f-task">Task 1</div>
+                        <div class="f-task">Task 2 (Conditional)</div>
+                        <div class="f-task">Task 3 (Notification)</div>
+                      </div>
+                    </div>
+                    <div class="f-arrow">↓</div>
+                    <div class="f-item">
+                      <div class="f-item-label">Tool testing</div>
+                      <div class="f-item-tasks">
+                        <div class="f-task">Task 4 (Free messaging)</div>
+                        <div class="f-task">Task 5 (Paid messaging)</div>
+                      </div>
+                    </div>
+                    <div class="f-arrow">↓</div>
+                    <div class="f-item">
+                      <div class="f-item-label">Verify business</div>
+                      <div class="f-item-tasks">
+                        <div class="f-task">Task 6</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ SHAPE CONCEPTS ═══ -->
+      <section class="panel" id="shape-divider" data-group="shape">
+        <div class="panel-inner divider-page">
+          <p class="divider-title">Shape Concepts</p>
+          <p class="divider-desc">Exploring directions</p>
+        </div>
+      </section>
+
+      <section class="panel" id="shape-patterns" data-group="shape">
+        <div class="panel-inner">
+          <div class="single-col">
+            <div>
+              <p class="section-title">Structure</p>
+              <p class="content-p">Rapid concept ideation to align leadership and teams on a 0-to-1 new bet</p>
+            </div>
+            <div class="slide-img"><img src="img_project/10/7.jpg" alt="Guide Patterns" /></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="shape-experiences" data-group="shape">
+        <div class="panel-inner">
+          <div class="split">
+            <div class="split-text">
+              <h2 class="content-h2" style="margin-top:0">Experiences</h2>
+              <p class="content-p">Revamped <b>onboarding experience with linear guidance</b> so businesses clearly know what to do next</p>
+            </div>
+            <div class="split-img">
+              <div class="slide-img" style="display:flex;align-items:center;justify-content:center;padding:16px">
+                <div class="wireframe-compare">
+                  <div class="wireframe-col">
+                    <div class="wf-browser">
+                      <div class="wf-toolbar"><span class="wf-dot"></span><span class="wf-dot"></span><span class="wf-dot"></span><div class="wf-url"></div></div>
+                      <div class="wf-body">
+                        <div class="wf-sidebar"><div class="wf-sb-line w60"></div><div class="wf-sb-line w40"></div><div class="wf-sb-line w50"></div><div class="wf-sb-line w30"></div><div class="wf-sb-line w45"></div></div>
+                        <div class="wf-content">
+                          <div class="wf-line w40" style="height:6px;margin-bottom:12px"></div>
+                          <div class="wf-cards">
+                            <div class="wf-card"><div class="wf-card-icon"></div><div class="wf-line w70"></div></div>
+                            <div class="wf-card"><div class="wf-card-icon"></div><div class="wf-line w60"></div></div>
+                            <div class="wf-card"><div class="wf-card-icon"></div><div class="wf-line w50"></div></div>
+                            <div class="wf-card"><div class="wf-card-icon"></div><div class="wf-line w70"></div></div>
+                            <div class="wf-card"><div class="wf-card-icon"></div><div class="wf-line w40"></div></div>
+                            <div class="wf-card"><div class="wf-card-icon"></div><div class="wf-line w60"></div></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <p class="wireframe-label">Hub-and-spoke, built by partners</p>
+                  </div>
+                  <div class="wireframe-arrow">→</div>
+                  <div class="wireframe-col">
+                    <div class="wf-browser">
+                      <div class="wf-toolbar"><span class="wf-dot"></span><span class="wf-dot"></span><span class="wf-dot"></span><div class="wf-url"></div></div>
+                      <div class="wf-body">
+                        <div class="wf-sidebar"><div class="wf-sb-line w60"></div><div class="wf-sb-line w40"></div><div class="wf-sb-line w50"></div><div class="wf-sb-line w30"></div><div class="wf-sb-line w45"></div></div>
+                        <div class="wf-content">
+                          <div class="wf-line w50" style="height:6px;margin-bottom:6px"></div>
+                          <div class="wf-progress"><div class="wf-progress-fill"></div></div>
+                          <div class="wf-tasks">
+                            <div class="wf-task"><div class="wf-circle done"></div><div class="wf-line w70"></div></div>
+                            <div class="wf-task"><div class="wf-circle"></div><div class="wf-line w60"></div></div>
+                            <div class="wf-task"><div class="wf-circle"></div><div class="wf-line w50"></div></div>
+                            <div class="wf-task"><div class="wf-circle"></div><div class="wf-line w65"></div></div>
+                            <div class="wf-task"><div class="wf-circle"></div><div class="wf-line w55"></div></div>
+                            <div class="wf-task"><div class="wf-circle"></div><div class="wf-line w45"></div></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <p class="wireframe-label">Linear, built by Meta</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="shape-placement" data-group="shape">
+        <div class="panel-inner">
+          <div class="single-col">
+            <div>
+              <h2 class="content-h2" style="margin-top:0">Placement</h2>
+              <p class="content-p">Live on Meta surface or embedded within partner platforms</p>
+            </div>
+            <div class="slide-img"><img src="img_project/10/8.jpg" alt="Placement" /></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="shape-placement-detail" data-group="shape" data-nav="shape-placement">
+        <div class="panel-inner">
+          <div class="single-col">
+          <div>
+          <h2 class="content-h2" style="margin-top:0">Placement</h2>
+          <p class="content-p">Decided on Meta surface for MVP launch</p>
+          </div>
+          <table class="compare-table" style="margin-top:24px">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Live on Meta surface</th>
+                <th>Embedded within partner platforms</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Timeline</strong></td>
+                <td>3 months</td>
+                <td>6-12 months</td>
+              </tr>
+              <tr>
+                <td><strong>Pros</strong></td>
+                <td>Unified, accessible guide</td>
+                <td>Native experience on partner platforms</td>
+              </tr>
+              <tr>
+                <td><strong>Cons</strong></td>
+                <td>Users need to navigate to other surface</td>
+                <td>Risk of inconsistency or deprioritization</td>
+              </tr>
+              <tr>
+                <td><strong>Decision</strong></td>
+                <td colspan="2" class="check">&#10003; MVP on Meta surface, and develop embedded experience in 2026</td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="shape-navigation" data-group="shape">
+        <div class="panel-inner">
+          <div class="single-col">
+            <div>
+              <h2 class="content-h2" style="margin-top:0">Navigation</h2>
+              <p class="content-p">Streamlined 5 entry points + 5 destinations across Meta, partner tools</p>
+            </div>
+            <div class="slide-img"><img src="img_project/10/9.jpg" alt="Navigation" /></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ EXPLORED MVP ═══ -->
+      <section class="panel" id="mvp-divider" data-group="mvp">
+        <div class="panel-inner divider-page">
+          <p class="divider-title">Explored MVP</p>
+          <p class="divider-desc">Building the first version</p>
+        </div>
+      </section>
+
+      <section class="panel" id="mvp-principles" data-group="mvp">
+        <div class="panel-inner">
+          <div class="single-col">
+            <div>
+              <p class="section-title">Tasks & Sequence</p>
+              <p class="content-p">6-task onboarding journey considering business user and monetization needs</p>
+            </div>
+            <div class="slide-img"><img src="img_project/10/18.jpg" alt="Task Sequence" /></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="mvp-layout" data-group="mvp">
+        <div class="panel-inner">
+          <div class="single-col">
+            <div>
+              <h2 class="content-h2" style="margin-top:0">Layout</h2>
+              <p class="content-p">Designed the guidance page to scale easily and stay responsive at any browser width</p>
+            </div>
+            <div class="slide-img"><img src="img_project/10/11.jpg" alt="Layout" /></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="mvp-grouping" data-group="mvp">
+        <div class="panel-inner">
+          <div class="single-col">
+            <div>
+              <h2 class="content-h2" style="margin-top:0">Grouping</h2>
+              <p class="content-p">Designed the guidance page to flexibly accommodate task reordering</p>
+            </div>
+            <div class="slide-img"><img src="img_project/10/12.jpg" alt="Task Grouping" /></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="mvp-options" data-group="mvp">
+        <div class="panel-inner">
+          <div class="single-col">
+            <div>
+              <h2 class="content-h2" style="margin-top:0">Options</h2>
+              <p class="content-p">Less-experienced businesses prefer single options to avoid decision fatigue</p>
+            </div>
+            <div class="slide-img"><img src="img_project/10/13.jpg" alt="Task Options" /></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ LAUNCH ═══ -->
+      <section class="panel" id="launch-divider" data-group="launch">
+        <div class="panel-inner divider-page">
+          <p class="divider-title">Launch</p>
+          <p class="divider-desc">Shipping to the world</p>
+        </div>
+      </section>
+
+      <section class="panel" id="launch-mvp" data-group="launch">
+        <div class="panel-inner">
+          <div class="single-col">
+            <div class="slide-img click-swap" onclick="this.classList.toggle('swapped')" style="max-height:calc(100vh - 120px);width:fit-content;margin:0 auto">
+              <img src="img_project/10/partner.jpg" alt="Partner" class="swap-a" style="max-height:calc(100vh - 120px);width:auto;object-fit:contain" />
+              <img src="img_project/10/mvp-1.jpg" alt="MVP Experience" class="swap-b" style="max-height:calc(100vh - 120px);width:auto;object-fit:contain" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="launch-future" data-group="launch">
+        <div class="panel-inner">
+          <div class="single-col">
+            <div class="slide-img click-swap" onclick="this.classList.toggle('swapped')" style="max-height:calc(100vh - 120px);width:fit-content;margin:0 auto">
+              <img src="img_project/10/partner.jpg" alt="Partner" class="swap-a" style="max-height:calc(100vh - 120px);width:auto;object-fit:contain" />
+              <img src="img_project/10/future-1.jpg" alt="Future" class="swap-b" style="max-height:calc(100vh - 120px);width:auto;object-fit:contain" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ IMPACT & LEARNING ═══ -->
+      <section class="panel" id="impact-divider" data-group="impact">
+        <div class="panel-inner divider-page">
+          <p class="divider-title">Impact</p>
+          <p class="divider-desc">Results and reflections</p>
+        </div>
+      </section>
+
+      <section class="panel" id="impact-goals" data-group="impact">
+        <div class="panel-inner">
+          <div class="single-col">
+            <div>
+              <h2 class="content-h2" style="margin-top:0">Product</h2>
+              <p class="content-p"><b>Exceeded goals</b> and <b>positive feedback</b> to secure more resources in 2026+</p>
+            </div>
+            <div class="impact-grid">
+              <div class="impact-stats">
+                <div class="impact-stat">
+                  <p class="impact-number">40%</p>
+                  <p class="impact-label">user engagement</p>
+                </div>
+                <div class="impact-stat">
+                  <p class="impact-number">+9%</p>
+                  <p class="impact-label">onboarding completion rate</p>
+                </div>
+                <div class="impact-stat" style="grid-column: 1 / -1">
+                  <p class="impact-number">$43M-$107M</p>
+                  <p class="impact-label">annual gross revenue opportunity</p>
+                </div>
+              </div>
+              <div class="impact-quotes">
+                <div class="impact-quote">
+                  <p class="quote-text">"I've worked in this space for <b>over four years</b>, and this is the first time I've <b>clearly understood the full journey</b> and what to focus on for improvement"</p>
+                  <p class="quote-author">Engineering manager, partner team</p>
+                </div>
+                <div class="impact-quote">
+                  <p class="quote-text">"Manychat agreed to <b>implement immediately</b> — <b>very rare for a top partner</b> juggling 10+ Meta integrations to say yes right away"</p>
+                  <p class="quote-author">PM lead</p>
+                </div>
+                <div class="impact-quote">
+                  <p class="quote-text">"<b>This is helpful</b> as partners may not think as we think"</p>
+                  <p class="quote-author">PM director</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="impact-alignment" data-group="impact">
+        <div class="panel-inner">
+          <div class="single-col">
+            <div>
+              <h2 class="content-h2" style="margin-top:0">Collaboration</h2>
+              <p class="content-p">Aligned understanding on end-to-end journey with partner teams</p>
+            </div>
+            <div class="slide-img"><img src="img_project/10/16.jpg" alt="Collaboration Impact" /></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="impact-holistic" data-group="impact" data-nav="impact-alignment">
+        <div class="panel-inner">
+          <div class="single-col">
+            <div>
+              <h2 class="content-h2" style="margin-top:0">Collaboration</h2>
+              <p class="content-p">Connected product experiences to drive critical funnel growth</p>
+            </div>
+            <div class="slide-img"><img src="img_project/10/17.jpg" alt="Collaboration Impact" /></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ SCALE ═══ -->
+      <section class="panel" id="scale-divider" data-group="scale">
+        <div class="panel-inner divider-page">
+          <p class="divider-title">Scale</p>
+          <p class="divider-desc">Extending the impact</p>
+        </div>
+      </section>
+
+      <section class="panel" id="scale-ecosystem" data-group="scale">
+        <div class="panel-inner" style="display:flex;flex-direction:column;justify-content:center;height:100%;gap:36px;max-width:none;width:100%">
+          <div style="max-width:none">
+            <h2 class="content-h2" style="margin-top:0">Ecosystem</h2>
+            <p class="content-p" style="max-width:none">Scaled <b>new onboarding strategy</b> to developer onboarding flow</p>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:12px;opacity:0.25">
+              <div class="slide-img" style="margin:0;padding:20px"><img src="img_project/10/wa-business-app.svg" alt="WhatsApp Business App" style="max-height:240px;width:auto;margin:0 auto" /></div>
+              <p style="font-family:var(--font);font-size:16px;font-weight:600;color:var(--ink);text-align:center">WhatsApp Business App</p>
+              <p style="font-family:var(--font);font-size:14px;color:var(--ink2);text-align:center;margin-top:-6px">Mobile app for small businesses</p>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:12px;opacity:0.25">
+              <div class="slide-img" style="margin:0;padding:20px"><img src="img_project/10/meta-business-suite.svg" alt="Meta Business Suite" style="max-height:240px;width:auto;margin:0 auto" /></div>
+              <p style="font-family:var(--font);font-size:16px;font-weight:600;color:var(--ink);text-align:center">Meta Business Inbox</p>
+              <p style="font-family:var(--font);font-size:14px;color:var(--ink2);text-align:center;margin-top:-6px">Web-based inbox tools</p>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:12px;opacity:0.25">
+              <div class="slide-img" style="margin:0;padding:20px"><img src="img_project/10/partner-platforms.svg" alt="Partner Platforms" style="max-height:240px;width:auto;margin:0 auto" /></div>
+              <p style="font-family:var(--font);font-size:16px;font-weight:600;color:var(--ink);text-align:center">Partner Platforms</p>
+              <p style="font-family:var(--font);font-size:14px;color:var(--ink2);text-align:center;margin-top:-6px">Inbox, broadcast tool (i.e. Twilio, AiSensy)</p>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:12px">
+              <div class="slide-img" style="margin:0;padding:20px"><img src="img_project/10/api-integration.svg" alt="API Integration" style="max-height:240px;width:auto;margin:0 auto" /></div>
+              <p style="font-family:var(--font);font-size:16px;font-weight:600;color:var(--ink);text-align:center">Internal Tools with API</p>
+              <p style="font-family:var(--font);font-size:14px;color:var(--ink2);text-align:center;margin-top:-6px">Custom-built with WhatsApp Cloud API</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="scale-structure" data-group="scale">
+        <div class="panel-inner">
+          <div class="single-col">
+            <div>
+              <h2 class="content-h2" style="margin-top:0">Implementation</h2>
+              <p class="content-p">Replaced current landing page with <b>linear guidance and clear navigation</b></p>
+            </div>
+            <div class="slide-img"><img src="img_project/10/17.jpg" alt="Implementation Structure" /></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="scale-adoption" data-group="scale" data-nav="scale-structure">
+        <div class="panel-inner">
+          <div class="single-col">
+            <div>
+              <h2 class="content-h2" style="margin-top:0">Implementation</h2>
+              <p class="content-p">Redesigned core configuration page with <b>testing for both free and paid products</b></p>
+            </div>
+            <div class="slide-img"><img src="img_project/10/17.jpg" alt="Implementation Adoption" /></div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script>
+    const main = document.getElementById('main');
+    const panels = document.querySelectorAll('.panel');
+    const parentNavItems = document.querySelectorAll('.side-section > .nav-item');
+    const allNavItems = document.querySelectorAll('.nav-item');
+    const navSubs = document.querySelectorAll('.nav-sub');
+
+    // ── Overview layer swap ──
+    const overviewLayers = ['overview', 'solutions', 'role', 'impact'];
+    const layerEls = {
+      overview: document.getElementById('layer-overview'),
+      solutions: document.getElementById('layer-solutions'),
+      role: document.getElementById('layer-role'),
+      impact: document.getElementById('layer-impact'),
+    };
+    let overviewLayerIdx = 0; // start on 'overview'
+    let overviewLayer = 'overview';
+
+    // ── Context messaging/partners layer toggle ──
+    const p1ContextLayerMessaging = document.getElementById('contextLayerMessaging');
+    const p1ContextLayerPartners = document.getElementById('contextLayerPartners');
+    const p1ContextDimCards = [document.getElementById('p1CtxCard1'), document.getElementById('p1CtxCard2'), document.getElementById('p1CtxCard4')];
+    let p1ContextLayerState = 'messaging';
+
+    // ── Fixed-layer system: reusable for any panel with [data-fixed-layers] ──
+    const fixedLayerPanels = {};
+    document.querySelectorAll('[data-fixed-layers]').forEach(panel => {
+      const layers = panel.querySelectorAll('.fixed-layer');
+      fixedLayerPanels[panel.id] = { idx: 0, layers, count: layers.length };
+    });
+
+    function setFixedLayer(panelId, idx) {
+      const p = fixedLayerPanels[panelId];
+      if (!p) return;
+      p.idx = idx;
+      p.layers.forEach((el, i) => el.classList.toggle('active', i === idx));
+      updatePageCounter();
+    }
+
+    function resetFixedLayers(exceptId) {
+      Object.keys(fixedLayerPanels).forEach(id => {
+        if (id !== exceptId && fixedLayerPanels[id].idx !== 0) setFixedLayer(id, 0);
+      });
+    }
+
+    function getFixedLayerExtra(panelIdx) {
+      let extra = 0;
+      Object.keys(fixedLayerPanels).forEach(id => {
+        const pi = visiblePanels.findIndex(p => p.id === id);
+        if (pi < 0) return;
+        if (panelIdx === pi) extra += fixedLayerPanels[id].idx;
+        else if (panelIdx > pi) extra += fixedLayerPanels[id].count - 1;
+      });
+      return extra;
+    }
+
+    function setContextLayer(which) {
+      p1ContextLayerState = which;
+      if (which === 'partners') {
+        p1ContextLayerMessaging.classList.remove('active');
+        p1ContextLayerPartners.classList.add('active');
+        p1ContextDimCards.forEach(c => c.style.opacity = '0.2');
+      } else {
+        p1ContextLayerPartners.classList.remove('active');
+        p1ContextLayerMessaging.classList.add('active');
+        p1ContextDimCards.forEach(c => c.style.opacity = '1');
+      }
+      updatePageCounter();
+    }
+
+    function setOverviewLayer(which) {
+      overviewLayer = which;
+      overviewLayerIdx = overviewLayers.indexOf(which);
+      Object.entries(layerEls).forEach(([key, el]) => {
+        el.classList.toggle('active', key === which);
+      });
+      navSubs.forEach(sub => {
+        if (sub.dataset.parent === 'overview') {
+          sub.querySelectorAll('.nav-item').forEach(si => {
+            si.classList.toggle('active', si.dataset.target === 'overview-' + which);
+          });
+        }
+      });
+      history.replaceState(null, '', '#overview-' + which);
+    }
+
+    // ── Click nav item → scroll to panel or swap overview layer ──
+    allNavItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const target = item.dataset.target;
+        if (target === 'overview-overview' || target === 'overview-solutions' || target === 'overview-role' || target === 'overview-impact') {
+          const el = document.getElementById('overview-project');
+          if (el) main.scrollTo({ top: el.offsetTop });
+          setOverviewLayer(target.replace('overview-', ''));
+          return;
+        }
+        const el = document.getElementById(target);
+        if (el) {
+          main.scrollTo({ top: el.offsetTop });
+        }
+      });
+    });
+
+    // ── Scroll within overview panel → swap layers ──
+    const overviewPanel = document.getElementById('overview-project');
+
+    overviewPanel.addEventListener('wheel', (e) => {
+      const rect = overviewPanel.getBoundingClientRect();
+      const mainRect = main.getBoundingClientRect();
+      const isVisible = rect.top >= mainRect.top - 10 && rect.top <= mainRect.top + 10;
+      if (!isVisible) return;
+
+      if (e.deltaY > 0) {
+        e.preventDefault();
+        if (overviewLayerIdx < overviewLayers.length - 1) {
+          setOverviewLayer(overviewLayers[overviewLayerIdx + 1]);
+        } else {
+          // Last layer — scroll to next panel
+          let target = overviewPanel.nextElementSibling;
+          while (target && target.style.display === 'none') target = target.nextElementSibling;
+          if (target) main.scrollTo({ top: target.offsetTop, behavior: 'smooth' });
+        }
+      } else if (e.deltaY < 0 && overviewLayerIdx > 0) {
+        e.preventDefault();
+        setOverviewLayer(overviewLayers[overviewLayerIdx - 1]);
+      }
+    }, { passive: false });
+
+    // ── Keyboard arrow keys → swap overview layers ──
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'r' || e.key === 'R') {
+        main.scrollTo({ top: overviewPanel.offsetTop, behavior: 'smooth' });
+        setOverviewLayer('overview');
+        return;
+      }
+      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+
+      const rect = overviewPanel.getBoundingClientRect();
+      const mainRect = main.getBoundingClientRect();
+      const isOverview = rect.top >= mainRect.top - 10 && rect.top <= mainRect.top + 10;
+
+      if (isOverview) {
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          if (overviewLayerIdx < overviewLayers.length - 1) {
+            setOverviewLayer(overviewLayers[overviewLayerIdx + 1]);
+          } else {
+            let target = overviewPanel.nextElementSibling;
+            while (target && target.style.display === 'none') target = target.nextElementSibling;
+            if (target) main.scrollTo({ top: target.offsetTop, behavior: 'smooth' });
+          }
+        } else if (e.key === 'ArrowUp' && overviewLayerIdx > 0) {
+          e.preventDefault();
+          setOverviewLayer(overviewLayers[overviewLayerIdx - 1]);
+        }
+      } else {
+        e.preventDefault();
+        const idx = currentVisiblePanelIdx;
+        const curPanel = visiblePanels[idx];
+
+        // Context messaging/partners layer toggle
+        if (curPanel && curPanel.id === 'context-messaging') {
+          if (e.key === 'ArrowDown' && p1ContextLayerState === 'messaging') {
+            setContextLayer('partners');
+            return;
+          } else if (e.key === 'ArrowUp' && p1ContextLayerState === 'partners') {
+            setContextLayer('messaging');
+            return;
+          }
+        }
+
+        // Fixed-layer toggle (generic)
+        if (curPanel && fixedLayerPanels[curPanel.id]) {
+          const fl = fixedLayerPanels[curPanel.id];
+          if (e.key === 'ArrowDown' && fl.idx < fl.count - 1) {
+            setFixedLayer(curPanel.id, fl.idx + 1);
+            return;
+          } else if (e.key === 'ArrowUp' && fl.idx > 0) {
+            setFixedLayer(curPanel.id, fl.idx - 1);
+            return;
+          }
+        }
+
+        if (e.key === 'ArrowDown' && idx < visiblePanels.length - 1) {
+          main.scrollTo({ top: visiblePanels[idx + 1].offsetTop, behavior: 'smooth' });
+        } else if (e.key === 'ArrowUp') {
+          if (idx > 0) {
+            main.scrollTo({ top: visiblePanels[idx - 1].offsetTop, behavior: 'smooth' });
+          }
+        }
+      }
+    });
+
+    // ── Click parent nav → toggle sub-nav ──
+    parentNavItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const target = item.dataset.target;
+        const el = document.getElementById(target);
+        if (el) main.scrollTo({ top: el.offsetTop });
+      });
+    });
+
+    // ── Scroll spy ──
+    let activeGroup = 'overview';
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const panel = entry.target;
+          const id = panel.id;
+          const group = panel.dataset.group;
+
+          // Update active group
+          activeGroup = group;
+
+          // Highlight Onboarding & Activate/Retain on goals slide
+          if (id === 'clarify-goals') {
+            setTimeout(() => {
+              document.getElementById('goalsTriggerOnboard').classList.add('accent');
+              document.getElementById('goalsArrow1').classList.add('accent');
+            }, 300);
+            setTimeout(() => {
+              document.getElementById('goalsTriggerActivate').classList.add('accent');
+              document.getElementById('goalsArrow2').classList.add('accent');
+            }, 600);
+          } else {
+            document.getElementById('goalsTriggerOnboard').classList.remove('accent');
+            document.getElementById('goalsTriggerActivate').classList.remove('accent');
+            document.getElementById('goalsArrow1').classList.remove('accent');
+            document.getElementById('goalsArrow2').classList.remove('accent');
+          }
+
+          // Update page counter
+          currentVisiblePanelIdx = visiblePanels.indexOf(panel);
+          // Reset fixed layers when navigating away
+          resetFixedLayers(id);
+          updatePageCounter();
+
+          // Update URL hash
+          const hashId = group === 'overview' ? 'overview-' + overviewLayer : id;
+          if (location.hash !== '#' + hashId) {
+            history.replaceState(null, '', '#' + hashId);
+          }
+
+          // Highlight parent nav items
+          parentNavItems.forEach(n => {
+            const nTarget = n.dataset.target;
+            const nPanel = document.getElementById(nTarget);
+            const nGroup = nPanel ? nPanel.dataset.group : null;
+            n.classList.toggle('active', nGroup === group);
+          });
+
+          // Show/hide sub-navs
+          navSubs.forEach(sub => {
+            const isActive = sub.dataset.parent === group;
+            if (isActive) {
+              sub.classList.add('open');
+              sub.style.maxHeight = sub.scrollHeight + 'px';
+            } else {
+              sub.classList.remove('open');
+              sub.style.maxHeight = '0';
+            }
+          });
+
+          // Highlight active sub-item
+          navSubs.forEach(sub => {
+            if (sub.dataset.parent === 'overview') {
+              // Overview sub-items managed by layer swap
+              if (group === 'overview') {
+                sub.querySelectorAll('.nav-item').forEach(si => {
+                  si.classList.toggle('active', si.dataset.target === 'overview-' + overviewLayer);
+                });
+              }
+            } else {
+              const navId = panel.dataset.nav || id;
+              sub.querySelectorAll('.nav-item').forEach(si => {
+                si.classList.toggle('active', si.dataset.target === navId);
+              });
+            }
+          });
+        }
+      });
+    }, {
+      root: main,
+      threshold: 0.5
+    });
+
+    panels.forEach(p => observer.observe(p));
+
+    // ── Close dropdown on outside click ──
+    document.addEventListener('click', e => {
+      const dd = document.getElementById('pageDropdown');
+      if (dd && !dd.contains(e.target)) dd.classList.remove('open');
+    });
+
+    // ── Count-up animation for stat numbers ──
+    function animateCount(el, delay) {
+      const target = parseFloat(el.dataset.countTo);
+      const prefix = el.dataset.prefix || '';
+      const suffix = el.dataset.suffix || '';
+      const decimals = parseInt(el.dataset.decimals) || 0;
+      const duration = 1000;
+      let startTime = null;
+
+      // Reset to 0
+      el.textContent = prefix + '0' + suffix;
+
+      setTimeout(() => {
+        function step(timestamp) {
+          if (!startTime) startTime = timestamp;
+          const progress = Math.min((timestamp - startTime) / duration, 1);
+          // Ease out cubic
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const current = eased * target;
+          el.textContent = prefix + current.toFixed(decimals) + suffix;
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          } else {
+            el.textContent = prefix + target.toFixed(decimals) + suffix;
+          }
+        }
+        requestAnimationFrame(step);
+      }, delay);
+    }
+
+    // ── Page counter ──
+    const pageCounter = document.getElementById('pageCounter');
+    const visiblePanels = Array.from(panels).filter(p => p.style.display !== 'none');
+    // Overview counts as 4 pages (layers), rest are 1 each
+    // Total = 4 (overview layers) + (visiblePanels.length - 1) non-overview panels
+    const contextPanelIdx = visiblePanels.findIndex(p => p.id === 'context-messaging');
+    // Total: overview layers + visible panels + context sub-layer + all fixed-layer extras - 1 (overview counted as layers)
+    const fixedLayerExtraTotal = Object.values(fixedLayerPanels).reduce((sum, fl) => sum + fl.count - 1, 0);
+    const totalPages = overviewLayers.length + visiblePanels.length + fixedLayerExtraTotal;
+
+    let currentVisiblePanelIdx = 0;
+
+    function updatePageCounter() {
+      let page;
+      const idx = currentVisiblePanelIdx;
+      if (idx === 0) {
+        page = overviewLayerIdx + 1;
+      } else {
+        let extra = overviewLayers.length;
+        if (idx === contextPanelIdx) {
+          extra += (p1ContextLayerState === 'partners' ? 1 : 0);
+        } else if (idx > contextPanelIdx) {
+          extra += 1;
+        }
+        extra += getFixedLayerExtra(idx);
+        page = extra + idx;
+      }
+      pageCounter.textContent = page + '/' + totalPages;
+    }
+
+    // Hook into layer swap (must be before hash init)
+    const origSetLayer = setOverviewLayer;
+    setOverviewLayer = function(which) {
+      origSetLayer(which);
+      updatePageCounter();
+      if (which === 'impact') {
+        const statEls = layerEls.impact.querySelectorAll('.stat-number[data-count-to]');
+        statEls.forEach((el, i) => {
+          animateCount(el, 200 + i * 150);
+        });
+      }
+    };
+
+    // ── Restore position from URL hash on load ──
+    if (location.hash) {
+      const hash = location.hash.slice(1);
+      if (hash.startsWith('overview-')) {
+        const layer = hash.replace('overview-', '');
+        if (overviewLayers.includes(layer)) {
+          const el = document.getElementById('overview-project');
+          if (el) main.scrollTo({ top: el.offsetTop });
+          setOverviewLayer(layer);
+        }
+      } else {
+        const el = document.getElementById(hash);
+        if (el) main.scrollTo({ top: el.offsetTop });
+      }
+    }
+
+    // ── Funnel diagram click to reveal ──
+    document.getElementById('funnelTrigger').addEventListener('click', () => {
+      document.getElementById('funnelTrigger').closest('.funnel-diagram').classList.toggle('open');
+    });
+    // Goals diagram: independent toggles
+    document.getElementById('goalsTriggerOnboard').addEventListener('click', () => {
+      document.getElementById('goalsGroupOnboard').classList.toggle('open');
+    });
+    document.getElementById('goalsTriggerActivate').addEventListener('click', () => {
+      document.getElementById('goalsGroupActivate').classList.toggle('open');
+    });
+    // ── Findings diagram: auto-animate step1 on scroll, click for step2 ──
+    const findingsDiagram = document.getElementById('findingsDiagram');
+    const findingsPanel = document.getElementById('clarify-insights');
+    const findingsObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          findingsDiagram.classList.add('step1');
+        } else {
+          findingsDiagram.classList.remove('step1', 'step2');
+        }
+      });
+    }, { root: main, threshold: 0.5 });
+    findingsObserver.observe(findingsPanel);
+
+    document.getElementById('findingsTrigger').addEventListener('click', () => {
+      findingsDiagram.classList.toggle('step2');
+    });
+
+    // ── Divider page description fade-in ──
+    const dividerObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        } else {
+          entry.target.classList.remove('visible');
+        }
+      });
+    }, { root: main, threshold: 0.5 });
+    document.querySelectorAll('.divider-page').forEach(d => dividerObserver.observe(d));
+
+    // ── Image Carousels ──
+    document.querySelectorAll('.slide-carousel').forEach(carousel => {
+      const imgs = carousel.querySelectorAll('.carousel-track img');
+      const dots = carousel.querySelectorAll('.carousel-dot');
+      const delay = parseInt(carousel.dataset.autoplay) || 4000;
+      let current = 0;
+      let timer;
+
+      function goTo(idx) {
+        imgs[current].classList.remove('active');
+        dots[current].classList.remove('active');
+        current = idx % imgs.length;
+        imgs[current].classList.add('active');
+        dots[current].classList.add('active');
+      }
+
+      function startAutoplay() {
+        timer = setInterval(() => goTo(current + 1), delay);
+      }
+
+      dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => {
+          clearInterval(timer);
+          goTo(i);
+          startAutoplay();
+        });
+      });
+
+      startAutoplay();
+    });
+  </script>
+
+</body>
+</html>

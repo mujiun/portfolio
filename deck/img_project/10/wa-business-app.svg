@@ -1,0 +1,27 @@
+<svg width="200" height="320" viewBox="0 0 200 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Phone frame -->
+  <rect x="20" y="6" width="160" height="308" rx="20" fill="#F6F6F6" stroke="#D0CCC6" stroke-width="1.5"/>
+  <!-- Header -->
+  <rect x="20" y="6" width="160" height="32" rx="20" fill="#25D366"/>
+  <rect x="20" y="26" width="160" height="12" fill="#25D366"/>
+  <rect x="50" y="18" width="60" height="6" rx="3" fill="rgba(255,255,255,0.8)"/>
+  <!-- Chat bubbles -->
+  <rect x="34" y="50" width="90" height="22" rx="8" fill="#E7FFDB"/>
+  <rect x="42" y="58" width="60" height="4" rx="2" fill="#7CB87C"/>
+  <rect x="76" y="82" width="90" height="22" rx="8" fill="white" stroke="#E8E5E0" stroke-width="1"/>
+  <rect x="84" y="90" width="66" height="4" rx="2" fill="#C4C0BA"/>
+  <rect x="34" y="114" width="110" height="30" rx="8" fill="#E7FFDB"/>
+  <rect x="42" y="122" width="76" height="4" rx="2" fill="#7CB87C"/>
+  <rect x="42" y="132" width="50" height="4" rx="2" fill="#7CB87C"/>
+  <rect x="76" y="154" width="90" height="22" rx="8" fill="white" stroke="#E8E5E0" stroke-width="1"/>
+  <rect x="84" y="162" width="50" height="4" rx="2" fill="#C4C0BA"/>
+  <rect x="34" y="186" width="80" height="22" rx="8" fill="#E7FFDB"/>
+  <rect x="42" y="194" width="50" height="4" rx="2" fill="#7CB87C"/>
+  <rect x="76" y="218" width="90" height="30" rx="8" fill="white" stroke="#E8E5E0" stroke-width="1"/>
+  <rect x="84" y="226" width="66" height="4" rx="2" fill="#C4C0BA"/>
+  <rect x="84" y="236" width="44" height="4" rx="2" fill="#C4C0BA"/>
+  <!-- Input -->
+  <rect x="30" y="274" width="140" height="24" rx="12" fill="white" stroke="#D0CCC6" stroke-width="1"/>
+  <rect x="42" y="283" width="44" height="4" rx="2" fill="#D0CCC6"/>
+  <circle cx="158" cy="286" r="8" fill="#25D366"/>
+</svg>

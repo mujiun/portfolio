@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mu Jiun Shie — Sr. Product Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@100..900&display=block" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #FFFFFF;
+      --surface: #F9F9F9;
+      --surface2: #F0EFED;
+      --ink: #434343;
+      --ink2: #6e502e;
+      --ink3: #9A958E;
+      --accent: #D56C00;
+      --accent-light: #FDF3E8;
+      --border: rgba(67,67,67,0.1);
+      --border2: rgba(67,67,67,0.06);
+      --user-bubble: #434343;
+      --user-text: #FFFFFF;
+      --ai-bubble: #F9F9F9;
+      --ai-border: rgba(67,67,67,0.12);
+      --tag-bg: #F0EFED;
+      --tag-text: #6e502e;
+      --card-hover: rgba(161,93,17,0.04);
+      --font: 'Commissioner', system-ui, sans-serif;
+      --radius: 16px;
+      --radius-sm: 8px;
+      --radius-pill: 999px;
+    }
+
+    html {
+      overflow-y: scroll;
+      min-height: 100.1vh;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100dvh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 32px;
+      border-bottom: 1px solid var(--border2);
+      background: var(--bg);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+
+    .logo {
+      font-family: var(--font);
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--ink);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    nav a {
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink2);
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      border: 1px solid transparent;
+      transition: all 0.18s ease;
+      letter-spacing: 0.01em;
+    }
+
+    nav a:hover {
+      color: var(--ink);
+      border-color: var(--border);
+      background: var(--surface2);
+    }
+
+    nav a.active {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: var(--accent-light);
+    }
+
+    /* ── CENTER STAGE (landing) ── */
+    .center-stage {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px 100px;
+      text-align: center;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .center-stage .greeting {
+      font-family: var(--font);
+      font-weight: 300;
+      font-size: clamp(24px, 5vw, 40px);
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      margin-bottom: 36px;
+      max-width: 100%;
+    }
+
+    .center-stage .greeting strong {
+      font-weight: 700;
+      letter-spacing: -0.025em;
+    }
+
+    .rotate-line {
+      display: none;
+    }
+
+    .rotate-line.active {
+      display: inline;
+    }
+
+    .rotate-line .typed-text {
+      border-right: 2px solid var(--accent);
+      animation: blink-caret 0.6s step-end infinite;
+    }
+
+    .rotate-line .typed-text.done {
+      border-right-color: transparent;
+      animation: none;
+    }
+
+    @keyframes blink-caret {
+      0%, 100% { border-right-color: var(--accent); }
+      50% { border-right-color: transparent; }
+    }
+
+    .center-stage .greeting em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .center-stage .sub {
+      font-family: var(--font);
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--ink2);
+      line-height: 1.6;
+      max-width: 460px;
+      margin-bottom: 12px;
+    }
+
+    /* ── STATUS PILL ── */
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: var(--font);
+      font-size: 11.5px;
+      font-weight: 500;
+      color: var(--ink3);
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-pill);
+      padding: 5px 12px;
+      margin-bottom: 20px;
+      letter-spacing: 0.02em;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #22C55E;
+      box-shadow: 0 0 0 2px rgba(34,197,94,0.2);
+      animation: pulse 2s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 2px rgba(34,197,94,0.2); }
+      50% { box-shadow: 0 0 0 5px rgba(34,197,94,0); }
+    }
+
+    /* ── ICE BREAKERS ── */
+    .icebreakers {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      max-width: 900px;
+      margin-bottom: 28px;
+    }
+
+    .ice-btn {
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink2);
+      background: var(--bg);
+      border: 1px solid rgba(67,67,67,0.2);
+      border-radius: var(--radius-pill);
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      text-align: left;
+      line-height: 1.4;
+    }
+
+    .ice-btn:hover {
+      background: var(--accent-light);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .ice-label {
+      font-family: var(--font);
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--ink3);
+      letter-spacing: 0.03em;
+      margin-bottom: 6px;
+    }
+
+    .ice-btn.used {
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    /* ── CHAT CONTAINER ── */
+    .chat-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      max-width: 960px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 20px 96px;
+      overflow-y: auto;
+    }
+
+    /* ── MESSAGES ── */
+    .messages {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      padding-top: 48px;
+    }
+
+    .msg {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 20px;
+      animation: fadeUp 0.35s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .msg.user { flex-direction: row-reverse; }
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: var(--font);
+      overflow: hidden;
+      margin-top: 2px;
+    }
+
+    .avatar.mu {
+      background: var(--ink);
+      color: var(--bg);
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .avatar.visitor {
+      background: var(--surface2);
+      color: var(--ink2);
+      font-size: 11px;
+      font-weight: 500;
+      border: 1px solid var(--border);
+    }
+
+    .bubble {
+      max-width: 88%;
+      padding: 12px 16px;
+      border-radius: var(--radius);
+      font-size: 15px;
+      line-height: 1.4;
+      color: var(--ink);
+      font-family: var(--font);
+      font-weight: 400;
+    }
+
+    .msg.ai .bubble {
+      background: var(--ai-bubble);
+      border: 1px solid var(--ai-border);
+      border-top-left-radius: 4px;
+    }
+
+    .msg.user .bubble {
+      background: var(--user-bubble);
+      color: var(--user-text);
+      border-top-right-radius: 4px;
+    }
+
+    .bubble strong { font-weight: 600; }
+    .bubble p + p { margin-top: 10px; }
+
+    /* ── TYPING INDICATOR ── */
+    .typing-indicator {
+      display: flex;
+      gap: 5px;
+      padding: 14px 18px;
+      width: fit-content;
+    }
+
+    .typing-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--ink3);
+      animation: bounce 1.2s ease infinite;
+    }
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes bounce {
+      0%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-6px); }
+    }
+
+    /* ── PROJECT CAROUSEL ── */
+    .carousel-wrap {
+      width: 100%;
+      margin-top: 8px;
+      position: relative;
+    }
+
+    .carousel {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 10px;
+    }
+
+    .carousel::-webkit-scrollbar { display: none; }
+
+    .project-card {
+      flex-shrink: 0;
+      width: 336px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      scroll-snap-align: start;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.22s ease, box-shadow 0.22s ease;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .project-card:hover {
+      border-color: var(--accent);
+    }
+
+    .project-card:hover .card-title {
+      color: var(--accent);
+    }
+
+    .card-img {
+      width: 100%;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .project-card:hover .card-img img {
+      transform: scale(1.06);
+    }
+
+    .card-body {
+      padding: 14px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .tag {
+      font-family: var(--font);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      border-radius: var(--radius-pill);
+      padding: 3px 9px;
+    }
+
+    .tag.accent {
+      background: var(--accent-light);
+      color: var(--accent);
+    }
+
+    .card-company {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0px;
+    }
+
+    .card-title {
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 650;
+      color: var(--ink);
+      margin-bottom: 6px;
+      line-height: 1.35;
+      letter-spacing: -0.01em;
+    }
+
+    .card-summary {
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--ink2);
+      line-height: 1.35;
+      flex: 1;
+    }
+
+    .card-arrow {
+      color: var(--accent);
+      font-size: 16px;
+      font-weight: 700;
+      transition: transform 0.18s ease;
+      display: inline-block;
+    }
+
+    .project-card:hover .card-arrow { transform: translateX(3px); }
+
+    .carousel-wrap::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0; right: 0;
+      width: 32px;
+      background: linear-gradient(to left, var(--bg), transparent);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* ── PROJECT MODAL ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      padding: 24px;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal {
+      background: var(--bg);
+      border-radius: var(--radius);
+      width: 95%;
+      max-width: 1280px;
+      height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.2);
+      transform: translateY(12px) scale(0.98);
+      transition: transform 0.25s ease;
+    }
+
+    .modal-overlay.open .modal {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .modal-title {
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .modal-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      background: var(--surface2);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: var(--ink2);
+      transition: all 0.15s ease;
+      font-family: var(--font);
+      line-height: 1;
+    }
+
+    .modal-close:hover {
+      background: var(--ink);
+      color: var(--bg);
+    }
+
+    .modal-body {
+      flex: 1;
+      min-height: 0;
+    }
+
+    .modal-body iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    @media (max-width: 600px) {
+      .modal-overlay { padding: 0; }
+      .modal { border-radius: 0; height: 100vh; max-width: 100%; }
+    }
+
+    /* ── INPUT BAR ── */
+    .input-area {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: var(--bg);
+      border-top: 1px solid var(--border2);
+      padding: 16px 20px 24px;
+      z-index: 50;
+    }
+
+    /* Input always fixed at bottom, even on landing */
+
+    .input-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+    }
+
+    .input-field {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 13px 18px;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--ink);
+      resize: none;
+      outline: none;
+      min-height: 54px;
+      max-height: 140px;
+      line-height: 1.5;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    }
+
+    .input-field::placeholder { color: var(--ink3); }
+    .input-field:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-light), 0 2px 16px rgba(0,0,0,0.06);
+    }
+
+    .send-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--ink);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.18s ease;
+    }
+
+    .send-btn:hover { background: var(--accent); transform: scale(1.05); }
+    .send-btn:active { transform: scale(0.96); }
+
+    .send-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: var(--bg);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      header { padding: 16px 20px; }
+      nav a { display: none; }
+      .center-stage { padding: 32px 16px 24px; }
+      .chat-wrap { padding: 0 12px 120px; }
+      .messages { padding-top: 28px; }
+      .project-card { width: 210px; }
+    }
+  </style>
+</head>
+<body class="on-landing">
+
+  <header>
+    <a class="logo" href="#" id="logoBtn">Mu<span>.</span></a>
+    <nav>
+      <a href="#" id="restartBtn" style="display:none">Restart</a>
+      <a href="index.html" class="active">Chat</a>
+      <a href="projects.html">Projects</a>
+      <a href="resume.html">About</a>
+      <a href="https://www.linkedin.com/in/mshie/" target="_blank">LinkedIn</a>
+    </nav>
+  </header>
+
+  <!-- CENTER STAGE (landing) -->
+  <div class="center-stage" id="centerStage">
+    <p class="greeting">Hi&#x1F44B;&#x1F3FC; I'm <strong>Mu</strong>, Sr. Product Designer<br><span class="rotate-line active">@ Meta — Monetization, BizAI</span><span class="rotate-line">Based in 🇺🇸🌴 San Francisco Bay Area</span><span class="rotate-line">Build products for ads, businesses, and developers</span></p>
+    <p class="sub">What do you want to learn about Mu?</p>
+    <div class="icebreakers" id="landingIcebreakers"></div>
+  </div>
+
+  <!-- CHAT VIEW (hidden until first interaction) -->
+  <div class="chat-wrap" id="chatWrap" style="display:none">
+    <div class="messages" id="messages"></div>
+  </div>
+
+  <!-- INPUT BAR -->
+  <div class="input-area" id="inputArea" style="display:block">
+    <div class="input-inner">
+      <textarea class="input-field" id="userInput" placeholder="Ask me anything…" rows="1"></textarea>
+      <button class="send-btn" id="sendBtn" aria-label="Send">
+        <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- PROJECT MODAL -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title" id="modalTitle"></span>
+        <button class="modal-close" id="modalClose">×</button>
+      </div>
+      <div class="modal-body">
+        <iframe id="modalIframe" src="" title="Project"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/projects-data.js"></script>
+  <script>
+    const messagesEl    = document.getElementById('messages');
+    const chatWrap      = document.getElementById('chatWrap');
+    const centerStage   = document.getElementById('centerStage');
+    const inputField    = document.getElementById('userInput');
+    const sendBtn       = document.getElementById('sendBtn');
+    const landingIce    = document.getElementById('landingIcebreakers');
+    const modalOverlay  = document.getElementById('modalOverlay');
+    const modalTitle    = document.getElementById('modalTitle');
+    const modalIframe   = document.getElementById('modalIframe');
+    const modalClose    = document.getElementById('modalClose');
+
+    let conversationStarted = false;
+
+    // ── MODAL ──
+    function openModal(url, title) {
+      modalTitle.textContent = title;
+      modalIframe.src = url;
+      modalOverlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modalOverlay.classList.remove('open');
+      document.body.style.overflow = '';
+      setTimeout(() => { modalIframe.src = ''; }, 250);
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // ── DATA (loaded from js/projects-data.js) ──
+
+    const ICEBREAKERS = [
+      { label: 'Works at Meta', topic: 'meta' },
+      { label: 'Superpower', topic: 'philosophy' },
+      { label: 'Business tools', topic: 'business'  },
+      { label: 'Ad products', topic: 'ad'  },
+      { label: 'Framework', topic: 'framework'  },
+      { label: 'Get in touch', topic: 'contact'  },
+    ];
+
+    const RESPONSES = {
+      meta: {
+        text: `At Meta I'm a <strong>Senior Product Designer</strong> on Business Messaging — I've launched 20+ features across Instagram, WhatsApp, and Ads Manager, unlocking $400M+ in annual revenue potential. Here's some of my work:`,
+        showProjects: [0, 1, 2, 3],
+      },
+      philosophy: {
+        text: `A few things that set me apart:\n\n<strong>Turning ambiguity into clarity</strong> — I use structured analysis (dogfooding, UXR, data) to cut through complexity and find the real problem to solve.\n\n<strong>Building simple systems for complex products</strong> — I create modular, scalable solutions that unify fragmented tools — like consolidating 7 WhatsApp flows into one system, boosting adoption 1.6x.\n\n<strong>Moving fast with high craft</strong> — I excel at rapid Figma prototyping and have contributed to 10+ design sprints. I ship MVPs while defining long-term strategy.\n\n<strong>Driving alignment across 10+ teams</strong> — I lead cross-functional efforts with engineering, PM, and design to connect dots and deliver bigger product impact.`,
+        showProjects: null,
+      },
+      business: {
+        text: `Enterprise and business-facing tools I've designed:`,
+        showProjects: [0, 1, 2],
+      },
+      ad: {
+        text: `Ad products I've worked on:`,
+        showProjects: [3, 4],
+      },
+      framework: {
+        text: `Here's a framework I use across projects — <strong>Design Systems for Everyone</strong>. It's a cross-company playbook covering token architecture, component governance, and how to drive adoption across engineering and PM teams.`,
+        showProjects: [0, 1],
+      },
+      contact: {
+        text: `I'd love to connect — whether it's about new opportunities, collaborations, or just swapping notes on design challenges.\n\n<strong>Email</strong> → <a href="mailto:mujiunshie@gmail.com" style="color:var(--accent)">mujiunshie@gmail.com</a>\n<strong>LinkedIn</strong> → <a href="https://www.linkedin.com/in/mshie/" target="_blank" style="color:var(--accent)">linkedin.com/in/mshie</a>\n<strong>Portfolio</strong> → <a href="https://mu-jn.com" target="_blank" style="color:var(--accent)">mu-jn.com</a>`,
+        showProjects: null,
+      },
+    };
+
+    // ── POPULATE LANDING ICEBREAKERS ──
+    ICEBREAKERS.forEach(ice => {
+      const btn = document.createElement('button');
+      btn.className = 'ice-btn';
+      btn.textContent = ice.label;
+      btn.addEventListener('click', () => {
+        transitionToChat();
+        setTimeout(() => handleIce(ice.topic, ice.label), 350);
+      });
+      landingIce.appendChild(btn);
+    });
+
+    // ── TRANSITION: landing → chat ──
+    const restartBtn = document.getElementById('restartBtn');
+
+    function transitionToChat() {
+      if (conversationStarted) return;
+      conversationStarted = true;
+
+      centerStage.style.opacity = '0';
+      centerStage.style.transform = 'translateY(-12px)';
+
+      setTimeout(() => {
+        centerStage.style.display = 'none';
+        chatWrap.style.display = 'flex';
+        document.body.classList.remove('on-landing');
+        restartBtn.style.display = '';
+      }, 300);
+    }
+
+    // ── RESTART: back to landing ──
+    function restartToLanding() {
+      conversationStarted = false;
+      messagesEl.innerHTML = '';
+      chatWrap.style.display = 'none';
+      centerStage.style.display = '';
+      centerStage.style.opacity = '';
+      centerStage.style.transform = '';
+      document.body.classList.add('on-landing');
+      restartBtn.style.display = 'none';
+      inputField.value = '';
+    }
+
+    restartBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      restartToLanding();
+    });
+
+    document.getElementById('logoBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      if (conversationStarted) restartToLanding();
+    });
+
+    // ── RENDER HELPERS ──
+    function renderAvatar(type) {
+      const el = document.createElement('div');
+      el.className = `avatar ${type}`;
+      el.textContent = type === 'mu' ? 'M' : 'you';
+      return el;
+    }
+
+    function renderBubble(html) {
+      const el = document.createElement('div');
+      el.className = 'bubble';
+      el.innerHTML = html.replace(/\n/g, '<br>');
+      return el;
+    }
+
+    function renderCarousel(indices) {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'carousel-wrap';
+      const track = document.createElement('div');
+      track.className = 'carousel';
+
+      const list = indices ? indices.map(i => PROJECTS[i]) : PROJECTS;
+      list.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'project-card';
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', () => {
+          if (p.external) {
+            window.open(p.url, '_blank');
+          } else {
+            openModal(p.url, p.title);
+          }
+        });
+        card.innerHTML = `
+          <div class="card-img">
+            <img src="${p.img}" alt="${p.title}" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <div class="card-company">${p.company}</div>
+            <div class="card-title">${p.title} <span class="card-arrow">→</span></div>
+            <div class="card-summary">${p.summary}</div>
+          </div>
+        `;
+        track.appendChild(card);
+      });
+
+      wrapper.appendChild(track);
+      return wrapper;
+    }
+
+    function scrollToBottom() {
+      setTimeout(() => { chatWrap.scrollTop = chatWrap.scrollHeight; }, 50);
+      setTimeout(() => { chatWrap.scrollTop = chatWrap.scrollHeight; }, 400);
+    }
+
+    function appendMsg(type, contentFn) {
+      const msg = document.createElement('div');
+      msg.className = `msg ${type}`;
+      const av = renderAvatar(type === 'ai' ? 'mu' : 'visitor');
+      const inner = document.createElement('div');
+      inner.style.flex = '1';
+      inner.style.minWidth = '0';
+      inner.style.display = 'flex';
+      inner.style.flexDirection = 'column';
+      inner.style.alignItems = type === 'user' ? 'flex-end' : 'flex-start';
+      contentFn(inner);
+      if (type === 'user') { msg.appendChild(inner); }
+      else { msg.appendChild(av); msg.appendChild(inner); }
+      messagesEl.appendChild(msg);
+      scrollToBottom();
+      return msg;
+    }
+
+    function showTyping() {
+      const msg = document.createElement('div');
+      msg.className = 'msg ai';
+      msg.id = 'typing';
+      const av = renderAvatar('mu');
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble typing-indicator';
+      bubble.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+      msg.appendChild(av);
+      msg.appendChild(bubble);
+      messagesEl.appendChild(msg);
+      scrollToBottom();
+    }
+
+    function hideTyping() {
+      const el = document.getElementById('typing');
+      if (el) el.remove();
+    }
+
+    // ── RENDER CHAT ICEBREAKERS (excludes current topic) ──
+    function renderChatIcebreakers(excludeTopic) {
+      const outer = document.createElement('div');
+      outer.style.marginTop = '14px';
+      const wrap = document.createElement('div');
+      wrap.className = 'icebreakers';
+      wrap.style.justifyContent = 'flex-start';
+      ICEBREAKERS.filter(ice => ice.topic !== excludeTopic).forEach(ice => {
+        const btn = document.createElement('button');
+        btn.className = 'ice-btn';
+        btn.textContent = ice.label;
+        btn.addEventListener('click', () => {
+          btn.classList.add('used');
+          handleIce(ice.topic, ice.label);
+        });
+        wrap.appendChild(btn);
+      });
+      outer.appendChild(wrap);
+      return outer;
+    }
+
+    // ── HANDLE ICE BREAKER ──
+    function handleIce(topic, label) {
+      appendMsg('user', container => container.appendChild(renderBubble(label)));
+      showTyping();
+      setTimeout(() => {
+        hideTyping();
+        const resp = RESPONSES[topic];
+        appendMsg('ai', container => {
+          container.appendChild(renderBubble(resp.text));
+          if (resp.showProjects !== null) {
+            container.appendChild(renderCarousel(resp.showProjects));
+          }
+          container.appendChild(renderChatIcebreakers(topic));
+        });
+      }, 900);
+    }
+
+    // ── HANDLE USER INPUT ──
+    function handleSend() {
+      const text = inputField.value.trim();
+      if (!text) return;
+      inputField.value = '';
+      inputField.style.height = 'auto';
+
+      if (!conversationStarted) {
+        transitionToChat();
+        setTimeout(() => doSend(text), 350);
+      } else {
+        doSend(text);
+      }
+    }
+
+    function doSend(text) {
+      appendMsg('user', container => container.appendChild(renderBubble(text)));
+      showTyping();
+
+      const lower = text.toLowerCase();
+      let topic = null;
+      if (/meta|instagram|whatsapp|ads manager|facebook|designed at/i.test(lower)) topic = 'meta';
+      else if (/stand out|superpower|strength|unique|special|differ/i.test(lower)) topic = 'philosophy';
+      else if (/business tool|enterprise|b2b|ads|monetiz/i.test(lower)) topic = 'business';
+      else if (/consumer|gov|public|portal|end.?user/i.test(lower)) topic = 'consumer';
+      else if (/contact|hire|work together|reach|email|opportunity|touch|connect/i.test(lower)) topic = 'contact';
+      else if (/project|case stud|portfolio|show|built|work/i.test(lower)) topic = 'business';
+
+      setTimeout(() => {
+        hideTyping();
+        if (topic) {
+          const resp = RESPONSES[topic];
+          appendMsg('ai', container => {
+            container.appendChild(renderBubble(resp.text));
+            if (resp.showProjects !== null) {
+              container.appendChild(renderCarousel(resp.showProjects));
+            }
+            container.appendChild(renderChatIcebreakers(topic));
+          });
+        } else {
+          appendMsg('ai', container => {
+            container.appendChild(renderBubble(`Good question! That one's best answered in person. Feel free to reach me at <a href="mailto:mujiunshie@gmail.com" style="color:var(--accent)">mujiunshie@gmail.com</a> or on <a href="https://www.linkedin.com/in/mshie/" target="_blank" style="color:var(--accent)">LinkedIn</a>.`));
+            container.appendChild(renderChatIcebreakers(null));
+          });
+        }
+      }, 1000);
+    }
+
+    // ── WIRE UP INPUT ──
+    sendBtn.addEventListener('click', handleSend);
+    inputField.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); }
+    });
+    inputField.addEventListener('input', () => {
+      inputField.style.height = 'auto';
+      inputField.style.height = Math.min(inputField.scrollHeight, 140) + 'px';
+    });
+
+    // ── TYPING ROTATION ──
+    (function() {
+      var lines = document.querySelectorAll('.rotate-line');
+      var texts = [];
+      lines.forEach(function(line) {
+        texts.push(line.textContent);
+        line.innerHTML = '<span class="typed-text"></span>';
+      });
+      var current = 0;
+      var TYPING_SPEED = 45;
+      var DELETE_SPEED = 25;
+      var PAUSE_AFTER_TYPE = 2000;
+      var PAUSE_AFTER_DELETE = 300;
+
+      function typeText(idx, cb) {
+        var span = lines[idx].querySelector('.typed-text');
+        var text = texts[idx];
+        var i = 0;
+        span.textContent = '';
+        span.classList.remove('done');
+        var interval = setInterval(function() {
+          span.textContent = text.slice(0, i + 1);
+          i++;
+          if (i >= text.length) {
+            clearInterval(interval);
+            setTimeout(function() { span.classList.add('done'); }, 100);
+            cb();
+          }
+        }, TYPING_SPEED);
+      }
+
+      function deleteText(idx, cb) {
+        var span = lines[idx].querySelector('.typed-text');
+        var text = span.textContent;
+        var i = text.length;
+        span.classList.remove('done');
+        var interval = setInterval(function() {
+          i--;
+          span.textContent = text.slice(0, i);
+          if (i <= 0) {
+            clearInterval(interval);
+            cb();
+          }
+        }, DELETE_SPEED);
+      }
+
+      function cycle() {
+        typeText(current, function() {
+          setTimeout(function() {
+            deleteText(current, function() {
+              lines[current].classList.remove('active');
+              current = (current + 1) % lines.length;
+              lines[current].classList.add('active');
+              setTimeout(cycle, PAUSE_AFTER_DELETE);
+            });
+          }, PAUSE_AFTER_TYPE);
+        });
+      }
+
+      // Init first line
+      lines[0].classList.add('active');
+      cycle();
+    })();
+  </script>
+</body>
+</html>
