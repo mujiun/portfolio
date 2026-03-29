@@ -1,0 +1,158 @@
+.wd{ 
+	max-width: 1000px; 
+	margin: 0 auto;
+	margin-bottom: 300px;
+}
+.v-head{
+	margin-top: 120px;
+	h1{ font-size: 48px; }
+	img.logo{ width: 350px; position: relative; margin-top: 30px;}
+	background-image: url("../images/intro/goose.jpg");
+	background-size: 100%;
+	background-repeat: no-repeat;
+	background-position: center center;
+	height: 1200px;
+
+	h4{ font-weight: 700;}
+}
+
+.v-intro{
+	margin-bottom: 200px;
+	h2{ 
+		font-size: 66px; font-weight: 800; 
+		//margin-bottom: 50px;
+		line-height: 1.2em;
+	}
+	font-size: 24px; 
+	line-height: 1.3em;
+	.mmm{
+		line-height: 1.8em;
+	}
+	.age{
+		font-weight: 800; 
+		width: 80px;
+		border-right: 2px #000 solid;
+		display: inline-block;
+		vertical-align: top;
+		>div{height: 120px;}
+	}
+	.dream{
+		width: 350px;
+		padding-left: 20px;
+		vertical-align: top;
+		display: inline-block;
+		>div{height: 120px;}
+	}
+	.photo{
+		display: inline-block;
+		>div{height: 120px;}
+		img{ height: 100px; width: auto;}
+	}
+
+	.firm{
+		vertical-align: top;
+		width: 180px;
+		>div{
+			height: 90px; 
+			border-bottom: 2px #ccc dotted;
+			margin-top: 20px;
+		}
+		.bb{ height: 130px;}
+		>div:first-child{ height: 40px;}
+		display: inline-block;
+	}
+	.sk{
+		vertical-align: top;
+		display: inline-block;
+		width: 180px;
+		>div{
+			height: 90px; 
+			border-bottom: 2px #ccc dotted;
+			margin-top: 20px;
+		}
+		.bb{ height: 130px;}
+		>div:first-child{ height: 40px;}
+		a{ 
+			display: block;
+			width: 140px;
+			height: 30px;
+			margin: 0 20px;
+			line-height: 30px;
+			font-size: 14px;
+			text-align: center;
+			color: #000;
+			border-radius: 15px;
+			margin-bottom: 10px;
+			font-weight: 600;
+		}
+		.tt{ font-weight: 600; text-align: center;}
+	}
+	.sk1 a{ background-color: #A0DFFF;}
+	.sk1 .tt{ color: #38A8E1;}
+	.sk2 a{ background-color: #C0A6F8;}
+	.sk2 .tt{ color: #6E38E1;}
+	.sk3 a{ background-color: #F8B2A6;}
+	.sk3 .tt{ color: #E94B2F;}
+	.sk4 a{ background-color: #B9E9A8;}
+	.sk4 .tt{ color: #2F920E;}
+
+	.pres{
+		//width: 48%; display: inline-block;
+		//border: 1px red solid;
+		width: 32%; display: inline-block;
+
+		h3{ 
+			//font-size: 24px;
+    		font-weight: 800;
+    		line-height: 1.4em;
+    		vertical-align: top;
+		}
+		h6{ font-weight: 600; opacity: .6; }
+		img{ 
+			//width: 300px;
+			display: inline-block; 
+			vertical-align: top;
+			margin-right: 2%;
+			border-radius: 5px;
+		}
+		>div{ 
+			display: inline-block;
+			margin-top: 20px;
+		}
+		a{ 
+			font-size: 17px; 
+			font-weight: 500;
+			text-decoration: underline;
+			padding-right: 20px;
+		}
+	}
+}
+
+
+a.hide>img { display: none;}
+a.hide:hover>img { 
+	display: block; 
+	width: 500px;
+    background: white;
+    position: relative;
+    left: 160px;
+    top: -30px;
+    box-shadow: 0px 0px 5px #aaa;
+    border-radius: 5px;
+    padding: 20px;
+}
+.sk3, .sk4{ a.hide:hover>img { left: -520px;}}
+
+.end{ 
+	img{ height: 300px; width: auto; border-radius: 20px;}
+	
+	img:first-child{ margin-right: 50px;}
+	>div{ display: inline-block;}
+}
+
+
+
+
+
+
+

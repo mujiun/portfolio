@@ -1,0 +1,95 @@
+.amazon1{
+	background-color: #eee;
+	margin-left: 300px;
+
+	img{
+		max-width:900px; 
+		//margin:0 auto; 
+		//display:block;
+	}
+	.alist{
+		position: absolute;
+		z-index: 9999;
+		width: 250px; 
+		top:0px;
+		>div{position: relative;}
+
+		a{ 
+			font-weight: 500; 
+			color:$textColor1;
+			position: relative;
+			left: 930px;
+		}
+		img{ 
+			width: 900px; 
+			position: relative; 
+			left:-930px;
+			opacity: 0%;
+		}
+		a:hover{ img{ opacity: 100%;}}
+	}
+	.alist-1{
+		top:160px;
+		img{ top: -85px;}
+	}
+	.alist-2{
+		top:60px;
+		img{ top: -100px;}
+	}
+	.alist-3{
+		top:-160px;
+		img{ top: -380px;}
+	}
+	.alist-4{
+		top:-180px;
+		img{ top: -75px;}
+	}
+	.alist-5{
+		top:-560px;
+		img{ top: -225px;}
+	}
+	.alist-6{
+		top:-980px;
+		img{ top: -370px;}
+	}
+	.alist-7{
+		top:-1200px;
+		img{ top: -110px;}
+	}
+
+
+
+
+	.alist-8{
+		top:120px;
+		img{ top: -85px;}
+	}
+	.alist-9{
+		top:30px;
+		img{ top: -90px;}
+	}
+	.alist-10{
+		top:-40px;
+		img{ top: -250px;}
+	}
+	.alist-11{
+		top:-210px;
+		img{ top: -200px;}
+	}
+	.alist-12{
+		top:-280px;
+		img{ top: -230px;}
+	}
+	.alist-13{
+		top:-430px;
+		img{ top: -80px;}
+	}
+	.alist-14{
+		top:-650px;
+		img{ top: -540px;}
+	}
+	.alist-15{
+		top:-1530px;
+		img{ top: -100px;}
+	}
+}

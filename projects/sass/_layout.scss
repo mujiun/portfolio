@@ -1,0 +1,181 @@
+html,
+body {
+    font-family: $font-base;
+    color: $textColor1;
+    font-size: 15px;
+    font-weight: 500;
+    margin: 0 auto;
+    line-height: 1.6em;
+    width: 100%;
+    -webkit-font-smoothing: antialiased;
+    //letter-spacing: -0.1px;
+}
+
+.space{ height: 150px;}
+.paragraph{ height: 50px;}
+.img-gap{ height: 20px;}
+p.img-note{ 
+    font-size: 13px;
+    color:$textColor4; 
+    font-weight: 500; 
+    text-align: center;
+    padding-top: 10px;
+}
+
+.article p.detx{
+    font-size: 17px; 
+    font-style: italic;
+    font-weight: 600;
+    line-height: 1.5em;
+    border-left: 5px #aaa solid;
+    color: $textColor2; 
+    padding-bottom: 0px;
+}
+
+span.detx{ color: $textColor2; font-weight: 500; font-size: 14px; line-height: 1.3em;}
+
+.container{ padding: 3%;}
+.part{ margin-bottom: $spacing-part*1.5;}
+
+p.decision{ text-align: right; font-weight: 600; opacity: .6; line-height: 1.6em;}
+p.feedback{ color: $textColor4; font-style: italic; font-weight: 500; font-size: 15px; padding-top: 20px;}
+
+span.divider{ padding: 0 10px;}
+span.ui-num{ }
+span.of{ font-weight: 700; display: inline-block;}
+span.num{  font-size: 32px; font-weight: 800; height:30px; display: inline-block; margin-right: 5px;}
+span.numw{ font-size: 28px; font-weight: 800; height:30px; display: inline-block; margin-right: 5px;}
+span.qs{ display: block; color:$textColor2; font-size: 14px; line-height: 1.7em; font-weight: 500; padding-left: 25px; padding-bottom: 10px;}
+ul.decision{ 
+    font-size: 17px;
+    list-style: disc;
+    b{ font-weight: 600;}
+    li{ padding-bottom: 10px; line-height: 1.5em;}
+}
+
+.data.CO {
+    > div{
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.5em;
+    }
+    span{ display: block; margin-bottom: 5px;}
+}
+.brief { 
+    span, h3{ 
+        font-size: 16px; 
+        color: $textColor2;
+        font-weight: 700;
+        padding-bottom:5px;
+    }
+    h4.s-data{ padding-top: 10px; padding-bottom:0px; font-size: 14px; line-height: 1.5em; color:$textColor4; font-weight: 500;}
+}
+
+
+.article .content a{ 
+    &:hover{text-decoration: none;}
+    span.pre{
+        min-height: 70px;
+        font-size: 14px; line-height: 1.5em;
+        color: #999;
+    }
+}
+.article .content .g-2 a span.pre{ padding: 15px 0px 0px 5px;}
+.article .content .g-4 a span.pre{ padding: 0px 0px 0px 5px;}
+
+table { 
+    border-collapse: collapse; 
+    width: 100%; 
+    max-width: 700px; 
+    margin: 0 auto;
+}
+td, th { 
+    width: 45%;
+    height: 30px;
+    padding-bottom: 25px;
+    vertical-align: top;
+    font-size: 15px; line-height: 1.7em;
+    font-weight: 500;
+}
+tr:first-child{ th { font-size: 18px; font-weight: 800; padding-bottom: 20px;}}
+td:nth-child(2), th:nth-child(2) { width: 10%; font-weight: 600; text-align: center;}
+
+
+p{line-height: 1.7em;}
+.article{ h2, h3, h4, h5{ padding-bottom: $padding-title;}}
+.article{ p{ padding-bottom: $padding-basic;}}
+p.note{ color:$textColor2; font-size: 13px; font-weight: 500; line-height: 1.3em; padding-top: 10px;}
+
+.sub-title{ font-size:20px; font-weight: 700; color:$textColor3; height: 40px;}
+a{ color: $btnColor1; text-decoration: none; line-height: 1.4em;}
+a:hover{ text-decoration: underline;}
+//qrcode
+a.see-o{ display: block; color:white; &:hover{background-color: none;}}
+.article .content a.see-o img.qrcode{ position: absolute; top: 35px; width: 150px; border-radius: 2px;display: none;}
+.article .content a.see-o:hover img.qrcode{ display: block;}
+
+//divide bg color
+.divbg1{ background-color: $div-bg1;}
+.divbg2{ background-color: $div-bg2;}
+.divbg3{ background-color: $div-bg3;}
+
+//go new tab
+.article .content span.new-tab{
+    color:$textColor1; 
+    img{ width: 13px; display: inline-block; vertical-align: middle; margin-left: 7px;}
+} 
+
+i{ color:$btnColor2;}
+b, span.mark{ font-weight:800;}
+
+h1 { font-size: 32px; font-weight: 700; line-height: 1.6em;}
+h2 { font-size: 24px; font-weight: 700; line-height: 1.5em;}
+h3 { font-size: 20px; font-weight: 500; line-height: 1.5em;}
+h4 { font-size: 18px; font-weight: 500; line-height: 1.6em;}
+h5 { font-size: 15px; font-weight: 500; line-height: 1.6em;}
+h6 { font-size: 14px; font-weight: 500; line-height: 1.6em; color: $textColor2; letter-spacing: -0.1px;}
+p{  font-size: 15px; font-weight: 500; line-height: 1.75em;}
+
+img{ width: 100%;}
+
+footer{
+    display: none;
+    position: fixed; 
+    bottom: 3%; right: 3%;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+// 800px ==================================
+@include breakpoint(860px) { 
+    footer{ display: block;}
+}
+
+
+
+//選字色
+::selection {
+    //background: lighten($mainColor3, 50%);
+    //background-color: $mainColor4;
+}
+::-moz-selection {
+    //background: lighten($mainColor3, 50%);
+    //background-color: $mainColor4;
+}
+
+//gotop
+#return-to-top {
+    -webkit-transition: all 0.3s linear;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+#return-to-top i {
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+

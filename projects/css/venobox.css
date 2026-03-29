@@ -1,0 +1,78 @@
+/* ------ venobox.css --------*/
+.vbox-overlay *, .vbox-overlay *:before, .vbox-overlay *:after{
+    -webkit-backface-visibility: hidden;
+    -webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
+body{
+    -webkit-overflow-scrolling:touch;
+}
+/* ------- overlay: change here background color and opacity ----- */
+.vbox-overlay{
+    background: #181818;
+    background: rgba(255,255,255,0.975); 
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity .2s ease-in-out;
+    -moz-transition: opacity .2s ease-in-out;
+    -webkit-transition: opacity .2s ease-in-out;
+}
+
+/* ----- preloader - choose between CIRCLE, IOS, DOTS, QUADS ----- */
+
+
+
+/* ------- PLease do NOT edit this! (or do it at your own risk) ------ */
+.vbox-container{
+    position: relative;
+
+    width: 98%;
+    
+    margin: 0 auto;
+}
+.vbox-content{
+    text-align: center;
+    float: left;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+.vbox-container img{
+    max-width: 100%;
+    height: auto;
+}
+.vwrap{
+    opacity: 1;
+    transition: opacity .25s ease-in-out;
+    -moz-transition: opacity .25s ease-in-out;
+    -webkit-transition: opacity .25s ease-in-out;
+    width: 100%;
+    height: auto;
+    float: left;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: 1;
+}
+
+
+.vbox-close{
+    cursor: pointer;
+    cursor: pointer;
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    background: url(cross.svg) no-repeat;
+    background-size: 50px;
+    background-color: white;
+    background-position: 15px 15px;
+    opacity: 0.6;
+    padding: 40px;
+}
+.vbox-close:hover{ opacity: 1;}

@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="UTF-8">
+    <title>Hygge</title>
+
+    <!-- All -->
+    <meta property="og:title" content="Mujiun | UX Designer" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://mu-jn.com/" />
+    <meta property="og:image" content="http://mu-jn.com/images/og.jpg" />
+    <meta property="og:description" content="CMU MIIPS, Web/App Design" />
+    <link rel="apple-touch-icon" sizes="76x76" href="favicons/apple-icon-76x76.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
+    <link rel="manifest" href="favicons/manifest.json">
+    <link rel="mask-icon" href="favicons/safari-pinned-tab.svg" color="#000">
+    <meta name="theme-color" content="#000">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-112748057-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-158583225-1', {
+          'page_title' : 'hygge.html',
+          'page_path': '/hygge.html'
+        });
+    </script>
+    <!-- All -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/mu.css">
+    <link rel="stylesheet" href="css/venobox.css">
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="js/mumu.js"></script>
+    <script src="js/venobox.js"></script>
+    <script>
+        $(function(){
+            $('.gallery').venobox();
+        });
+    </script>
+    <style>
+      /* ── NEW PROJECT LAYOUT ── */
+      body.new-layout {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      body.new-layout .progress-container { display: none; }
+
+      /* Left nav */
+      body.new-layout .side-nav {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 240px;
+        height: 100vh;
+        padding: 40px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        z-index: 100;
+      }
+
+      body.new-layout .side-nav a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 12.5px;
+        font-weight: 400;
+        color: #35363A;
+        text-decoration: none;
+        padding: 0;
+        line-height: 1.4;
+        transition: color 0.15s ease;
+        letter-spacing: -0.01em;
+        text-transform: uppercase;
+      }
+
+      body.new-layout .side-nav a::before {
+        content: '';
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #35363A;
+        opacity: 0.2;
+        flex-shrink: 0;
+        transition: background-color 0.15s ease, opacity 0.15s ease;
+      }
+
+      body.new-layout .side-nav a:hover {
+        color: #35363A;
+      }
+
+      body.new-layout .side-nav a.active {
+        color: #D56C00;
+        font-weight: 500;
+      }
+
+      body.new-layout .side-nav a.active::before {
+        background-color: #D56C00;
+        opacity: 1;
+      }
+
+      /* Hide old shortcut */
+      body.new-layout .shortcut { display: none !important; }
+
+      /* Main content area */
+      body.new-layout .main-content {
+        flex: 1;
+        max-width: 720px;
+        margin-left: calc(280px + (100vw - 280px - 700px) / 2);
+      }
+
+      body.new-layout .top {
+        margin: 0;
+        margin-bottom: 20px;
+      }
+
+      body.new-layout .top img {
+        max-height: none;
+        width: 100%;
+        display: block;
+        object-fit: cover;
+      }
+
+      body.new-layout .head {
+        text-align: left;
+      }
+
+      body.new-layout .head .text {
+        max-width: none;
+        text-align: left;
+      }
+
+      body.new-layout.article h1,
+      body.new-layout.article h2,
+      body.new-layout.article h3,
+      body.new-layout.article h5,
+      body.new-layout.article h6,
+      body.new-layout.article p,
+      body.new-layout.article .block,
+      body.new-layout.article .block-box,
+      body.new-layout.article ul,
+      body.new-layout.article ol,
+      body.new-layout.article table,
+      body.new-layout.article .head,
+      body.new-layout.article .head .text {
+        max-width: none;
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
+        text-align: left;
+      }
+
+      body.new-layout .main-content .head {
+        padding: 0;
+        padding-top: 30px;
+      }
+
+      body.new-layout .main-content .head .text {
+        max-width: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      body.new-layout .top {
+        margin: 0;
+      }
+
+      body.new-layout .top img {
+        margin: 0;
+      }
+
+      /* Override all centering from mu.css */
+      body.new-layout.article .content .g-0,
+      body.new-layout.article .content .g-1,
+      body.new-layout.article .content .g-1w,
+      body.new-layout.article .content .g-2,
+      body.new-layout.article .content .g-3,
+      body.new-layout.article .content .g-4,
+      body.new-layout.article .content .g-wide {
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
+        max-width: none;
+      }
+
+      body.new-layout.article .content {
+        margin-top: 40px;
+      }
+
+      body.new-layout.article .content .g-0 a,
+      body.new-layout.article .content .g-1 a,
+      body.new-layout.article .content .g-1w a {
+        display: block;
+      }
+
+      body.new-layout.article .g-1w,
+      body.new-layout.article .content .g-1w {
+        width: 108%;
+        max-width: none;
+        margin-left: -4%;
+        padding: 0;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      body.new-layout .divide {
+        padding-left: 0;
+        padding-right: 0;
+        padding-bottom: 0;
+      }
+
+      body.new-layout .divide.divbg1 {
+        background-color: transparent;
+        padding: 0;
+        border-radius: 12px;
+        font-family: 'IBM Plex Mono', monospace;
+      }
+
+      body.new-layout .divide.divbg1 .block-box span,
+      body.new-layout .divide.divbg1 .block-box div,
+      body.new-layout .divide.divbg1 .block-w1 span,
+      body.new-layout .divide.divbg1 .block-w1 div,
+      body.new-layout .divide.divbg1 .block-w2 span,
+      body.new-layout .divide.divbg1 .block-w2 div {
+        font-size: 13px;
+      }
+
+      body.new-layout .part {
+        margin-bottom: 80px;
+      }
+
+      body.new-layout.article .block-box {
+        padding: 0;
+        background-color: #F6F6F6;
+        border-radius: 12px;
+        display: flex;
+        gap: 20px;
+        font-family: 'IBM Plex Mono', monospace;
+      }
+
+      body.new-layout.article .block-box .block-w1,
+      body.new-layout.article .block-box .block-w2 {
+        width: 50%;
+        margin-right: 0;
+      }
+
+      body.new-layout.article table {
+        margin-left: 0;
+      }
+
+      body.new-layout p,
+      body.new-layout li,
+      body.new-layout .block-w1 div,
+      body.new-layout .block-w1 span,
+      body.new-layout .block-w2 div,
+      body.new-layout .block-w2 span {
+        font-size: 17px;
+        font-weight: 400;
+        line-height: 1.4;
+      }
+
+      body.new-layout .part ul {
+        list-style: disc;
+        padding-left: 1.5em;
+        padding-bottom: 20px;
+      }
+
+      body.new-layout.article p:has(+ ul) {
+        padding-bottom: 6px;
+      }
+
+      body.new-layout .block-box .box-label {
+        font-size: 12px;
+        font-weight: 700;
+        font-family: 'IBM Plex Mono', monospace;
+        color: #D56C00;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 6px;
+      }
+
+      body.new-layout .block-box .box-text,
+      body.new-layout .block-box p {
+        font-size: 13px;
+        font-weight: 400;
+        letter-spacing: -0.2px;
+        line-height: 1.4;
+        margin-bottom: 40px;
+      }
+
+      body.new-layout .block-box .box-text li {
+        font-size: 13px;
+        font-weight: 400;
+        letter-spacing: -0.2px;
+        line-height: 1.4;
+        margin-bottom: 0;
+      }
+
+      body.new-layout .box-text:last-child {
+        margin-bottom: 0;
+      }
+
+      body.new-layout b {
+        font-weight: 600;
+        color: #D56C00;
+      }
+
+      body.new-layout h3 {
+        color: #35363A;
+        padding-top: 16px;
+        font-weight: 700;
+      }
+
+      body.new-layout h1 {
+        font-size: 40px;
+        line-height: 1.3em;
+        padding-bottom: 12px;
+      }
+
+      body.new-layout .part-title {
+        margin-bottom: 36px;
+        color: #35363A;
+      }
+
+      body.new-layout p.feedback {
+        padding: 0;
+        padding-bottom: 12px;
+        font-size: 14px;
+        color: #D56C00;
+      }
+
+      body.new-layout.article .block {
+        padding-top: 32px;
+      }
+
+      body.new-layout .part1 .block-box {
+        background-color: transparent;
+      }
+
+      body.new-layout .box-text ul {
+        list-style: disc;
+        padding-left: 1.2em;
+      }
+
+      body.new-layout h6 {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 1.6em;
+        color: #888;
+      }
+
+      body.new-layout .content {
+        text-align: left;
+      }
+
+      body.new-layout .g-1w,
+      body.new-layout .g-0,
+      body.new-layout .g-1 {
+        text-align: left;
+      }
+
+      body.new-layout .g-1w img,
+      body.new-layout .g-0 img,
+      body.new-layout .g-1 img {
+        display: block;
+      }
+
+      body.new-layout .part-title {
+        text-align: left;
+      }
+
+      body.new-layout .divide {
+        text-align: left;
+      }
+
+      body.new-layout footer {
+        text-align: left;
+        margin-left: 0;
+      }
+
+      /* Responsive: collapse nav on small screens */
+      @media (max-width: 768px) {
+        body.new-layout .side-nav {
+          position: relative;
+          width: 100%;
+          height: auto;
+          flex-direction: row;
+          flex-wrap: wrap;
+          padding: 16px 20px;
+          gap: 4px 16px;
+          border-bottom: 1px solid rgba(67,67,67,0.1);
+        }
+
+        body.new-layout .side-nav a {
+          font-size: 14px;
+        }
+
+        body.new-layout .main-content {
+          margin-left: 0;
+          width: 100%;
+        }
+
+        body.new-layout {
+          flex-direction: column;
+        }
+      }
+
+    </style>
+</head>
+
+<body class="article hygge new-layout">
+<div class="progress-container"><div class="progress-bar" id="myBar"></div></div>
+
+    <!-- Left side navigation -->
+    <nav class="side-nav">
+        <a href="#01">Summary</a>
+        <a href="#02">User Interviews</a>
+        <a href="#03">Data Research</a>
+        <a href="#04">Focus Problems</a>
+        <a href="#05">Wireframe</a>
+        <a href="#06">Product Design</a>
+        <a href="#07">Implementation</a>
+        <a href="#08">Lessons</a>
+    </nav>
+
+    <!-- Hide old shortcut -->
+    <div class="shortcut" style="display:none"></div>
+
+    <!-- Main content -->
+    <div class="main-content">
+    <div class="top" id="00"><img src="images/01/001.jpg" alt=""></div>
+    <div class="head">
+        <div class="text">
+            <h1>Hygge Trip Planner</h1>
+            <h6>Oct 2019, Lead Designer, Academic Project, Integrative System</h6>
+            <p>This project aims to simplify the process of planning and booking a trip by integrating multiple services, enabling streamlined user flow, and giving limited options. I started from user and data research to define problems, I developed service flow and wireframe, and delivered app design. I had another teammate who possesses business and engineering backgrund.</p>
+        </div>
+    </div>
+
+
+    <!-- content -->
+    <div class="content fadeup">
+        <div class="part1" id="01">
+            <div class="part brief"><div class="divide divbg1">
+                <div class="block-box">
+                <div class="block-w1">
+                    <div class="br-title">Summary</div>
+                    <br><br>
+                    <span>Issue</span>
+                    <div>Travel planners cannot tailor a trip effectively and enjoyable, need to spend 53 days and use 28 apps/sites to plan/book, and experience anxiety.</div><br>
+
+                    <span>Barriers</span>
+                    <div>Information overload, decision fatigue, organize and integrate complex data manually.</div><br>
+
+                    <span>Solution</span>
+                    <div>An all-in-one app that integrates all trip-planner resources, provides personalized recommendations, and generated trip schedule.</div><br>
+
+                    <span>Success Metrics</span>
+                    <div>TraveTravel planners can personalize a trip and receive trip schedule in 10 minutes.</div>
+                </div>
+                <div class="block-w2">
+                    <div class="br-title">Process</div>
+                    <br><br>
+                    <span>● &nbsp; Discover</span>
+                    <span class="br-lf">Inspiration, User Interviews, User Journey Map, Data Research</span>
+                    <span>● &nbsp; Define</span>
+                    <span class="br-lf">Problem Focus, Product Requirements</span>
+                    <span>● &nbsp; Develop</span>
+                    <span class="br-lf">Service Design, Wireframe, User Flow, User Testing</span>
+                    <span>● &nbsp; Deliver</span>
+                    <span class="br-lf">Product Design, Prototype, Technical Implemetation</span>
+                    <span>● &nbsp; Ship Designs</span>
+                </div>
+                </div>
+            </div></div>
+        </div>
+
+        <div class="part">
+            <div class="block"><div class="part-title">Inspiration</div></div>
+            <p><span class="mark">Planning a trip can be a marathon in a labyrinth</span>, you get lost in explosive information and decisions, and spend a long time to reach a destination(best options). Without a guide and helps, trip-planning can become an endless trial and error loop; to reach right ends, you need to use and integrate multiple methods, mediums, and information.</p>
+
+            <p>A <a class="in-text" target="new" href="https://link.springer.com/article/10.1007%2Fs11482-009-9091-9#Sec20">study</a> about vacations and pre-trip happiness established that <span class="mark">"planning or anticipating your trip can make you happier than actually taking it"</span>. However, people also suffer from pre-trip anxiety due to the uncertainty and complexity of the trip planning. </p>
+            <div class="img-gap"></div>
+            <div class="g-0"><a class="gallery" href="images/01/005.jpg"><img src="images/01/005.jpg"></a></div>
+        </div>
+
+
+        <div class="part2" id="02">
+            <div class="part">
+                <div class="block"><div class="part-title">User Interviews</div></div>
+                <p>I interviewed 5 people and summarize the key points and overlay experience through making journey mapping.</p>
+                <div class="g-0"><a class="gallery" href="images/01/interview.jpg"><img src="images/01/interview.jpg"></a></div>
+                <div class="paragraph"></div>
+
+                <p>I realized that <span class="mark">People spend much time researching across multiple platforms</span>, sites, and apps. They not only need to digest a huge volume of the information but also need to <span class="mark">try many ways to narrow down the information</span> and to access to  ideal options. Eventually, countless decision making causes fatigue and anxiety.</p>
+                <div class="paragraph"></div>
+                <div class="g-1w"><a class="gallery" href="images/01/008.jpg"><img src="images/01/008.jpg"></a></div>
+        </div></div>
+        <div class="part3" id="03">
+            <div class="part">
+                <div class="block"><div class="part-title">Data Research</div></div>
+                <p>To understand the user behavior of a broad audience, and solve the questions I had on recommendation and itinerary organization, I did the domain research to help me move forward through quantified data.</p>
+                <div class="paragraph"></div>
+
+                <div class="data block">
+                    <div><span class="num">53</span><span class="of"> days + </span> <span class="num">28</span><span class="of"> websites</span><br/>travelers spent an average of 53 days visiting 28 different. websites over a period of 76 online sessions<a target="new" href="https://www.adobe.com/insights/digital-trends-in-travel-and-hospitality.html">*</a></div>
+                    <div><span class="numw">Social Media</span><span class="of"></span><br/>More than 50% of travelers checking social media for travel tips and inspiration.<a target="new" href="https://www.adobe.com/insights/digital-trends-in-travel-and-hospitality.html">*</a></div>
+
+                    <div><span class="num">57%</span><span class="of"> of U.S. travelers</span><br/>want the tailored information based on <span class="mark">personal preferences.</span> <a target="new" href="https://www.thinkwithgoogle.com/data/personalized-online-experience-statistics/">*</a></div>
+                    <div><span class="num">69%</span><span class="of"> of leisure travelers</span><br/><span class="mark">feel anxiety</span> for not finding the best price or making the best decision.<a target="new" href="https://www.thinkwithgoogle.com/marketing-resources/micro-moments/travel-booking-trends-book-it-moments/">*</a></div>
+
+                    <div><span class="numw">Near me</span><br/>mobile searches have grown over 200% with  "events, attractions, food, buy".<a target="new" href="https://www.thinkwithgoogle.com/search/#?query=near%20me&page=0,0&sort_field=date&limit=12&locale=en-us&current_source=data_points">*</a></div>
+                    <div><span class="numw">Price</span><br/>is the most important factor in booking travel for smartphone users.<a target="new" href="https://www.thinkwithgoogle.com/data/consumer-travel-smartphone-usage-price-factor/">*</a></div>
+                </div>
+                <div class="paragraph"></div>
+
+                <div class="block">
+                    <div>Jeroen Nawijn, the lead author of the <a class="in-text" target="new" href="https://link.springer.com/article/10.1007%2Fs11482-009-9091-9#Sec20">[study]</a> which mentioned above, suggested that people can <span class="mark">maximize the pre-trip happiness by fully indulging in the excitement of planning</span> such as talking to people about plans, bragging about them on social media, and reveling in both the anticipation and FOMO you're causing.<a target="new" href="https://www.huffpost.com/entry/how-to-make-the-most-of-vacation_n_5755b42ae4b0eb20fa0e906d?guccounter=1&guce_referrer=aHR0cHM6Ly93d3cuZ29vZ2xlLmNvbS8&guce_referrer_sig=AQAAAJNUm2KnedWdmfrCBYJFSjEpSKC-7SvDLFfmxY7fxrBhYsI7FxcjWN6b1rujufZ1U44FyVSFvDJKnJqjb76VjCmNhHFow-DFQ4shK9R3aInQ7vVEbQ-k-Kve8MXzGir2jcdXVSM0jODrW19UHU5UzjcAxWPsZdPWW94Qn-CtNbCe">*</a></div>
+                </div>
+            </div>
+
+            <div class="block"><div class="part-titleSub">Takeaway from <b>User Interview &amp; Data Research</b> - <br>People experience information overload, decision fatigue, and high digital footprints, the whole trip-planning process is complex and time-consuming. People want to <b>get right options directly</b> and <b>a better tool to help them organize a trip</b></b>.<br><br>###</div></div>
+        </div>
+
+        <div class="part4" id="04">
+            <div class="part">
+            <div class="block"><div class="part-title">Focus Problems</div></div>
+            <p>From the interviews and domain research, I confirmed that users want to use fewer efforts and time to <b>customize their trip based on the interests and needs</b>; therefore, I want to develop a <b>trip planner app</b> that can help the user customize a trip within 10 minutes, to fulfill the goal, it should be able to <b>recommend options precisely and organize itinerary perfectly</b>.</p>
+            <div class="g-0"><a class="gallery" href="images/01/006.jpg"><img src="images/01/006.jpg"></a></div>
+            <div class="paragraph"></div><div class="paragraph"></div>
+                <table>
+                  <tr>
+                    <th>Problem</th>
+                    <th></th>
+                    <th>Solution</th>
+                  </tr>
+                  <tr>
+                    <td>Require high digital footprints, lots of time on finding trip planning services.</td>
+                    <td>&rarr;</td>
+                    <td><b>#1</b> <b>All-in-one platform</b>, integrate all resources like flight, stay, attraction, shopping, ticket, restaurant...</td>
+                  </tr>
+                  <tr>
+                    <td>Use keywords to narrow down research result back and forth.  Decision fatigue, comparing multiple options manually.</td>
+                    <td>&rarr;</td>
+                    <td><b>#2</b> <b>Provide more filters</b> on search. </b> Recommend <b> less than 10 options</b> that highly <b>match users' interests</b>.</td>
+                  </tr>
+                  <tr>
+                    <td>Arrange schedule and cross-analyze information manually.</td>
+                    <td>&rarr;</td>
+                    <td><b>#3</b> <b>Organize itinerary automatically</b> by day and location.</td>
+                  </tr>
+                  <tr>
+                    <td>Experience pre-trip anxiety due to the complex process.</td>
+                    <td>&rarr;</td>
+                    <td><b>#4</b> Enable user to <b>share</b> trips through digital and tangible mediums. </td>
+                  </tr>
+                </table>
+            </div>
+            <div class="paragraph"></div>
+        </div>
+
+
+        <div class="part">
+            <div class="block"><div class="part-title">Service Design</div></div>
+            <div class="g-1"><a class="gallery" href="images/01/011.jpg"><img src="images/01/011.jpg"></a></div>
+
+            <div class="img-gap"></div>
+            <p>Steps:</p>
+            <ul class="decision">
+                <li><b>Build Persona</b>: Users build "Persona" to digitize their preferences and interests when register, this value will be used to match options. </li>
+                <li><b>Input Requirements</b>: Hygge provides multiple filters so users can target options easily. (e.g. budget, flight, hotel, attraction, trip purpose...)</li>
+                <li><b>Select Options</b>: Hygge provides less than 10 options for each section, based on the match score. Users can also see more options immediately.</li>
+                <li><b>Get Itinerary</b>: Once users confirm selections, Hygge can book all services and generate  online or printed itinerary.</li>
+            </ul>
+
+            <div class="paragraph"></div><div class="paragraph"></div>
+            <p>The change of the user journey map, without and with the Hygge:</p>
+            <div class="img-gap"></div>
+            <div class="g-2">
+                <a class="gallery" href="images/01/008.jpg"><img src="images/01/008a.jpg"></a>
+                <a class="gallery" href="images/01/007.jpg"><img src="images/01/007a.jpg"></a>
+            </div>
+        </div>
+
+        <div class="part5" id="05">
+            <div class="part">
+                <div class="block"><div class="part-title">Wireframe</div></div>
+                <div class="g-wide"><a class="gallery" href="images/01/009.jpg"><img src="images/01/009.jpg"></a></div>
+            </div>
+        </div>
+
+        <div class="part6" id="06">
+            <div class="part">
+                <div class="divide" style="background:#2B43B3;">
+                <div class="block"><div class="part-title" style="color:white;">Product Design</div></div>
+                <div class="block"><a class="see-o" target="new" href="hygge-ui-board.html"><span class="new-tab" style="color:white;">see all UIs<img src="images/svg/seeo.svg" alt=""></span></a></div>
+                <div class="paragraph"></div>
+                <div class="col-gp col-a">
+                    <div class="col">
+                        <img src="images/01/app/1.1.jpg">
+                        <img src="images/01/app/3.1.1.jpg">
+                    </div>
+                    <div class="col">
+                        <img src="images/01/app/1.2.jpg">
+                        <img src="images/01/app/3.2.jpg">
+                    </div>
+                    <div class="col">
+                        <img src="images/01/app/1.3.jpg">
+                        <img src="images/01/app/3.3.jpg">
+                    </div>
+                    <div class="col">
+                        <img src="images/01/app/2.1.jpg">
+                       <img src="images/01/app/3.4.jpg">
+                    </div>
+                    <div class="col">
+                        <img src="images/01/app/2.2.jpg">
+                        <img src="images/01/app/3.5.jpg">
+                    </div>
+                    <div class="col last">
+                        <img src="images/01/app/2.3.jpg">
+                        <img src="images/01/app/4.2.jpg">
+                    </div>
+                </div>
+            </div>
+
+            <div class="part">
+                <div class="divide invision divbg2">
+                <div class="paragraph"></div><div class="paragraph"></div>
+                <div class="block"><div class="part-title" style="color:white;">Screen Prototype</div></div>
+                    <iframe src="https://mujiun.invisionapp.com/public/share/TJY4SP4NS" frameborder="0" allowtransparency="true" onload="this.style.height=(this.contentDocument.body.scrollHeight+45) +'px';" scrolling="no" style="width:100%;border:none;"></iframe>
+                </div>
+                <div class="no-radius" ><img src="images/01/013.jpg"></div>
+            </div></div>
+
+            <div class="part7" id="07">
+                <div class="part">
+                    <div class="block"><div class="part-title">Technical Implemetation</div></div>
+                    <h3>How does Hygge build a database?</h3>
+                    <p>Hygge <span class="mark">scrapes data</span> from numerous sites such as Google, TripAdvisor, Wikipedia and build then build the initial database. Therefore, Hygge owns basic information such as the popular and famous sites in each city. For analysis, Hygge would <span class="mark">identify characteristics</span> and assign an attribute value for each trip options, the value will be used for matching a user's requirement and preferences.
+                    <div class="img-gap"></div>
+                    <div class="g-1"><a class="gallery" href="images/01/002.jpg"><img src="images/01/002.jpg"></a></div>
+
+                    <div class="paragraph"></div><div class="paragraph"></div>
+                    <h3>How does the Persona help recommendations?</h3>
+                    <p>Hygge requests user to build Persona when register, therefore, Hygge can <span class="mark">build the initial data and value for the further recommendation analysis</span>. Hygge uses multiple data analysis methods such as euclidean distance to calculate the match number.</p>
+                    <div class="img-gap"></div>
+                    <div class="g-1"><a class="gallery" href="images/01/003.jpg"><img src="images/01/003.jpg"></a></div>
+
+                    <div class="paragraph"></div><div class="paragraph"></div>
+                    <h3>How does Hygge optimize recommendation?</h3>
+                    <p> Hygge uses <span class="mark">machine learning to update the scoring system</span> for both the database and the user. Sometimes people just have no idea what they like or what they want, Hygge will revise the matching value based on the user's behavior and decisions.</p>
+                    <div class="img-gap"></div>
+                    <div class="g-1"><a class="gallery" href="images/01/004.jpg"><img src="images/01/004.jpg"></a></div>
+                </div>
+        </div>
+
+        <div class="part8" id="08">
+            <div class="part">
+                <div class="block"><div class="part-title">Lessons</div></div>
+                <p>Feasibility and accuracy of the personalization. As the machine learning and algorithm grow mature, I think "personalization" will be the next trend for every digital service/product. <span class="mark">Most of the products recommend options based on past data, which I think might have a limitation due to the weak links</span>. I have doubts about this process so I choose to let the user input their interest in the first step, which is also a challenge for me - <span class="mark">how can I use the fewer steps to get the most related data to know users' interests and preferences?</span> - that will be the topic I want to learn more about.</p>
+                <p>Digital experience v.s tangible experience. I also think about the digital experience and physical experience, which can lead to a very different experience for users. On the age of digital, people will eventually get bored of only acquiring the online product, and convenience can take away lots of experience. <span class="mark">I believe that happy memory and experience should be augmented in people's lives, and those abstract things should be delivered in the tangible form if possible to remind people and bring a positive impact on people's lives</span>.
+                </p>
+                <div class="space"></div>
+
+                <div class="block"><div class="part-title">Iteration</div></div>
+                <p>For the future improvement, I want to (1) <b>improve the accuracy of recommendation</b>, this might require more data research or cooperated with experienced expert. In addition, I want to (2) <b>make the whole process more streamlined and simplified</b>, by iterating the interface and experience design.</p>
+            </div>
+        </div>
+
+        <div class="block"><div class="part-titleSub">END ###</div></div>
+    </div>
+
+
+<footer></footer>
+    </div><!-- /main-content -->
+
+<script>
+// Scroll spy for side nav
+(function() {
+  var navLinks = document.querySelectorAll('.side-nav a');
+  var sections = [];
+  navLinks.forEach(function(link) {
+    var id = link.getAttribute('href').replace('#', '');
+    var el = document.getElementById(id);
+    if (el) sections.push({ id: id, el: el, link: link });
+  });
+
+  function updateActive() {
+    var scrollPos = window.scrollY + 120;
+    var current = sections[0];
+    sections.forEach(function(s) {
+      if (s.el.offsetTop <= scrollPos) current = s;
+    });
+    navLinks.forEach(function(l) { l.classList.remove('active'); });
+    if (current) current.link.classList.add('active');
+  }
+
+  // Set first item active on load
+  if (navLinks.length) navLinks[0].classList.add('active');
+
+  window.addEventListener('scroll', updateActive);
+})();
+</script>
+</body>
+</html>

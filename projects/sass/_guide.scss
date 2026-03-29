@@ -1,0 +1,58 @@
+.guide{
+	width: 500px; margin: 0 auto; padding-top: 40px;
+	margin-bottom: 200px;
+
+	.title{
+		font-size: 20px;
+		color: #3383FF;
+		font-weight: 800;
+		padding-bottom: 30px;
+	}
+	h1,h2,h3,h4,h5,h6,p,.part{ position: relative; top: -22px;}
+
+	.g-title{
+		color: #CDCDCD;
+		font-size: 14px; 
+		font-weight: 800;
+		border-bottom: 2px #CDCDCD solid;
+
+	    display: inline-block;
+	    position: relative;
+	    left: -100px;
+	    height: 22px;
+	}
+
+	span{ height: 50px; padding-right: 10px;}
+	.weight1{ font-weight: 400;}
+	.weight2{ font-weight: 600;}
+	.weight3{ font-weight: 700;}
+	.weight4{ font-weight: 800;}
+
+	.color-theme{
+		font-size: 14px; line-height: 50px;
+		color: white;
+		font-weight: 600; text-align: center; 
+		> div{ float: left; width: 120px; height: 50px;}
+		.color1{ background-color: $mainColor1;}
+		.color2{ background-color: $mainColor2;}
+		.color3{ background-color: $mainColor3;}
+		.color4{ background-color: $mainColor4;}
+
+		.text1{ background-color: $textColor1;}
+		.text2{ background-color: $textColor2;}
+		.text3{ background-color: $textColor3;}
+
+		.btn1{ background-color: $btnColor1;}
+		.btn2{ background-color: $btnColor2;}
+	}
+
+	.border{
+		font-size: 14px; line-height: 22px;
+		> div{ padding-top: 20px;}
+		> div:first-child{ padding-top: 0px;}
+		.border1{ border-bottom: $borderLine1;}
+		.border2{ border-bottom: $borderLine2;}
+	}
+}
+
+

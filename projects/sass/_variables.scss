@@ -1,0 +1,78 @@
+//Font
+@import url(https://fonts.googleapis.com/css?family=Work+Sans:400,500,600,700&display=swap);
+
+*{
+    -webkit-font-smoothing: antialiased;
+    -webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;
+}
+
+//'Assistant', sans-serif,
+
+$font-base: 
+'Work Sans', sans-serif,
+'Noto Sans TC',
+Microsoft JhengHei,
+微軟正黑體,
+Helvetica Neue;
+
+//Basic Setting
+$rhythm-unit: 'px';
+$susy: ( 
+	columns:12, 
+	gutters:1/3, 
+	gutter-position:split, 
+);//gutters:1/3＝20px;gutter-position:split=左右均分間距
+$pc: ( 
+	column-width:60px, 
+	math:static
+);
+
+$gutter: 10px;
+
+//Color Theme
+$mainColor1:#373AB8; // 深紫
+$mainColor2:#696CD9; // 中紫
+$mainColor3:#E3E4FE; // 淺紫
+$mainColor4:#E9E9FF; //hover/a bg 灰
+
+$textColor1:#35363A; // 黑
+$textColor2:#888; // 灰
+$textColor3:#bbb; // 淺灰
+$textColor4:#999; // 淺灰
+$textColor5:#aaa; // 灰
+
+$shortcutColor:#000000;
+
+$bgColor: #ffffff; //white
+
+$btnColor1:#3E42DA; // 按鈕文字
+$btnColor2:#C8C9F5; // 按鈕圖標
+
+//Line & Border
+$borderLine1: 1px $textColor1 solid; //
+$borderLine2: 1px $mainColor3 solid; //
+
+
+//Letter-spacing
+$letterSpace1: .2px;
+$letterSpace2: .5px;
+
+//width
+$maxWidth1: 650px;
+$maxWidth2: 740px;
+$maxWidth3: 900px; //screen>1440px 
+
+//bg
+$div-bg1: #F6F6F6; //淺灰F8F8F8
+$div-bg2: #1D2029; //for invision
+$div-bg3: #aaa; //深灰
+
+//Space & Padding
+$padding-container: 40px;
+$padding-basic: 20px;
+$padding-title: 10px;
+$padding-paragraph: 30px;
+$spacing-part: 100px;
+
+
+

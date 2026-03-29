@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="UTF-8">
+    <title>Maryland DNR License Portal - Discovery Journey, Web Framework</title>
+
+    <!-- All -->
+    <meta property="og:title" content="Mujiun | UX Designer" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://mu-jn.com/" />
+    <meta property="og:image" content="http://mu-jn.com/images/og.jpg" />
+    <meta property="og:description" content="CMU MIIPS, Web/App Design" />
+    <link rel="apple-touch-icon" sizes="76x76" href="favicons/apple-icon-76x76.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
+    <link rel="manifest" href="favicons/manifest.json">
+    <link rel="mask-icon" href="favicons/safari-pinned-tab.svg" color="#000">
+    <meta name="theme-color" content="#000">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-112748057-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-158583225-1', {
+          'page_title' : 'theme-editor.html',
+          'page_path': '/theme-editor.html'
+        });
+    </script>
+    <!-- All -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/mu.css">
+    <link rel="stylesheet" href="css/venobox.css">
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="js/mumu.js"></script>
+    <script src="js/venobox.js"></script>
+    <script>
+        $(function(){
+            $('.gallery').venobox();
+        });
+    </script>
+    <style>
+      /* ── NEW PROJECT LAYOUT ── */
+      body.new-layout {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      body.new-layout .progress-container { display: none; }
+
+      /* Left nav */
+      body.new-layout .side-nav {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 240px;
+        height: 100vh;
+        padding: 40px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        z-index: 100;
+      }
+
+      body.new-layout .side-nav a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 12.5px;
+        font-weight: 400;
+        color: #35363A;
+        text-decoration: none;
+        padding: 0;
+        line-height: 1.4;
+        transition: color 0.15s ease;
+        letter-spacing: -0.01em;
+        text-transform: uppercase;
+      }
+
+      body.new-layout .side-nav a::before {
+        content: '';
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #35363A;
+        opacity: 0.2;
+        flex-shrink: 0;
+        transition: background-color 0.15s ease, opacity 0.15s ease;
+      }
+
+      body.new-layout .side-nav a:hover {
+        color: #35363A;
+      }
+
+      body.new-layout .side-nav a.active {
+        color: #D56C00;
+        font-weight: 500;
+      }
+
+      body.new-layout .side-nav a.active::before {
+        background-color: #D56C00;
+        opacity: 1;
+      }
+
+      /* Hide old shortcut */
+      body.new-layout .shortcut { display: none !important; }
+
+      /* Main content area */
+      body.new-layout .main-content {
+        flex: 1;
+        max-width: 720px;
+        margin-left: calc(280px + (100vw - 280px - 700px) / 2);
+      }
+
+      body.new-layout .top {
+        margin: 0;
+        margin-bottom: 20px;
+      }
+
+      body.new-layout .top img {
+        max-height: none;
+        width: 100%;
+        display: block;
+        object-fit: cover;
+      }
+
+      body.new-layout .head {
+        text-align: left;
+      }
+
+      body.new-layout .head .text {
+        max-width: none;
+        text-align: left;
+      }
+
+      body.new-layout.article h1,
+      body.new-layout.article h2,
+      body.new-layout.article h3,
+      body.new-layout.article h5,
+      body.new-layout.article h6,
+      body.new-layout.article p,
+      body.new-layout.article .block,
+      body.new-layout.article .block-box,
+      body.new-layout.article ul,
+      body.new-layout.article ol,
+      body.new-layout.article table,
+      body.new-layout.article .head,
+      body.new-layout.article .head .text {
+        max-width: none;
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
+        text-align: left;
+      }
+
+      body.new-layout .main-content .head {
+        padding: 0;
+        padding-top: 30px;
+      }
+
+      body.new-layout .main-content .head .text {
+        max-width: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      body.new-layout .top {
+        margin: 0;
+      }
+
+      body.new-layout .top img {
+        margin: 0;
+      }
+
+      /* Override all centering from mu.css */
+      body.new-layout.article .content .g-0,
+      body.new-layout.article .content .g-1,
+      body.new-layout.article .content .g-1w,
+      body.new-layout.article .content .g-2,
+      body.new-layout.article .content .g-3,
+      body.new-layout.article .content .g-4,
+      body.new-layout.article .content .g-wide {
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
+        max-width: none;
+      }
+
+      body.new-layout.article .content {
+        margin-top: 40px;
+      }
+
+      body.new-layout.article .content .g-0 a,
+      body.new-layout.article .content .g-1 a,
+      body.new-layout.article .content .g-1w a {
+        display: block;
+      }
+
+      body.new-layout.article .g-1w,
+      body.new-layout.article .content .g-1w {
+        width: 108%;
+        max-width: none;
+        margin-left: -4%;
+        padding: 0;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      body.new-layout .divide {
+        padding-left: 0;
+        padding-right: 0;
+        padding-bottom: 0;
+      }
+
+      body.new-layout .divide.divbg1 {
+        background-color: transparent;
+        padding: 0;
+        border-radius: 12px;
+        font-family: 'IBM Plex Mono', monospace;
+      }
+
+      body.new-layout .divide.divbg1 .block-box span,
+      body.new-layout .divide.divbg1 .block-box div,
+      body.new-layout .divide.divbg1 .block-w1 span,
+      body.new-layout .divide.divbg1 .block-w1 div,
+      body.new-layout .divide.divbg1 .block-w2 span,
+      body.new-layout .divide.divbg1 .block-w2 div {
+        font-size: 13px;
+      }
+
+      body.new-layout .part {
+        margin-bottom: 80px;
+      }
+
+      body.new-layout.article .block-box {
+        padding: 0;
+        background-color: #F6F6F6;
+        border-radius: 12px;
+        display: flex;
+        gap: 20px;
+        font-family: 'IBM Plex Mono', monospace;
+      }
+
+      body.new-layout.article .block-box .block-w1,
+      body.new-layout.article .block-box .block-w2 {
+        width: 50%;
+        margin-right: 0;
+      }
+
+      body.new-layout.article table {
+        margin-left: 0;
+      }
+
+      body.new-layout p,
+      body.new-layout li,
+      body.new-layout .block-w1 div,
+      body.new-layout .block-w1 span,
+      body.new-layout .block-w2 div,
+      body.new-layout .block-w2 span {
+        font-size: 17px;
+        font-weight: 400;
+        line-height: 1.4;
+      }
+
+      body.new-layout .part ul {
+        list-style: disc;
+        padding-left: 1.5em;
+        padding-bottom: 20px;
+      }
+
+      body.new-layout.article p:has(+ ul) {
+        padding-bottom: 6px;
+      }
+
+      body.new-layout .block-box .box-label {
+        font-size: 12px;
+        font-weight: 700;
+        font-family: 'IBM Plex Mono', monospace;
+        color: #D56C00;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 6px;
+      }
+
+      body.new-layout .block-box .box-text,
+      body.new-layout .block-box p {
+        font-size: 13px;
+        font-weight: 400;
+        letter-spacing: -0.2px;
+        line-height: 1.4;
+        margin-bottom: 40px;
+      }
+
+      body.new-layout .block-box .box-text li {
+        font-size: 13px;
+        font-weight: 400;
+        letter-spacing: -0.2px;
+        line-height: 1.4;
+        margin-bottom: 0;
+      }
+
+      body.new-layout .box-text:last-child {
+        margin-bottom: 0;
+      }
+
+      body.new-layout b {
+        font-weight: 600;
+        color: #D56C00;
+      }
+
+      body.new-layout h3 {
+        color: #35363A;
+        padding-top: 16px;
+        font-weight: 700;
+      }
+
+      body.new-layout h1 {
+        font-size: 40px;
+        line-height: 1.3em;
+        padding-bottom: 12px;
+      }
+
+      body.new-layout .part-title {
+        margin-bottom: 36px;
+        color: #35363A;
+      }
+
+      body.new-layout p.feedback {
+        padding: 0;
+        padding-bottom: 12px;
+        font-size: 14px;
+        color: #D56C00;
+      }
+
+      body.new-layout.article .block {
+        padding-top: 32px;
+      }
+
+      body.new-layout .part1 .block-box {
+        background-color: transparent;
+      }
+
+      body.new-layout .box-text ul {
+        list-style: disc;
+        padding-left: 1.2em;
+      }
+
+      body.new-layout h6 {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 1.6em;
+        color: #888;
+      }
+
+      body.new-layout .content {
+        text-align: left;
+      }
+
+      body.new-layout .g-1w,
+      body.new-layout .g-0,
+      body.new-layout .g-1 {
+        text-align: left;
+      }
+
+      body.new-layout .g-1w img,
+      body.new-layout .g-0 img,
+      body.new-layout .g-1 img {
+        display: block;
+      }
+
+      body.new-layout .part-title {
+        text-align: left;
+      }
+
+      body.new-layout .divide {
+        text-align: left;
+      }
+
+      body.new-layout footer {
+        text-align: left;
+        margin-left: 0;
+      }
+
+      /* Responsive: collapse nav on small screens */
+      @media (max-width: 768px) {
+        body.new-layout .side-nav {
+          position: relative;
+          width: 100%;
+          height: auto;
+          flex-direction: row;
+          flex-wrap: wrap;
+          padding: 16px 20px;
+          gap: 4px 16px;
+          border-bottom: 1px solid rgba(67,67,67,0.1);
+        }
+
+        body.new-layout .side-nav a {
+          font-size: 14px;
+        }
+
+        body.new-layout .main-content {
+          margin-left: 0;
+          width: 100%;
+        }
+
+        body.new-layout {
+          flex-direction: column;
+        }
+      }
+
+    </style>
+</head>
+
+<body class="article theme new-layout">
+<div class="progress-container">
+    <div class="progress-bar" id="myBar"></div>
+</div>
+
+    <!-- Left side navigation -->
+    <nav class="side-nav">
+        <a href="#01">Background</a>
+        <a href="#02">User Journey</a>
+        <a href="#03">Define Scope</a>
+        <a href="#04">Shape Solution</a>
+        <a href="#05">Convince Leadership</a>
+        <a href="#06">Negotiate Trade-offs</a>
+        <a href="#07">User Validation</a>
+        <a href="#08">Result &amp; Impact</a>
+        <a href="#09">Lessons</a>
+    </nav>
+
+    <!-- Hide old shortcut -->
+    <div class="shortcut" style="display:none"></div>
+
+    <!-- Main content -->
+    <div class="main-content">
+    <div class="top" id="00"><img src="images/08/001.jpg" alt=""></div>
+    <div class="head">
+        <div class="text">
+            <h1>Maryland DNR License Portal - Discovery Journey, Web Framework</h1>
+            <h6>Jun - Jul 2021, Lead Designer, Government Project</h6>
+            <h3>Ease the journey of obtaining hunting/fishing licenses with intuitive, streamlined navigation and useful, scannable content.</h3>
+        </div>
+    </div>
+
+    <!-- content -->
+    <div class="content fadeup">
+        <div class="part1">
+            <div class="part brief"><div class="divide divbg1">
+                <div class="block-box">
+                <div class="block-w1">
+                    <div class="br-title">Summary</div>
+                    <br><br>
+                    <span>Impact</span>
+                    <div>New portal saves users 50% footprint on discovery and improves ease of use proven by user testing.</div><br>
+
+                    <span>Deliverables</span>
+                    <div>Product strategy (eCommerce), 3 UI pages (mobile, desktop), UX, content, branding, web framework, design system.</div><br>
+
+                    <span>Team</span>
+                    <div>Core Memeber - Design Lead, Director of Product(PM); Support - UXR, Eng, Project Assistant, Business Analyst, Visual Designer.</div><br>
+
+                    <span>Project Challenges</span>
+                    <div>New domain to learn, ambiguous scope, define web framework before shape solution.</div><br>
+
+                </div>
+                <div class="block-w2">
+                    <div class="br-title">Process</div>
+                    <br><br>
+                    <span>● &nbsp; Discover</span>
+                    <span class="br-lf">Understand Product <br>User Journey & Problems</span>
+                    <span>● &nbsp; Define</span>
+                    <span class="br-lf">Clarify Scope & Product Area <br> Shape UI/UX Solution<br>Convince CEO</span>
+                    <span>● &nbsp; Develop</span>
+                    <span class="br-lf">Build Prototypes <br>Negotiate Trade-offs<br>User Testing<br>Iterate with Feedback</span>
+                    <span>● &nbsp; Deliver</span>
+                    <span class="br-lf">UI, UX, Content, Branding, Design System</span>
+                    <span>● &nbsp; 8 Weeks to Deliver Designs</span>
+                </div>
+                </div>
+            </div></div>
+        </div>
+
+        <div class="part" id="01">
+            <div class="block"><div class="part-title">Background</div></div>
+            <p>Maryland Department of Natural Resources provides various services on their online portal -<a href="https://compass.dnr.maryland.gov/">DNR Compass</a> including recreational licenses, permits and stamps; off-road vehicle registrations, magazine subscriptions, and donation. </p>
+            <div class="img-gap"></div>
+            <div class="g-0"><a class="gallery" href="images/08/002.jpg"><img src="images/08/002.jpg"></a></div>
+
+            <div class="paragraph"></div><div class="paragraph"></div>
+            <p>As people get used to easy-to-use eCommerce experience when purchase online, this text-heavy outdated portal no longer meets users' needs. Our goal is to build a more intuitive and streamlined experiences so users can discover product and complete tasks easily.</p>
+            <div class="img-gap"></div>
+            <div class="g-0"><a class="gallery" href="images/08/003.jpg"><img src="images/08/003.jpg"></a></div>
+        </div>
+
+        <div class="part2" id="02">
+            <div class="part">
+                <div class="block"><div class="part-title">User Journey</div></div>
+                <p>We interviewed 10 users who purchased hunting licenses on current DNR portal within a year to learn about 4 pain points users have within the journey.</p>
+                <div class="img-gap"></div>
+                <div class="g-0"><a class="gallery" href="images/08/004.jpg"><img src="images/08/004.jpg"></a></div>
+                <div class="paragraph"></div>
+                <p>P1 - Login on homepage makes informaion and portal not accessible<br>
+                   P2 - Disconnected navigation makes users go back and forth between pages<br>
+                   P3 - Lack of informaiton requires users additional time on research<br>
+                   P4 - Lack of guidance on verifying certificate and purchase prerequisite</p>
+            </div>
+        </div>
+
+        <div class="part3" id="03">
+            <div class="part">
+            <div class="block"><div class="part-title">Define Scope</div></div>
+                <p>To clarify scope for discovery, I first aligned with team on tasks to focus.</p>
+                <div class="img-gap"></div>
+                <div class="g-0"><a class="gallery" href="images/08/005.jpg"><img src="images/08/005.jpg"></a></div>
+                <div class="paragraph"></div>
+                <p>"Where to build features" was still unclear which blocked discussion. To address blocker, I built the "baseline" which echos user needs on eCommerce experience. Baseline could be the starting point to drive research, inspire ideas, facilitate discussion, and shape solution.</p>
+                <div class="img-gap"></div>
+                <div class="g-0"><a class="gallery" href="images/08/006.jpg"><img src="images/08/006.jpg"></a></div>
+            </div>
+        </div>
+
+        <div class="part4" id="04">
+            <div class="part">
+                <div class="block"><div class="part-title">Shape Solution</div></div>
+                <h3>Homepage - Show products before login to make information accessible and ease the discovery</h3>
+                <p></p>
+                <div class="g-1w"><a class="gallery" href="images/08/007.jpg"><img src="images/08/007.jpg"></a></div>
+                <div class="img-gap"></div><div class="img-gap"></div><div class="img-gap"></div>
+                <p>When built homepage mockup, I learned that login can impact price display, and this finding drove more research. From competitor research, I cannot find any precedents showing price range before user login, so I eventually turned to client and users to justify this approach. </p>
+                <div class="img-gap"></div><div class="img-gap"></div>
+                <div class="g-0"><a class="gallery" href="images/08/008.jpg"><img src="images/08/008.jpg"></a></div>
+                <div class="paragraph"></div><div class="paragraph"></div>
+
+                <h3>Category Page - Show product card with useful information and scannable format to ease the discovery</h3>
+                <p></p>
+                <div class="g-1w"><a class="gallery" href="images/08/009.jpg"><img src="images/08/009.jpg"></a></div>
+                <div class="paragraph"></div><div class="paragraph"></div>
+
+                <h3>Product Details Page - (1) Provide needed information in the portal to save user time on research</h3>
+                <p></p>
+                <div class="g-1w"><a class="gallery" href="images/08/010.jpg"><img src="images/08/010.jpg"></a></div>
+                <div class="img-gap"></div><div class="img-gap"></div>
+                <p>I've guided the team on research to fulfill the content for product details page.</p>
+                <div class="img-gap"></div>
+                <div class="g-0"><a class="gallery" href="images/08/011.jpg"><img src="images/08/011.jpg"></a></div>
+                <div class="paragraph"></div><div class="paragraph"></div>
+
+                <h3>Product Details Page - (2) Add prerequisites and certificate at once to save clicks and navigation</h3>
+                <p></p>
+                <div class="g-1w"><a class="gallery" href="images/08/012.jpg"><img src="images/08/012.jpg"></a></div>
+                <div class="img-gap"></div><div class="img-gap"></div><div class="img-gap"></div>
+                <p>I've led team discussion on different user flow regarding when to verify certificate and add licenses to cart, analyzed pros and cons, and landed on the final decision.</p>
+                <div class="img-gap"></div><div class="img-gap"></div>
+                <div class="g-0"><a class="gallery" href="images/08/013.jpg"><img src="images/08/013.jpg"></a></div>
+                <div class="paragraph"></div><div class="paragraph"></div>
+
+                <h3>Final Proposal - Streamlined discovery experience users want</h3>
+                <p></p>
+                <div class="g-0"><a class="gallery" href="images/08/014.jpg"><img src="images/08/014.jpg"></a></div>
+            </div>
+        </div>
+
+        <div class="part5" id="05">
+            <div class="part">
+            <div class="block"><div class="part-title">Convince Leadership</div></div>
+            <p>To pitch our solution and persuade CEO, I've invited relevant stakeholders and mocked up additional concept based on CEO's proposal. By showing 2 concepts to the broader team, I expected to gain more support for my ideas to impact CEO's decision.</p>
+            <p>And I've successfully pitched our team's idea and changed CEO's mind</p>
+            <div class="img-gap"></div>
+            <div class="g-1w"><a class="gallery" href="images/08/015.jpg"><img src="images/08/015.jpg"></a></div>
+            </div>
+        </div>
+
+        <div class="part6" id="06">
+            <div class="part">
+            <div class="block"><div class="part-title">Negotiate Trade-offs</div></div>
+            <p>After getting leadership approval, I've worked with PM, Eng, researcher, and visual designer to update pages and planned for user testing to validate designs.</p>
+            <div class="g-0"><a class="gallery" href="images/08/016.jpg"><img src="images/08/016.jpg"></a></div>
+            <div class="paragraph"></div><div class="paragraph"></div>
+
+            <h3>Changes we made and why?</h3>
+            <p></p>
+            <div class="g-1w"><a class="gallery" href="images/08/018.jpg"><img src="images/08/018.jpg"></a></div>
+            <div class="img-gap"></div>
+            <div class="g-1w"><a class="gallery" href="images/08/019.jpg"><img src="images/08/019.jpg"></a></div>
+            <div class="img-gap"></div>
+            <div class="g-1w"><a class="gallery" href="images/08/020.jpg"><img src="images/08/020.jpg"></a></div>
+            <div class="img-gap"></div>
+            <div class="g-1w"><a class="gallery" href="images/08/021.jpg"><img src="images/08/021.jpg"></a></div>
+        </div>
+
+        <div class="part7" id="07">
+            <div class="part">
+            <div class="block"><div class="part-title">User Validation</div></div>
+            <div class="g-1"><a class="gallery" href="images/08/022.jpg"><img src="images/08/022.jpg"></a></div>
+        </div>
+
+        <div class="part8" id="08">
+            <div class="part">
+            <div class="block"><div class="part-title">Result &amp; Impact</div></div>
+            <p>Achievements:
+            <br/>(1) Save users 50% footprint on product discovery
+            <br/>(2) User testing reached 100% task completion rate, prove the ease of use
+            <br/>(3) Partner team credited on scalable designs</p>
+            <div class="g-wide"><a class="gallery" href="images/08/017.png"><img src="images/08/017.png"></a></div>
+            </div>
+        </div>
+
+        <div class="part9" id="09">
+            <div class="part">
+            <div class="block"><div class="part-title">Lessons</div></div>
+            <p>I learned about 2 things from this project:
+            <br/>(1) How to impact leadership decisions through presentation and stakeholders' feedback
+            <br/>(2) How to quickly help team align on one page and clarify ambiguity with baseline concepts
+            </p>
+            <div class="space"></div>
+        </div>
+
+        <div class="block"><div class="part-titleSub">END ###</div></div>
+    </div>
+
+
+<footer></footer>
+    </div><!-- /main-content -->
+
+<script>
+// Scroll spy for side nav
+(function() {
+  var navLinks = document.querySelectorAll('.side-nav a');
+  var sections = [];
+  navLinks.forEach(function(link) {
+    var id = link.getAttribute('href').replace('#', '');
+    var el = document.getElementById(id);
+    if (el) sections.push({ id: id, el: el, link: link });
+  });
+
+  function updateActive() {
+    var scrollPos = window.scrollY + 120;
+    var current = sections[0];
+    sections.forEach(function(s) {
+      if (s.el.offsetTop <= scrollPos) current = s;
+    });
+    navLinks.forEach(function(l) { l.classList.remove('active'); });
+    if (current) current.link.classList.add('active');
+  }
+
+  // Set first item active on load
+  if (navLinks.length) navLinks[0].classList.add('active');
+
+  window.addEventListener('scroll', updateActive);
+})();
+</script>
+</body>
+</html>
