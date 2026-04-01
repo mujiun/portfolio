@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meta for Developers — Assets</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@300..800&display=block" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #FFFFFF;
+      --page-bg: #F0F2F5;
+      --surface: #F8F9FA;
+      --ink: #1C1E21;
+      --ink2: #4B4F56;
+      --ink3: #8A8D91;
+      --accent: #1877F2;
+      --accent-light: #E7F3FF;
+      --green: #31A24C;
+      --border: #DADDE1;
+      --border-light: #E4E6EB;
+      --font: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+      --title: 'Commissioner', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: var(--font);
+      background: var(--page-bg);
+      background-image: url('bg.jpg');
+      background-size: cover;
+      background-attachment: fixed;
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* ══ TOP NAV ══ */
+    .topnav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 50px;
+      padding: 0 16px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .topnav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .meta-logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .meta-logo img { height: 18px; width: auto; }
+
+    .topnav-tabs {
+      display: flex;
+      gap: 0;
+      align-items: center;
+      height: 50px;
+    }
+
+    .topnav-tab {
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink2);
+      text-decoration: none;
+      padding: 0 12px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      border-bottom: 3px solid transparent;
+      transition: color 0.12s;
+      cursor: pointer;
+    }
+
+    .topnav-tab:hover { color: var(--accent); }
+
+    .topnav-tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .topnav-tab .caret {
+      width: 12px;
+      height: 12px;
+      margin-left: 4px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+    }
+
+    .topnav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: var(--surface);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      padding: 6px 10px;
+      gap: 6px;
+      min-width: 160px;
+    }
+
+    .search-icon { color: var(--ink3); flex-shrink: 0; }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 13px;
+      color: var(--ink);
+      width: 100%;
+      font-family: var(--font);
+    }
+
+    .search-box input::placeholder { color: var(--ink3); }
+
+    .nav-icons {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .nav-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .nav-icon svg { width: 16px; height: 16px; color: var(--ink2); }
+
+    /* ══ BREADCRUMB ══ */
+    .breadcrumb {
+      padding: 14px 24px 0;
+      font-size: 13px;
+      color: var(--ink3);
+    }
+
+    .breadcrumb a { color: var(--ink2); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb .sep { margin: 0 8px; color: var(--ink3); font-size: 11px; }
+    .breadcrumb .current { color: var(--ink); font-weight: 600; }
+
+    /* ══ PAGE TITLE ══ */
+    .page-title-area { padding: 12px 24px 16px; }
+
+    .page-title-area h1 {
+      font-family: var(--title);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+
+    .page-title-area p { font-size: 13px; color: var(--ink2); }
+
+    /* ══ CONTENT LAYOUT ══ */
+    .content-layout {
+      display: flex;
+      gap: 16px;
+      padding: 0 24px 80px;
+      align-items: flex-start;
+    }
+
+    /* ══ LEFT NAV ══ */
+    .left-nav {
+      width: 220px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 66px;
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 8px 0;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    .nav-dropdown {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      margin: 4px 8px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg);
+      font-family: var(--title);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    .nav-dropdown .dd-caret {
+      width: 14px;
+      height: 14px;
+      stroke: var(--ink3);
+      fill: none;
+      stroke-width: 1.8;
+      flex-shrink: 0;
+    }
+
+    .nav-link {
+      display: block;
+      font-family: var(--title);
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--ink);
+      text-decoration: none;
+      padding: 6px 16px;
+      cursor: pointer;
+      transition: background 0.1s, color 0.1s;
+    }
+
+    .nav-link:hover {
+      background: var(--surface);
+      color: var(--ink);
+    }
+
+    .nav-link.active {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .nav-group {
+      margin-top: 2px;
+    }
+
+    .nav-group-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 16px;
+      font-family: var(--title);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.1s;
+    }
+
+    .nav-group-toggle:hover { background: var(--surface); }
+
+    .nav-group-toggle .chevron {
+      width: 14px;
+      height: 14px;
+      stroke: var(--ink3);
+      fill: none;
+      stroke-width: 1.8;
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .nav-group.collapsed .chevron {
+      transform: rotate(-90deg);
+    }
+
+    .nav-group-items {
+      overflow: hidden;
+      max-height: 300px;
+      transition: max-height 0.25s ease;
+    }
+
+    .nav-group.collapsed .nav-group-items {
+      max-height: 0;
+    }
+
+    .nav-link--sub {
+      padding-left: 32px;
+      font-size: 13px;
+    }
+
+    /* ══ RIGHT CONTENT ══ */
+    .right-content {
+      flex: 1;
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 24px 32px;
+      min-height: 600px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    .right-content h2 {
+      font-family: var(--title);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .right-content .overview-desc {
+      font-size: 14px;
+      color: var(--ink2);
+      line-height: 1.4;
+    }
+
+    .section-divider {
+      height: 1px;
+      background: var(--border-light);
+      margin: 28px 0;
+    }
+
+    .right-content h3 {
+      font-family: var(--title);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 16px;
+    }
+
+    /* ══ ASSET DIAGRAM ══ */
+    .asset-diagram {
+      margin-top: 6px;
+    }
+
+    /* Top card: Business Portfolio */
+    .asset-top {
+      background: var(--surface);
+      border-radius: 10px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .asset-top .asset-text { flex: 1; }
+
+    .asset-top .asset-tags-right {
+      display: flex;
+      gap: 4px;
+      flex-shrink: 0;
+      align-self: flex-start;
+    }
+
+    .asset-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .asset-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke-width: 1.6;
+      fill: none;
+    }
+
+    .asset-icon--blue { background: var(--accent-light); }
+    .asset-icon--blue svg { stroke: var(--accent); }
+
+    .asset-icon--green { background: #E8F5E9; }
+    .asset-icon--green svg { stroke: var(--green); }
+
+    .asset-icon--purple { background: #F3E8FF; }
+    .asset-icon--purple svg { stroke: #7C3AED; }
+
+    .asset-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .asset-name {
+      font-family: var(--title);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+
+    .asset-id {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--ink3);
+      line-height: 1.3;
+    }
+
+    .asset-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 4px;
+    }
+
+    .asset-tag {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--ink2);
+      background: var(--bg);
+      border: 1px solid var(--border-light);
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+
+    /* Grid of child cards */
+    .asset-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .asset-card {
+      background: var(--surface);
+      border-radius: 10px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .asset-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .asset-card-label {
+      font-family: var(--title);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--ink3);
+      margin-bottom: 4px;
+    }
+
+    /* Sub-items inside a card */
+    .asset-sub-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .asset-sub {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      background: var(--bg);
+      border-radius: 8px;
+    }
+
+    .asset-sub-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .asset-sub-icon svg {
+      width: 13px;
+      height: 13px;
+      stroke-width: 1.6;
+      fill: none;
+    }
+
+    .asset-sub-name {
+      font-family: var(--title);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+
+
+    /* ══ BOTTOM BAR ══ */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 36px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      z-index: 50;
+    }
+
+    .bottom-bar-left, .bottom-bar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .bottom-bar svg { width: 16px; height: 16px; color: var(--ink3); cursor: pointer; }
+    .bottom-bar svg:hover { color: var(--ink2); }
+    .bottom-bar-text { font-size: 11px; color: var(--ink3); }
+
+    /* ══ LEFT SYSTEM SIDEBAR ══ */
+    .sys-sidebar {
+      position: fixed;
+      left: 0;
+      top: 50px;
+      bottom: 36px;
+      width: 46px;
+      background: var(--bg);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 12px 0;
+      gap: 4px;
+      z-index: 90;
+    }
+
+    .sys-sidebar-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.12s;
+      color: var(--ink3);
+    }
+
+    .sys-sidebar-icon:hover {
+      background: var(--surface);
+      color: var(--ink2);
+    }
+
+    .sys-sidebar-icon.active {
+      background: var(--accent-light);
+      color: var(--accent);
+    }
+
+    .sys-sidebar-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.4;
+    }
+
+    .sys-sidebar-spacer { flex: 1; }
+
+    /* Offset page content for sidebar */
+    .breadcrumb,
+    .page-title-area,
+    .content-layout { margin-left: 46px; }
+  </style>
+</head>
+<body>
+
+  <!-- ══ TOP NAV ══ -->
+  <div class="topnav">
+    <div class="topnav-left">
+      <a class="meta-logo" href="#">
+        <img src="meta.svg" alt="Meta" />
+      </a>
+      <div class="topnav-tabs">
+        <a class="topnav-tab active">My Apps</a>
+        <a class="topnav-tab">Required actions</a>
+        <a class="topnav-tab">Docs <svg class="caret" viewBox="0 0 12 12"><path d="M3 4.5l3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="topnav-tab">Tools <svg class="caret" viewBox="0 0 12 12"><path d="M3 4.5l3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="topnav-tab">Support <svg class="caret" viewBox="0 0 12 12"><path d="M3 4.5l3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+    <div class="topnav-right">
+      <div class="search-box">
+        <svg class="search-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="4.5"/><path d="M9.5 9.5L13 13"/></svg>
+        <input type="text" placeholder="Search..." />
+      </div>
+      <div class="nav-icons">
+        <div class="nav-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M8 2a4 4 0 014 4c0 2-1 3.5-1 5H5c0-1.5-1-3-1-5a4 4 0 014-4zM6 13h4"/></svg></div>
+        <div class="nav-icon"><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="5.5" r="3"/><path d="M2.5 14.5C2.5 11.5 5 9.5 8 9.5s5.5 2 5.5 5"/></svg></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ LEFT SYSTEM SIDEBAR ══ -->
+  <div class="sys-sidebar">
+    <div class="sys-sidebar-icon active">
+      <svg viewBox="0 0 20 20"><path d="M3 5h14M3 10h14M3 15h14" stroke-linecap="round"/></svg>
+    </div>
+    <div class="sys-sidebar-icon">
+      <svg viewBox="0 0 20 20"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="11" y="3" width="6" height="6" rx="1"/><rect x="3" y="11" width="6" height="6" rx="1"/><rect x="11" y="11" width="6" height="6" rx="1"/></svg>
+    </div>
+    <div class="sys-sidebar-icon">
+      <svg viewBox="0 0 20 20"><path d="M7 3L3 10l4 7M13 3l4 7-4 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="sys-sidebar-icon">
+      <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><path d="M10 7v3l2 2" stroke-linecap="round"/></svg>
+    </div>
+    <div class="sys-sidebar-spacer"></div>
+    <div class="sys-sidebar-icon">
+      <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><path d="M10 9v4M10 7v.01" stroke-linecap="round"/></svg>
+    </div>
+  </div>
+
+  <!-- ══ BREADCRUMB ══ -->
+  <div class="breadcrumb">
+    <a href="#">Use cases</a>
+    <span class="sep">›</span>
+    <a href="#">Customize</a>
+    <span class="sep">›</span>
+    <span class="current">Assets</span>
+  </div>
+
+  <!-- ══ PAGE TITLE ══ -->
+  <div class="page-title-area">
+    <h1>Customize use case</h1>
+    <p>Customize use case settings and permissions to make your app work the way you want it to.</p>
+  </div>
+
+  <!-- ══ CONTENT ══ -->
+  <div class="content-layout">
+
+    <!-- LEFT NAV -->
+    <div class="left-nav">
+      <div class="nav-dropdown">
+        Connect on WhatsApp
+        <svg class="dd-caret" viewBox="0 0 12 12"><path d="M3 4.5l3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+
+      <a class="nav-link">Overview</a>
+
+      <div class="nav-group" id="nav-api">
+        <div class="nav-group-toggle" onclick="toggleGroup(this)">
+          Integrate with API
+          <svg class="chevron" viewBox="0 0 12 12"><path d="M3 4.5l3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="nav-group-items">
+          <a class="nav-link nav-link--sub active">Assets</a>
+          <a class="nav-link nav-link--sub">Step 1. Try it out</a>
+          <a class="nav-link nav-link--sub">Step 2. Production setup</a>
+          <a class="nav-link nav-link--sub">Step 3. Business verification</a>
+          <a class="nav-link nav-link--sub">Next steps</a>
+        </div>
+      </div>
+
+      <div class="nav-group collapsed" id="nav-partner">
+        <div class="nav-group-toggle" onclick="toggleGroup(this)">
+          Become a Partner
+          <svg class="chevron" viewBox="0 0 12 12"><path d="M3 4.5l3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="nav-group-items">
+          <a class="nav-link nav-link--sub">Become a Tech Provider</a>
+          <a class="nav-link nav-link--sub">Next steps</a>
+        </div>
+      </div>
+
+      <div class="nav-group collapsed" id="nav-other">
+        <div class="nav-group-toggle" onclick="toggleGroup(this)">
+          Other tools
+          <svg class="chevron" viewBox="0 0 12 12"><path d="M3 4.5l3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="nav-group-items">
+          <a class="nav-link nav-link--sub">Permissions and features</a>
+          <a class="nav-link nav-link--sub">Resources</a>
+          <a class="nav-link nav-link--sub">Documentation</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT CONTENT -->
+    <div class="right-content">
+      <h2>Your accounts and assets</h2>
+      <p class="overview-desc">These are the accounts and assets associated with your app. Each level inherits permissions from its parent.</p>
+
+      <div class="section-divider"></div>
+
+      <div class="asset-diagram">
+        <!-- Top: Business Portfolio -->
+        <div class="asset-top" style="flex-wrap: wrap;">
+          <div class="asset-card-label" style="width: 100%;">Business Portfolio</div>
+          <div class="asset-icon" style="background: #E4E6EB; border-radius: 8px; font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 20px; font-weight: 700; color: var(--ink2);">J</div>
+          <div class="asset-text">
+            <div class="asset-name">Jasper's Market Business</div>
+            <div class="asset-id">Business Portfolio ID: 10152435678901234</div>
+          </div>
+          <div class="asset-tags-right">
+            <span class="asset-tag">Business not verified yet</span>
+          </div>
+        </div>
+
+        <!-- Grid: WhatsApp / Facebook / Instagram -->
+        <div class="asset-grid">
+
+          <!-- WhatsApp -->
+          <div class="asset-card">
+            <div class="asset-card-label">WhatsApp</div>
+            <div class="asset-card-header">
+              <div class="asset-text">
+                <div class="asset-name">Jasper's Market WhatsApp</div>
+                <div class="asset-id">WABA ID: 102948571625384</div>
+              </div>
+            </div>
+            <div class="asset-sub-list">
+              <div class="asset-sub">
+                <div class="asset-sub-icon asset-icon--green">
+                  <svg viewBox="0 0 16 16"><path d="M3.5 2.5c.3-.3 1-.5 1.3-.2l1.8 1.8c.3.3.2.9-.1 1.2l-.7.7c-.1.1-.1.3 0 .5.4.7 1 1.4 1.7 2 .6.5 1.3 1 2 1.3.2.1.4.1.5 0l.7-.7c.3-.3.9-.4 1.2-.1l1.8 1.8c.3.3.1 1-.2 1.3-.8.6-1.7.9-2.6.7-1.5-.3-3-1.2-4.2-2.4S4.1 7.6 3.8 6.1c-.2-.9.1-1.8.7-2.6z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="asset-sub-name">+1 (555) 123-4567</div>
+              </div>
+              <div class="asset-sub">
+                <div class="asset-sub-icon asset-icon--green">
+                  <svg viewBox="0 0 16 16"><path d="M3.5 2.5c.3-.3 1-.5 1.3-.2l1.8 1.8c.3.3.2.9-.1 1.2l-.7.7c-.1.1-.1.3 0 .5.4.7 1 1.4 1.7 2 .6.5 1.3 1 2 1.3.2.1.4.1.5 0l.7-.7c.3-.3.9-.4 1.2-.1l1.8 1.8c.3.3.1 1-.2 1.3-.8.6-1.7.9-2.6.7-1.5-.3-3-1.2-4.2-2.4S4.1 7.6 3.8 6.1c-.2-.9.1-1.8.7-2.6z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="asset-sub-name">+1 (555) 987-6543</div>
+              </div>
+              <div class="asset-sub">
+                <div class="asset-sub-icon asset-icon--green">
+                  <svg viewBox="0 0 16 16"><path d="M3.5 2.5c.3-.3 1-.5 1.3-.2l1.8 1.8c.3.3.2.9-.1 1.2l-.7.7c-.1.1-.1.3 0 .5.4.7 1 1.4 1.7 2 .6.5 1.3 1 2 1.3.2.1.4.1.5 0l.7-.7c.3-.3.9-.4 1.2-.1l1.8 1.8c.3.3.1 1-.2 1.3-.8.6-1.7.9-2.6.7-1.5-.3-3-1.2-4.2-2.4S4.1 7.6 3.8 6.1c-.2-.9.1-1.8.7-2.6z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <div class="asset-sub-name">+1 (555) 000-0000</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Facebook -->
+          <div class="asset-card">
+            <div class="asset-card-label">Facebook</div>
+            <div class="asset-card-header">
+              <div class="asset-text">
+                <div class="asset-name">Jasper's Market</div>
+                <div class="asset-id">Facebook Page ID: 928888311234</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Instagram -->
+          <div class="asset-card">
+            <div class="asset-card-label">Instagram</div>
+            <div class="asset-card-header">
+              <div class="asset-text">
+                <div class="asset-name">@jaspersmarket</div>
+                <div class="asset-id">Instagram ID: 17841400392567</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ BOTTOM BAR ══ -->
+  <div class="bottom-bar">
+    <div class="bottom-bar-left">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h8M8 4v8"/></svg>
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="2" y="2" width="12" height="12" rx="1.5"/><path d="M2 6h12"/></svg>
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="8" cy="8" r="5.5"/><path d="M8 5v3.5l2 1.5"/></svg>
+    </div>
+    <div class="bottom-bar-right">
+      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 2.5a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5zM7 7.5h2v4.5H7z"/></svg>
+      <span class="bottom-bar-text">Meta © 2025</span>
+    </div>
+  </div>
+
+  <script>
+    function toggleGroup(toggle) {
+      toggle.closest('.nav-group').classList.toggle('collapsed');
+    }
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

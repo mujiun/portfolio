@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meta for Developers — Step 2. Production Setup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@300..800&display=block" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #FFFFFF;
+      --page-bg: #F0F2F5;
+      --surface: #F8F9FA;
+      --ink: #1C2B33;
+      --ink2: #465A69;
+      --ink3: #465A69;
+      --accent: #1877F2;
+      --accent-light: #E7F3FF;
+      --green: #006b4e;
+      --border: #DADDE1;
+      --border-light: #E4E6EB;
+      --font: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+      --title: 'Commissioner', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: var(--title);
+      background: var(--page-bg);
+      background-image: url('bg.jpg');
+      background-size: cover;
+      background-attachment: fixed;
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      font-size: 14px;
+      line-height: 1.5;
+      letter-spacing: 0.1px;
+    }
+
+    /* ══ TOP NAV ══ */
+    .topnav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .topnav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .meta-logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .meta-logo img { height: 14px; width: auto; }
+
+    .topnav-tabs {
+      display: flex;
+      gap: 0;
+      align-items: center;
+    }
+
+    .topnav-tab {
+      font-family: var(--title);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink2);
+      text-decoration: none;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      border-bottom: 3px solid transparent;
+      transition: color 0.12s;
+      cursor: pointer;
+    }
+
+    .topnav-tab:hover { color: #0A78BE; }
+
+    .topnav-tab.active {
+      color: #0A78BE;
+      background: #E1EDF7;
+      border-radius: 4px;
+      border-bottom-color: transparent;
+    }
+
+    .topnav-tab .caret {
+      width: 12px;
+      height: 12px;
+      margin-left: 4px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+    }
+
+    .topnav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: var(--surface);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      padding: 6px 10px;
+      gap: 6px;
+      min-width: 160px;
+    }
+
+    .search-icon { color: var(--ink3); flex-shrink: 0; }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 13px;
+      color: var(--ink);
+      width: 100%;
+      font-family: var(--font);
+    }
+
+    .search-box input::placeholder { color: var(--ink3); }
+
+    .nav-icons {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .nav-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .nav-icon svg { width: 16px; height: 16px; color: var(--ink2); }
+
+    /* ══ BREADCRUMB ══ */
+    .breadcrumb {
+      padding: 14px 24px 16px;
+      font-size: 13px;
+      color: var(--ink3);
+    }
+
+    .breadcrumb a { color: var(--ink2); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb .sep { margin: 0 8px; color: var(--ink3); font-size: 11px; }
+    .breadcrumb .current { color: var(--ink); font-weight: 600; }
+
+    /* ══ PAGE TITLE ══ */
+    .page-title-area { padding: 12px 24px 16px; }
+
+    .page-title-area h1 {
+      font-family: var(--title);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+
+    .page-title-area p { font-size: 13px; color: var(--ink2); }
+
+    /* ══ CONTENT LAYOUT ══ */
+    .content-layout {
+      display: flex;
+      gap: 16px;
+      padding: 0 24px 0;
+      align-items: flex-start;
+    }
+
+    /* ══ LEFT NAV ══ */
+    .left-nav {
+      width: 260px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 66px;
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 8px 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    .nav-dropdown {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      margin: 4px 0px 8px 0px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg);
+      font-family: var(--title);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    .nav-dropdown .dd-caret {
+      width: 14px;
+      height: 14px;
+      stroke: var(--ink3);
+      fill: none;
+      stroke-width: 1.8;
+      flex-shrink: 0;
+    }
+
+    .nav-link {
+      display: block;
+      font-family: var(--title);
+      font-size: 15px;
+      font-weight: 450;
+      color: var(--ink);
+      text-decoration: none;
+      padding: 10px 12px;
+      cursor: pointer;
+      transition: background 0.1s, color 0.1s;
+    }
+
+    .nav-link:hover {
+      background: var(--surface);
+      color: var(--ink);
+    }
+
+    .nav-link.active {
+      color: #0A78BE;
+      font-weight: 700;
+      background: #E1EDF7;
+      border-radius: 4px;
+    }
+
+    .nav-group {
+      margin-top: 2px;
+    }
+
+    .nav-group-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 12px;
+      font-family: var(--title);
+      font-size: 15px;
+      font-weight: 450;
+      color: var(--ink);
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.1s;
+    }
+
+    .nav-group-toggle:hover { background: var(--surface); }
+
+    .nav-group-toggle .chevron {
+      width: 14px;
+      height: 14px;
+      stroke: var(--ink3);
+      fill: none;
+      stroke-width: 1.8;
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .nav-group.collapsed .chevron {
+      transform: rotate(-180deg);
+    }
+
+    .nav-group-items {
+      overflow: hidden;
+      max-height: 300px;
+      transition: max-height 0.25s ease;
+    }
+
+    .nav-group.collapsed .nav-group-items {
+      max-height: 0;
+    }
+
+    .nav-link--sub {
+      padding-left: 22px;
+      font-size: 15px;
+    }
+
+    /* ══ RIGHT CONTENT ══ */
+    .right-col {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .right-content {
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 16px 24px;
+      min-height: 0;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    .right-content h2 {
+      font-family: var(--title);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0;
+    }
+
+    .right-content .overview-desc {
+      font-size: 14px;
+      color: var(--ink);
+      line-height: 1.4;
+      font-weight: 450;
+    }
+
+    .section-divider {
+      height: 1px;
+      background: var(--border-light);
+      margin: 16px 0;
+    }
+
+    .right-content h3 {
+      font-family: var(--title);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 16px;
+    }
+
+    /* ══ TASK ACCORDION ══ */
+    .task-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .task-item {
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .task-item:last-child {
+      border-bottom: none;
+    }
+
+    .task-item:first-child .task-header {
+      padding-top: 0;
+    }
+
+    .task-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.1s;
+    }
+
+    .task-header:hover {
+      opacity: 0.85;
+    }
+
+    .task-check {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      background: var(--bg);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .task-check--done {
+      border: none;
+      background: transparent;
+    }
+
+    .task-check--done svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--green);
+    }
+
+    .task-title {
+      font-family: var(--title);
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .task-title--done {
+      color: var(--ink);
+    }
+
+    .task-info {
+      flex: 1;
+    }
+
+    .task-subtitle {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--ink3);
+      margin-top: 0;
+      line-height: 1.3;
+    }
+
+
+    .task-chevron {
+      width: 16px;
+      height: 16px;
+      stroke: var(--ink3);
+      fill: none;
+      stroke-width: 1.8;
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+    }
+
+    .task-item.collapsed .task-chevron {
+      transform: rotate(-180deg);
+    }
+
+    .task-body {
+      overflow: hidden;
+      max-height: 2000px;
+      transition: max-height 0.35s ease, padding 0.35s ease;
+      padding: 0 0 16px 34px;
+    }
+
+    .task-item.collapsed .task-body {
+      max-height: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    .task-desc {
+      font-size: 14px;
+      color: var(--ink2);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .task-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--title);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      background: var(--accent-light);
+      border: none;
+      border-radius: 6px;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: background 0.12s;
+    }
+
+    .task-action:hover {
+      background: #D4E8FF;
+    }
+
+    .task-done-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--green);
+    }
+
+    /* ══ TASK SUB-STEPS ══ */
+    .sub-step {
+      margin-bottom: 24px;
+    }
+
+    .sub-step:last-child { margin-bottom: 0; }
+
+    .sub-step-label {
+      font-family: var(--title);
+      font-size: 14px;
+      font-weight: 550;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+
+    .placeholder-box {
+      background: var(--surface);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: var(--ink3);
+      margin-bottom: 8px;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .btn-primary {
+      font-family: var(--title);
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      background: #0A78BE;
+      border: 1px solid #0A78BE;
+      border-radius: 6px;
+      padding: 8px 16px;
+      height: 36px;
+      cursor: pointer;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .btn-primary:hover { background: #096A9E; border-color: #096A9E; }
+
+    .btn-primary:disabled {
+      background: var(--border-light);
+      border-color: var(--border-light);
+      color: #A0AAB4;
+      cursor: not-allowed;
+    }
+
+    .btn-secondary {
+      font-family: var(--title);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 16px;
+      height: 36px;
+      cursor: pointer;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .btn-secondary:hover { background: var(--surface); }
+
+    .token-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .token-field {
+      flex: 1;
+      min-width: 0;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 12px;
+      color: var(--ink2);
+      background: var(--surface);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      padding: 0 12px;
+      height: 36px;
+      line-height: 36px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .sub-steps-container {
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .sub-step-bordered {
+      padding: 20px;
+    }
+
+    .sub-step-bordered + .sub-step-bordered {
+      border-top: 1px solid var(--border-light);
+    }
+
+    /* ══ TAB EXPLAINER ══ */
+    .tab-explainer {
+      background: var(--surface);
+      border-radius: 8px;
+      padding: 14px 20px;
+      font-size: 14px;
+      color: #1C1E21;
+      line-height: 1.3;
+      font-weight: 450;
+    }
+
+    /* ══ MINI TABS ══ */
+    .mini-tabs {
+      display: flex;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .mini-tab {
+      flex: 1;
+      font-family: var(--title);
+      font-size: 13px;
+      font-weight: 550;
+      color: var(--ink);
+      padding: 8px;
+      border: none;
+      background: var(--bg);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.12s;
+    }
+
+    .mini-tab + .mini-tab { border-left: 1px solid var(--border); }
+    .mini-tab:hover { background: var(--surface); }
+    .mini-tab.active { color: #fff; background: #0A78BE; }
+
+    .mini-pane { display: none; }
+    .mini-pane.active { display: block; }
+
+    /* ══ TEST LAYOUT ══ */
+    .test-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .test-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .test-panel-title {
+      font-family: var(--title);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .field-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    .field-select,
+    .field-input {
+      font-family: var(--font);
+      font-size: 13px;
+      color: var(--ink);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0 10px;
+      height: 36px;
+      background: var(--bg);
+      outline: none;
+      width: 100%;
+    }
+
+    .field-select {
+      padding-right: 28px;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M3 4.5l3 3 3-3' fill='none' stroke='%234B4F56' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+    }
+
+    .field-select:focus,
+    .field-input:focus { border-color: var(--accent); }
+
+    .field-textarea {
+      font-family: var(--font);
+      font-size: 13px;
+      color: var(--ink);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 10px;
+      background: var(--bg);
+      outline: none;
+      width: 100%;
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .field-textarea:focus { border-color: var(--accent); }
+
+    /* Preview panel */
+    .preview-panel {
+      background: var(--surface);
+      border-radius: 8px;
+      padding: 16px;
+      min-height: 200px;
+      height: 100%;
+    }
+
+    .preview-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .preview-tab {
+      font-family: var(--title);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink3);
+      background: none;
+      border: none;
+      padding: 6px 12px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.12s;
+    }
+
+    .preview-tab:hover { color: var(--ink2); }
+    .preview-tab.active { color: #0A78BE; border-bottom-color: #0A78BE; }
+
+    .preview-pane { display: none !important; }
+    .preview-pane.active { display: block !important; }
+    .preview-pane.active[style*="justify-content"] { display: flex !important; }
+
+    .preview-message {
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 13px;
+      color: var(--ink2);
+      line-height: 1.5;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+    }
+
+    .preview-code {
+      background: #1E1E1E;
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 12px;
+      color: #D4D4D4;
+      line-height: 1.6;
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    .preview-code .key { color: #9CDCFE; }
+    .preview-code .str { color: #CE9178; }
+    .preview-code .punct { color: #D4D4D4; }
+
+    /* ══ CONTINUE BANNER ══ */
+    .continue-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg);
+      margin-bottom: 36px;
+      border-radius: 8px;
+      padding: 16px 24px;
+      margin-top: 16px;
+
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    .continue-banner-text {
+      font-family: var(--title);
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .continue-btn {
+      font-family: var(--title);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 20px;
+      cursor: pointer;
+      transition: background 0.12s;
+    }
+
+    .continue-btn:hover {
+      background: var(--surface);
+    }
+
+    /* ══ BOTTOM BAR ══ */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 36px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      z-index: 50;
+    }
+
+    .bottom-bar-left, .bottom-bar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .bottom-bar svg { width: 16px; height: 16px; color: var(--ink3); cursor: pointer; }
+    .bottom-bar svg:hover { color: var(--ink2); }
+    .bottom-bar-text { font-size: 11px; color: var(--ink3); }
+
+    /* ══ LEFT SYSTEM SIDEBAR ══ */
+    .sys-sidebar {
+      position: fixed;
+      left: 0;
+      top: 60px;
+      bottom: 36px;
+      width: 46px;
+      background: var(--bg);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 12px 0;
+      gap: 4px;
+      z-index: 90;
+    }
+
+    .sys-sidebar-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.12s;
+      color: var(--ink3);
+    }
+
+    .sys-sidebar-icon:hover {
+      background: var(--surface);
+      color: var(--ink2);
+    }
+
+    .sys-sidebar-icon.active {
+      background: #E1EDF7;
+      color: #0A78BE;
+    }
+
+    .sys-sidebar-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.4;
+    }
+
+    .sys-sidebar-spacer { flex: 1; }
+
+    /* Offset page content for sidebar */
+    .breadcrumb { margin-left: 46px; }
+    .page-title-area { margin-left: 46px; }
+    .content-layout { margin-left: 46px; padding-bottom: 0; }
+  </style>
+</head>
+<body>
+
+  <!-- ══ TOP NAV ══ -->
+  <div class="topnav">
+    <div class="topnav-left">
+      <a class="meta-logo" href="#">
+        <img src="meta.svg" alt="Meta" />
+      </a>
+      <div class="topnav-tabs">
+        <a class="topnav-tab active">My Apps</a>
+        <a class="topnav-tab">Required actions</a>
+        <a class="topnav-tab">Docs <svg class="caret" viewBox="0 0 12 12"><path d="M3 4.5l3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="topnav-tab">Tools <svg class="caret" viewBox="0 0 12 12"><path d="M3 4.5l3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="topnav-tab">Support <svg class="caret" viewBox="0 0 12 12"><path d="M3 4.5l3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+    <div class="topnav-right">
+      <div class="search-box">
+        <svg class="search-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="4.5"/><path d="M9.5 9.5L13 13"/></svg>
+        <input type="text" placeholder="Search..." />
+      </div>
+      <div class="nav-icons">
+        <div class="nav-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M8 2a4 4 0 014 4c0 2-1 3.5-1 5H5c0-1.5-1-3-1-5a4 4 0 014-4zM6 13h4"/></svg></div>
+        <div class="nav-icon"><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="5.5" r="3"/><path d="M2.5 14.5C2.5 11.5 5 9.5 8 9.5s5.5 2 5.5 5"/></svg></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ LEFT SYSTEM SIDEBAR ══ -->
+  <div class="sys-sidebar">
+    <div class="sys-sidebar-icon active">
+      <svg viewBox="0 0 20 20"><path d="M3 5h14M3 10h14M3 15h14" stroke-linecap="round"/></svg>
+    </div>
+    <div class="sys-sidebar-icon">
+      <svg viewBox="0 0 20 20"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="11" y="3" width="6" height="6" rx="1"/><rect x="3" y="11" width="6" height="6" rx="1"/><rect x="11" y="11" width="6" height="6" rx="1"/></svg>
+    </div>
+    <div class="sys-sidebar-icon">
+      <svg viewBox="0 0 20 20"><path d="M7 3L3 10l4 7M13 3l4 7-4 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="sys-sidebar-icon">
+      <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><path d="M10 7v3l2 2" stroke-linecap="round"/></svg>
+    </div>
+    <div class="sys-sidebar-spacer"></div>
+    <div class="sys-sidebar-icon">
+      <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><path d="M10 9v4M10 7v.01" stroke-linecap="round"/></svg>
+    </div>
+  </div>
+
+  <!-- ══ BREADCRUMB ══ -->
+  <div class="breadcrumb">
+    <a href="#">Use cases</a>
+    <span class="sep">›</span>
+    <span class="current">Customize</span>
+  </div>
+
+
+  <!-- ══ CONTENT ══ -->
+  <div class="content-layout">
+
+    <!-- LEFT NAV -->
+    <div class="left-nav">
+      <div class="nav-dropdown">
+        Connect on WhatsApp
+        <svg class="dd-caret" viewBox="0 0 12 12"><path d="M3 4.5l3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+
+      <a class="nav-link" href="developer.html">Overview</a>
+
+      <div class="nav-group" id="nav-api">
+        <div class="nav-group-toggle" onclick="toggleGroup(this)">
+          Integrate with API
+          <svg class="chevron" viewBox="0 0 12 12"><path d="M3 4.5l3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="nav-group-items">
+          <a class="nav-link nav-link--sub">Step 1. Try it out</a>
+          <a class="nav-link nav-link--sub active">Step 2. Production setup</a>
+          <a class="nav-link nav-link--sub">Step 3. Business verification</a>
+          <a class="nav-link nav-link--sub">Next steps</a>
+        </div>
+      </div>
+
+      <div class="nav-group collapsed" id="nav-partner">
+        <div class="nav-group-toggle" onclick="toggleGroup(this)">
+          Become a Partner
+          <svg class="chevron" viewBox="0 0 12 12"><path d="M3 4.5l3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="nav-group-items">
+          <a class="nav-link nav-link--sub">Become a Tech Provider</a>
+          <a class="nav-link nav-link--sub">Next steps</a>
+        </div>
+      </div>
+
+      <div class="nav-group collapsed" id="nav-other">
+        <div class="nav-group-toggle" onclick="toggleGroup(this)">
+          Other tools
+          <svg class="chevron" viewBox="0 0 12 12"><path d="M3 4.5l3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="nav-group-items">
+          <a class="nav-link nav-link--sub">Permissions and features</a>
+          <a class="nav-link nav-link--sub">Resources</a>
+          <a class="nav-link nav-link--sub">Documentation</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="right-col">
+    <div class="right-content">
+      <h2>Step 2. Production setup</h2>
+      <p class="overview-desc">Add a real business phone number, configure your business profile, and generate a permanent access token.</p>
+
+      <div class="section-divider"></div>
+
+      <!-- TASK LIST -->
+      <div class="task-list">
+
+        <!-- Task 1: Set up webhooks (completed) -->
+        <div class="task-item collapsed">
+          <div class="task-header" onclick="toggleTask(this)">
+            <div class="task-check task-check--done">
+              <svg viewBox="0 0 20 20"><path d="M10.111.852a9.26 9.26 0 1 1 0 18.519 9.26 9.26 0 0 1 0-18.519zm4.416 5.87a.927.927 0 0 0-1.305-.101l-.065.056a40.495 40.495 0 0 0-4.488 4.386L7.062 9.457a.926.926 0 0 0-1.309 1.309l2.315 2.315a.925.925 0 0 0 1.358-.052l.055-.065.007-.009a38.637 38.637 0 0 1 4.865-4.865l.01-.007.064-.055a.926.926 0 0 0 .1-1.306z"/></svg>
+            </div>
+            <div class="task-info"><span class="task-title task-title--done">Set up your webhooks</span><div class="task-subtitle">Completed</div></div>
+            <svg class="task-chevron" viewBox="0 0 12 12"><path d="M3 4.5l3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="task-body">
+            <p class="task-desc">Configure webhook URLs to receive real-time notifications when messages are received, delivered, or read.</p>
+          </div>
+        </div>
+
+        <!-- Task 2: Add phone number (completed) -->
+        <div class="task-item collapsed">
+          <div class="task-header" onclick="toggleTask(this)">
+            <div class="task-check task-check--done">
+              <svg viewBox="0 0 20 20"><path d="M10.111.852a9.26 9.26 0 1 1 0 18.519 9.26 9.26 0 0 1 0-18.519zm4.416 5.87a.927.927 0 0 0-1.305-.101l-.065.056a40.495 40.495 0 0 0-4.488 4.386L7.062 9.457a.926.926 0 0 0-1.309 1.309l2.315 2.315a.925.925 0 0 0 1.358-.052l.055-.065.007-.009a38.637 38.637 0 0 1 4.865-4.865l.01-.007.064-.055a.926.926 0 0 0 .1-1.306z"/></svg>
+            </div>
+            <div class="task-info"><span class="task-title task-title--done">Add and register your WhatsApp phone number</span><div class="task-subtitle">Completed</div></div>
+            <svg class="task-chevron" viewBox="0 0 12 12"><path d="M3 4.5l3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="task-body">
+            <p class="task-desc">Register a real business phone number to replace your test number.</p>
+          </div>
+        </div>
+
+        <!-- Task 3: Add payment (completed) -->
+        <div class="task-item collapsed">
+          <div class="task-header" onclick="toggleTask(this)">
+            <div class="task-check task-check--done">
+              <svg viewBox="0 0 20 20"><path d="M10.111.852a9.26 9.26 0 1 1 0 18.519 9.26 9.26 0 0 1 0-18.519zm4.416 5.87a.927.927 0 0 0-1.305-.101l-.065.056a40.495 40.495 0 0 0-4.488 4.386L7.062 9.457a.926.926 0 0 0-1.309 1.309l2.315 2.315a.925.925 0 0 0 1.358-.052l.055-.065.007-.009a38.637 38.637 0 0 1 4.865-4.865l.01-.007.064-.055a.926.926 0 0 0 .1-1.306z"/></svg>
+            </div>
+            <div class="task-info"><span class="task-title task-title--done">Add your payment</span><div class="task-subtitle">Completed</div></div>
+            <svg class="task-chevron" viewBox="0 0 12 12"><path d="M3 4.5l3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="task-body">
+            <p class="task-desc">Add a valid payment method to your WhatsApp Business Account.</p>
+          </div>
+        </div>
+
+        <!-- Task 4: Test your production number (open) -->
+        <div class="task-item">
+          <div class="task-header" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <div class="task-info"><span class="task-title">Test your production number</span><div class="task-subtitle">About 5 minutes</div></div>
+            <svg class="task-chevron" viewBox="0 0 12 12"><path d="M3 4.5l3 3 3-3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="task-body">
+
+            <div class="sub-steps-container">
+
+            <!-- Sub-step 1: Create token -->
+            <div class="sub-step-bordered">
+              <div class="sub-step-label">Step 1. Create a permanent access token</div>
+              <div class="sub-step-subtitle" style="font-size: 13px; color: var(--ink3); margin-bottom: 8px;">Generate a long-lived token to authenticate your API requests.</div>
+              <div class="token-row" id="tokenRow">
+                <div class="token-field" id="tokenField">N/A</div>
+                <button class="btn-primary" id="tokenBtn" onclick="generateToken()">Generate token</button>
+              </div>
+            </div>
+
+            <!-- Sub-step 2: Test your number -->
+            <div class="sub-step-bordered">
+              <div class="sub-step-label">Step 2. Test your number</div>
+              <div class="sub-step-subtitle" style="font-size: 13px; color: var(--ink3); margin-bottom: 8px;">Send a test message to verify your production number is working correctly.</div>
+
+              <div class="mini-tabs" id="testTabs">
+                <button class="mini-tab active" onclick="switchTestTab(this, 'reply')">Reply to customer-initiated messages</button>
+                <button class="mini-tab" onclick="switchTestTab(this, 'send')">Send business-initiated messages</button>
+              </div>
+
+              <div class="tab-explainer" id="tabExplainerReply" style="margin-top: 6px; margin-bottom: 16px;">
+                Reply to messages your customers send first. This type of message is free and must be sent within 24 hours of the customer's last message.
+              </div>
+              <div class="tab-explainer" id="tabExplainerSend" style="margin-top: 6px; margin-bottom: 16px; display: none;">
+                Send messages at scale using approved message templates. Templates require Meta approval and can be created in <a href="#" style="color: var(--accent); text-decoration: none;">WhatsApp Manager</a>.
+              </div>
+
+              <div class="test-layout">
+                <!-- Left: Inputs -->
+                <div class="test-panel">
+                  <div class="field-group">
+                    <label class="field-label">Your number</label>
+                    <select class="field-select">
+                      <option>+1 (555) 123-4567</option>
+                      <option>+1 (555) 987-6543</option>
+                      <option>+1 (555) 000-0000 (Test)</option>
+                    </select>
+                  </div>
+                  <div class="field-group">
+                    <label class="field-label">Recipient number</label>
+                    <input class="field-input" id="recipientInput" type="text" placeholder="e.g. +1 234 567 8900" oninput="checkSendReady()" />
+                  </div>
+
+                  <!-- Tab 1: Composer -->
+                  <div class="mini-pane active" id="pane-reply">
+                    <div class="field-group">
+                      <label class="field-label">Message</label>
+                      <textarea class="field-textarea" id="replyMessage">Hello! Welcome to Jasper's Market. How can we help you today?</textarea>
+                    </div>
+                  </div>
+
+                  <!-- Tab 2: Integration test -->
+                  <div class="mini-pane" id="pane-send">
+                    <div class="field-group">
+                      <label class="field-label">Approved message template</label>
+                      <select class="field-select">
+                        <option>Test template #1 (Marketing)</option>
+                        <option>order_confirmation (en)</option>
+                        <option>appointment_reminder (en)</option>
+                        <option>shipping_update (en)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="btn-row" style="margin-top: 4px;">
+                    <button class="btn-primary" id="sendBtn" disabled>Send message</button>
+                  </div>
+                </div>
+
+                <!-- Right: Preview -->
+                <div class="test-panel">
+                  <div class="preview-panel" id="previewPanel">
+                    <div class="preview-tabs" id="previewTabs">
+                      <button class="preview-tab active" onclick="switchPreview(this, 'msg')">Message</button>
+                      <button class="preview-tab" onclick="switchPreview(this, 'code')">Code</button>
+                    </div>
+
+                    <div class="preview-pane active" id="preview-msg" style="display: flex; justify-content: center; align-items: center; min-height: 160px;">
+                      <div style="background: #fff; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.08); overflow: hidden; max-width: 260px;">
+                        <div style="padding: 8px 10px;">
+                          <p style="font-size: 13px; color: var(--ink); line-height: 1.4; margin: 0;">Hello! Welcome to Jasper's Market. How can we help you today?</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="preview-pane" id="preview-code">
+                      <div class="preview-code"><span class="punct">{</span>
+  <span class="key">"messaging_product"</span><span class="punct">:</span> <span class="str">"whatsapp"</span><span class="punct">,</span>
+  <span class="key">"to"</span><span class="punct">:</span> <span class="str">"12345678900"</span><span class="punct">,</span>
+  <span class="key">"type"</span><span class="punct">:</span> <span class="str">"text"</span><span class="punct">,</span>
+  <span class="key">"text"</span><span class="punct">:</span> <span class="punct">{</span>
+    <span class="key">"body"</span><span class="punct">:</span> <span class="str">"Hello! Welcome to Jasper's Market."</span>
+  <span class="punct">}</span>
+<span class="punct">}</span></div>
+                    </div>
+
+                    <!-- Send tab: template message preview -->
+                    <div class="preview-pane" id="preview-send-msg" style="display: flex; justify-content: center; align-items: center; min-height: 160px;">
+                      <div style="background: #fff; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.08); overflow: hidden; max-width: 260px;">
+                        <div style="padding: 8px 10px;">
+                          <p style="font-size: 13px; color: var(--ink); line-height: 1.4; margin: 0;">Hello! Welcome to Jasper's Market. We have great deals waiting for you. This is the testing template for marketing message.</p>
+                        </div>
+                        <div style="border-top: 1px solid var(--border-light); text-align: center; padding: 8px;">
+                          <a href="#" style="font-size: 13px; font-weight: 600; color: #007AFF; text-decoration: none;">Shop now</a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="preview-pane" id="preview-send-code">
+                      <div class="preview-code"><span class="punct">{</span>
+  <span class="key">"messaging_product"</span><span class="punct">:</span> <span class="str">"whatsapp"</span><span class="punct">,</span>
+  <span class="key">"to"</span><span class="punct">:</span> <span class="str">"12345678900"</span><span class="punct">,</span>
+  <span class="key">"type"</span><span class="punct">:</span> <span class="str">"template"</span><span class="punct">,</span>
+  <span class="key">"template"</span><span class="punct">:</span> <span class="punct">{</span>
+    <span class="key">"name"</span><span class="punct">:</span> <span class="str">"test_template_1"</span><span class="punct">,</span>
+    <span class="key">"language"</span><span class="punct">:</span> <span class="punct">{</span>
+      <span class="key">"code"</span><span class="punct">:</span> <span class="str">"en"</span>
+    <span class="punct">}</span>
+  <span class="punct">}</span>
+<span class="punct">}</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            </div><!-- /sub-steps-container -->
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ══ CONTINUE BANNER ══ -->
+    <div class="continue-banner">
+      <span class="continue-banner-text">Continue to Step 3. Business Verification</span>
+      <button class="continue-btn">Continue</button>
+    </div>
+    <div style="height: 36px;"></div>
+    </div><!-- /right-col -->
+
+  </div>
+
+  <!-- ══ BOTTOM BAR ══ -->
+  <div class="bottom-bar">
+    <div class="bottom-bar-left">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 8h8M8 4v8"/></svg>
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="2" y="2" width="12" height="12" rx="1.5"/><path d="M2 6h12"/></svg>
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="8" cy="8" r="5.5"/><path d="M8 5v3.5l2 1.5"/></svg>
+    </div>
+    <div class="bottom-bar-right">
+      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 2.5a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5zM7 7.5h2v4.5H7z"/></svg>
+      <span class="bottom-bar-text">Meta © 2025</span>
+    </div>
+  </div>
+
+  <script>
+    function toggleGroup(toggle) {
+      toggle.closest('.nav-group').classList.toggle('collapsed');
+    }
+
+    function toggleTask(header) {
+      header.closest('.task-item').classList.toggle('collapsed');
+    }
+
+    var currentTab = 'reply';
+    function switchTestTab(btn, id) {
+      currentTab = id;
+      document.querySelectorAll('#testTabs .mini-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('pane-reply').classList.toggle('active', id === 'reply');
+      document.getElementById('pane-send').classList.toggle('active', id === 'send');
+      document.getElementById('tabExplainerReply').style.display = id === 'reply' ? 'block' : 'none';
+      document.getElementById('tabExplainerSend').style.display = id === 'send' ? 'block' : 'none';
+      updatePreview();
+    }
+
+    function updatePreview() {
+      var activePreviewTab = document.querySelector('#previewTabs .preview-tab.active');
+      var isCode = activePreviewTab && activePreviewTab.textContent === 'Code';
+      document.getElementById('preview-msg').classList.remove('active');
+      document.getElementById('preview-code').classList.remove('active');
+      document.getElementById('preview-send-msg').classList.remove('active');
+      document.getElementById('preview-send-code').classList.remove('active');
+      if (currentTab === 'reply') {
+        document.getElementById(isCode ? 'preview-code' : 'preview-msg').classList.add('active');
+      } else {
+        document.getElementById(isCode ? 'preview-send-code' : 'preview-send-msg').classList.add('active');
+      }
+    }
+
+    var tokenGenerated = false;
+
+    function generateToken() {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let token = 'EAAJz' + Array.from({length: 120}, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+      document.getElementById('tokenField').textContent = token;
+      document.getElementById('tokenRow').innerHTML = `
+        <div class="token-field" id="tokenField">${token}</div>
+        <button class="btn-secondary" onclick="copyToken()">Copy</button>
+        <button class="btn-secondary" onclick="generateToken()">Generate new</button>
+      `;
+      tokenGenerated = true;
+      checkSendReady();
+    }
+
+    function checkSendReady() {
+      var recipient = document.getElementById('recipientInput').value.trim();
+      document.getElementById('sendBtn').disabled = !(tokenGenerated && recipient.length > 0);
+    }
+
+    function copyToken() {
+      const text = document.getElementById('tokenField').textContent;
+      navigator.clipboard.writeText(text);
+      event.target.textContent = 'Copied!';
+      setTimeout(() => { event.target.textContent = 'Copy'; }, 1500);
+    }
+
+    function switchPreview(btn, id) {
+      document.querySelectorAll('#previewTabs .preview-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      updatePreview();
+    }
+
+    // Live preview: update message bubble as user types
+    document.getElementById('replyMessage').addEventListener('input', function() {
+      document.getElementById('preview-msg').querySelector('p').textContent = this.value || 'Your message will appear here...';
+    });
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

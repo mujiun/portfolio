@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="../portfolio/projects/favicons/mu.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI-Powered Workflows — Mu Jiun Shie</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@100..900&family=IBM+Plex+Mono:wght@400;500;600;700&display=block" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    html, body { overflow: auto; }
+    .side-section > .nav-item { color: var(--ink3); font-weight: 500; padding: 4px 8px; }
+    .nav-sub .nav-item { padding: 4px 8px; padding-left: 16px; }
+    .side-section > .nav-item.active { color: var(--ink2); font-weight: 600; background: transparent; }
+    .nav-sub .nav-item { font-size: 13px; font-weight: 450; display: flex; align-items: center; gap: 8px; letter-spacing: 0.2px; color: #B5B0A9; }
+    .nav-sub .nav-item:hover { color: var(--ink3); background: transparent; }
+    .nav-sub .nav-item.active { color: var(--ink2); font-weight: 600; background: transparent; }
+    .nav-dot { width: 5px; height: 5px; min-width: 5px; min-height: 5px; border-radius: 50%; background: #D4D0CB; flex-shrink: 0; margin: 0 2px; }
+    .nav-sub .nav-item.active .nav-dot { background: var(--ink2); }
+    .shell { height: auto; min-height: 100vh; }
+    .side { position: fixed; top: 0; left: 0; height: 100vh; }
+
+    /* ── MAIN CONTENT ── */
+    .main {
+      flex: 1;
+      margin-left: var(--nav-w);
+    }
+
+    /* ── PANEL ── */
+    .panel {
+      min-height: 100vh;
+      padding: 48px 64px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .panel.active {
+      display: flex;
+    }
+    .panel:has(.tab-card) {
+      height: 100vh;
+      min-height: 100vh;
+    }
+
+    .panel-inner {
+      width: 100%;
+      max-width: 1080px;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin: 0 auto;
+    }
+    .panel:has(.tab-card) .panel-inner {
+      height: 100%;
+    }
+
+    /* ── CONTENT ELEMENTS ── */
+    .slide-img {
+      width: 100%;
+      background: var(--surface);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin: 16px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .slide-img img {
+      width: 100%;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .content-h2 {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 24px 0 12px;
+    }
+
+    .content-h2:first-child { margin-top: 0; }
+
+    .content-p {
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.35;
+      max-width: 720px;
+    }
+
+    .content-desc {
+      font-size: 17px;
+      font-weight: 400;
+      color: var(--ink3);
+      line-height: 1.4;
+      padding-top: 16px;
+      letter-spacing: 0.01em;
+    }
+
+    .single-col .content-desc {
+      padding-top: 4px;
+    }
+
+    /* ── 1-col layout ── */
+    .single-col {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      justify-content: center;
+      gap: 36px;
+    }
+    .single-col:has(.tab-card) {
+      gap: 16px;
+    }
+
+    .single-col .content-p {
+      max-width: none;
+    }
+
+    .single-col .slide-img {
+      margin: 0;
+    }
+
+    .single-col .slide-img img {
+      width: 100%;
+    }
+
+    /* ── Tab Card ── */
+    .page-header {
+      margin-bottom: 24px;
+    }
+    .page-header:has(+ .tab-card) .page-title {
+      margin-bottom: 0;
+    }
+    .page-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+    .page-desc {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.4;
+      padding-top: 4px;
+    }
+    .tab-card {
+      background: var(--surface);
+      border-radius: 12px;
+      overflow: hidden;
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .tab-bar {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .tab-btn {
+      padding: 12px 24px;
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink2);
+      background: none;
+      border: none;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+    }
+    .tab-btn.active {
+      color: var(--accent);
+      font-weight: 600;
+      border-bottom-color: var(--accent);
+    }
+    .tab-btn:hover {
+      color: var(--ink);
+    }
+    .tab-content {
+      display: none;
+      flex: 1;
+      min-height: 0;
+      padding: 24px;
+      align-items: center;
+      justify-content: center;
+    }
+    .tab-content.active {
+      display: flex;
+    }
+    .tab-content img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    .tab-placeholder {
+      font-size: 14px;
+      color: var(--ink2);
+    }
+
+    /* ── One-Pager PRD ── */
+    .prd {
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      gap: 0;
+      max-width: 960px;
+    }
+
+    .prd-header {
+      border-bottom: none;
+    }
+
+    .prd-title {
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+      margin-bottom: 20px;
+    }
+
+    .prd-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-family: var(--sans);
+      font-size: 13px;
+      color: var(--ink2);
+    }
+
+    .prd-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .prd-meta-label {
+      font-weight: 500;
+      color: var(--ink3);
+      min-width: 60px;
+    }
+
+    .prd-meta-value {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .prd-step {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--ink3);
+      padding: 3px 8px;
+      background: var(--surface);
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .prd-step.active {
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .prd-step.done {
+      background: var(--accent);
+      color: #fff;
+      opacity: 0.5;
+    }
+
+    .prd-step-arrow {
+      font-size: 9px;
+      color: var(--ink3);
+    }
+
+    .prd-check {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .prd-body {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-top: 24px;
+    }
+
+    .prd-card {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .prd-section-title {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .prd-text {
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.3;
+      padding-bottom: 4px;
+      letter-spacing: 0.003em;
+    }
+
+    .prd-text b {
+      font-weight: 600;
+    }
+
+    .prd-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .prd-metric {
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+
+    .prd-metric-number {
+      font-size: 40px;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .prd-metric-label {
+      font-size: 13px;
+      color: var(--ink2);
+      line-height: 1.4;
+    }
+
+    .prd-target-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .prd-target {
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+
+    .prd-target-number {
+      font-size: 36px;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .prd-target-label {
+      font-size: 13px;
+      color: var(--ink2);
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="shell">
+
+    <!-- ── LEFT NAV ── -->
+    <nav class="side">
+      <div class="side-section">
+        <a class="nav-item" data-target="context-onepager">Understand</a>
+        <div class="nav-sub" data-parent="context">
+          <a class="nav-item active" data-target="context-onepager"><span class="nav-dot"></span>One-Pager</a>
+          <a class="nav-item" data-target="context-current"><span class="nav-dot"></span>Current Experience</a>
+          <a class="nav-item" data-target="context-learnings"><span class="nav-dot"></span>Learnings</a>
+        </div>
+
+        <a class="nav-item" data-target="design-baseline">Design Exploration</a>
+        <div class="nav-sub" data-parent="design">
+          <a class="nav-item" data-target="design-baseline"><span class="nav-dot"></span>Baseline</a>
+          <a class="nav-item" data-target="design-placement"><span class="nav-dot"></span>Placement</a>
+          <a class="nav-item" data-target="design-layout"><span class="nav-dot"></span>Tool Layout</a>
+          <a class="nav-item" data-target="design-flow"><span class="nav-dot"></span>Setup Flow</a>
+          <a class="nav-item" data-target="design-iteration"><span class="nav-dot"></span>Iteration</a>
+        </div>
+
+        <a class="nav-item" data-target="launch-experiment">Delivery</a>
+        <div class="nav-sub" data-parent="launch">
+          <a class="nav-item" data-target="launch-experiment"><span class="nav-dot"></span>Page UI</a>
+          <a class="nav-item" data-target="launch-upsells"><span class="nav-dot"></span>Prototype</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ── MAIN CONTENT ── -->
+    <div class="main" id="main">
+
+      <!-- ═══ CONTEXT ═══ -->
+      <section class="panel" id="context-onepager" data-group="context" style="align-items:flex-start;justify-content:flex-start;">
+        <div class="panel-inner" style="max-width:none;margin:0;">
+          <div class="prd">
+
+            <!-- Header -->
+            <div class="prd-header">
+              <p class="prd-title">New Re-engagement Tool for Meta Business Inbox</p>
+              <div class="prd-meta">
+                <div class="prd-meta-row">
+                  <span class="prd-meta-label">POCs</span>
+                  <span style="font-size:13px;color:var(--ink);font-family:var(--font);">PD · <b>Mu Jiun Shie</b> &nbsp; CD · <b>Sarah Chen</b> &nbsp; PM · <b>David Park</b> &nbsp; Eng · <b>Kevin Liu</b></span>
+                </div>
+                <div class="prd-meta-row">
+                  <span class="prd-meta-label">Progress</span>
+                  <span style="display:flex;gap:4px;font-size:11px;font-family:var(--font);align-items:center;">
+                    <span style="padding:2px 8px;border-radius:4px;background:var(--surface);color:var(--ink2);">Understand</span>
+                    <span style="color:var(--ink2);font-size:9px;">→</span>
+                    <span style="padding:2px 8px;border-radius:4px;background:var(--surface);color:var(--ink2);">Concept</span>
+                    <span style="color:var(--ink2);font-size:9px;">→</span>
+                    <span style="padding:2px 8px;border-radius:4px;background:rgba(213,108,0,0.1);color:var(--accent);font-weight:600;">MVP Design</span>
+                    <span style="color:var(--ink2);font-size:9px;">→</span>
+                    <span style="padding:2px 8px;border-radius:4px;background:var(--surface);color:var(--ink2);">Development</span>
+                    <span style="color:var(--ink2);font-size:9px;">→</span>
+                    <span style="padding:2px 8px;border-radius:4px;background:var(--surface);color:var(--ink2);">Dogfood</span>
+                    <span style="color:var(--ink2);font-size:9px;">→</span>
+                    <span style="padding:2px 8px;border-radius:4px;background:var(--surface);color:var(--ink2);">Launch</span>
+                  </span>
+                </div>
+                <div class="prd-meta-row">
+                  <span class="prd-meta-label">Review</span>
+                  <span style="display:flex;gap:6px;font-size:11px;font-family:var(--font);">
+                    <span style="padding:2px 8px;border-radius:4px;background:var(--surface);color:var(--ink2);">Design</span>
+                    <span style="padding:2px 8px;border-radius:4px;background:var(--surface);color:var(--ink2);">Content</span>
+                    <span style="padding:2px 8px;border-radius:4px;background:var(--surface);color:var(--ink2);">Pillar</span>
+                    <span style="padding:2px 8px;border-radius:4px;background:rgba(213,108,0,0.1);color:var(--accent);font-weight:600;">✓ Legal</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="prd-body">
+
+              <!-- Today's Problem -->
+              <div class="prd-card">
+                <p class="prd-section-title">Today's Problem</p>
+                <p class="prd-text">Re-engagement drives conversions, but Meta's current inbox tools don't make it easy for businesses to do it at scale</p>
+                <p style="font-size:15px;font-weight:450;color:var(--ink3);line-height:1.4;letter-spacing:0.01em;">Businesses can only reply one by one — most leads never get a follow-up, driving them to third-party tools</p>
+                <div class="prd-metrics" style="text-align:center;">
+                  <div class="prd-metric">
+                    <p class="prd-metric-number">&gt;70%</p>
+                    <p class="prd-metric-label">conversations from ads</p>
+                  </div>
+                  <div class="prd-metric">
+                    <p class="prd-metric-number">63%</p>
+                    <p class="prd-metric-label">conversations have no follow-up within 24 hours</p>
+                  </div>
+                  <div class="prd-metric">
+                    <p class="prd-metric-number">~10%</p>
+                    <p class="prd-metric-label">use third-party tools for re-engagement</p>
+                  </div>
+                  <div class="prd-metric">
+                    <p class="prd-metric-number">2.4×</p>
+                    <p class="prd-metric-label">conversion when re-engage</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Proposal -->
+              <div class="prd-card">
+                <p class="prd-section-title">Proposal</p>
+                <p class="prd-text">A native re-engagement tool built into Meta Business Inbox</p>
+                <p style="font-size:15px;font-weight:450;color:var(--ink3);line-height:1.4;letter-spacing:0.01em;">Enable businesses to re-engage existing customers at scale</p>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;">
+                  <div style="background:var(--bg);border-radius:10px;padding:16px 18px;">
+                    <p style="font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;color:var(--accent);margin-bottom:6px;">MVP</p>
+                    <ul style="font-size:13px;font-weight:400;color:var(--ink);line-height:1.6;padding-left:16px;margin:0;">
+                      <li><b>Audience:</b> Target active advertisers</li>
+                      <li><b>Use Case:</b> Ad conversations follow-up</li>
+                      <li><b>Surface:</b> Business inbox desktop</li>
+                    </ul>
+                  </div>
+                  <div style="background:var(--bg);border-radius:10px;padding:16px 18px;">
+                    <p style="font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;color:var(--accent);margin-bottom:6px;">Long Term</p>
+                    <ul style="font-size:13px;font-weight:400;color:var(--ink);line-height:1.6;padding-left:16px;margin:0;">
+                      <li><b>Audience:</b> All messaging businesses</li>
+                      <li><b>Use Case:</b> Post-purchase re-engagement, broadcast</li>
+                      <li><b>Surface:</b> Cross-platform rollout</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Target Metrics -->
+              <div class="prd-card">
+                <p class="prd-section-title">Target Metrics</p>
+                <div class="prd-target-metrics" style="text-align:center;">
+                  <div class="prd-target">
+                    <p class="prd-target-number">12M+</p>
+                    <p class="prd-target-label">active messaging businesses</p>
+                  </div>
+                  <div class="prd-target">
+                    <p class="prd-target-number">8%</p>
+                    <p class="prd-target-label">adoption in first 6 months</p>
+                  </div>
+                  <div class="prd-target">
+                    <p class="prd-target-number">$200M+</p>
+                    <p class="prd-target-label">incremental annual revenue</p>
+                  </div>
+                  <div class="prd-target">
+                    <p class="prd-target-number">3.2×</p>
+                    <p class="prd-target-label">response rate vs. baseline</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="context-current" data-group="context" style="align-items:flex-start;justify-content:flex-start;">
+        <div class="panel-inner" style="max-width:none;margin:0;display:flex;flex-direction:column;">
+          <div class="page-header">
+            <p class="page-title">Current Experience</p>
+            <p class="page-desc">Audit finding: Our tool only automates first questions/responses, while businesses need follow-up conversations to drive outcomes</p>
+          </div>
+          <div class="tab-card">
+            <div class="tab-bar">
+              <button class="tab-btn active" onclick="switchTab('current', 'core')">Example</button>
+              <button class="tab-btn" onclick="switchTab('current', 'automation')">Automation Tools</button>
+              <button class="tab-btn" onclick="switchTab('current', 'messagingad')">Messaging Ad</button>
+            </div>
+            <div class="tab-content active" id="tab-current-core" style="padding:24px;align-items:center;justify-content:center;overflow:hidden;">
+              <div style="width:80%;margin:0 auto;">
+                <div style="max-height:100%;overflow:hidden;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.12);"><img src="prototype/ref/inbox.jpg" alt="Core Surface" style="width:100%;display:block;border-radius:12px;" /></div>
+                <p style="font-size:14px;color:var(--ink2);margin-top:20px;text-align:center;">First message sent through automation or ad setup</p>
+              </div>
+            </div>
+            <div class="tab-content" id="tab-current-automation" style="padding:24px;align-items:center;justify-content:center;overflow:hidden;">
+              <div style="width:80%;margin:0 auto;max-height:100%;overflow:hidden;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.12);cursor:pointer;" onclick="var img=this.querySelector('img');img.src=img.src.includes('Automations-1')?'prototype/ref/Automations-2.png':'prototype/ref/Automations-1.png';"><img src="prototype/ref/Automations-1.png" alt="Automation Tools" style="width:100%;display:block;border-radius:12px;" /></div>
+            </div>
+            <div class="tab-content" id="tab-current-messagingad" style="padding:24px;align-items:flex-start;justify-content:center;overflow-y:auto;">
+              <div style="width:80%;margin:0 auto;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.12);"><img src="prototype/ref/messagingads.png" alt="Messaging Ad" style="width:100%;display:block;border-radius:12px;" /></div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <section class="panel" id="context-learnings" data-group="context" style="align-items:flex-start;justify-content:flex-start;">
+        <div class="panel-inner" style="max-width:none;margin:0;display:flex;flex-direction:column;">
+          <div class="page-header">
+            <p class="page-title">Learnings</p>
+            <p class="page-desc">Third-party platforms offer simple tool to send broadcast or bulk messages. Meta tested with broadcast tool before and failed.</p>
+          </div>
+          <div class="tab-card">
+            <div class="tab-bar">
+              <button class="tab-btn active" data-tab="bc-3p" onclick="switchTab('learnings', 'bc-3p', this)">Broadcast Tool</button>
+              <button class="tab-btn" data-tab="bulk-3p" onclick="switchTab('learnings', 'bulk-3p', this)">Bulk Message Tool</button>
+            </div>
+            <div class="tab-content active" id="tab-learnings-bc-3p" style="padding:24px;align-items:center;justify-content:center;overflow:hidden;">
+              <div style="width:60%;margin:0 auto;max-height:100%;overflow:hidden;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.12);"><img src="img_project/14/broadcast.webp" alt="Broadcast Tool" style="width:100%;display:block;border-radius:12px;" /></div>
+            </div>
+            <div class="tab-content" id="tab-learnings-bulk-3p" style="padding:24px;align-items:center;justify-content:center;overflow:hidden;">
+              <div style="width:60%;margin:0 auto;max-height:100%;overflow:hidden;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.12);"><img src="img_project/14/bombot-kh-03.jpg" alt="Bulk Message Tool" style="width:100%;display:block;border-radius:12px;" /></div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ═══ DESIGN EXPLORATION ═══ -->
+      <section class="panel" id="design-baseline" data-group="design" style="align-items:flex-start;justify-content:flex-start;">
+        <div class="panel-inner" style="max-width:none;margin:0;display:flex;flex-direction:column;">
+          <div class="page-header">
+            <p class="page-title">Baseline</p>
+            <p class="page-desc">Used Figma to build the first version as a baseline for AI to continue exploring.</p>
+          </div>
+          <div class="tab-card" style="flex:1;">
+            <iframe style="border:none;width:100%;height:100%;" src="https://embed.figma.com/proto/c8NWwnMGCJQNR1Wqnry82R/2026-Portfolio?page-id=380%3A7265&node-id=416-16511&viewport=18%2C-122%2C0.06&t=FP9ydiC8YLc5uuDV-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=416%3A16511&embed-host=share" allowfullscreen></iframe>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="design-placement" data-group="design" style="align-items:flex-start;justify-content:flex-start;">
+        <div class="panel-inner" style="max-width:none;margin:0;display:flex;flex-direction:column;">
+          <div class="page-header">
+            <p class="page-title">Placement</p>
+            <p class="page-desc">Content coming soon</p>
+          </div>
+          <div class="tab-card">
+            <div class="tab-bar">
+              <button class="tab-btn active" onclick="switchTab('placement', 'tab1')">Tab 1</button>
+              <button class="tab-btn" onclick="switchTab('placement', 'tab2')">Tab 2</button>
+            </div>
+            <div class="tab-content active" id="tab-placement-tab1">
+              <p class="tab-placeholder">Tab 1 — image placeholder</p>
+            </div>
+            <div class="tab-content" id="tab-placement-tab2">
+              <p class="tab-placeholder">Tab 2 — image placeholder</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="design-layout" data-group="design" style="align-items:flex-start;justify-content:flex-start;">
+        <div class="panel-inner" style="max-width:none;margin:0;display:flex;flex-direction:column;">
+          <div class="page-header">
+            <p class="page-title">Tool Layout</p>
+            <p class="page-desc">Content coming soon</p>
+          </div>
+          <div class="tab-card">
+            <div class="tab-bar">
+              <button class="tab-btn active" onclick="switchTab('layout', 'tab1')">Tab 1</button>
+              <button class="tab-btn" onclick="switchTab('layout', 'tab2')">Tab 2</button>
+            </div>
+            <div class="tab-content active" id="tab-layout-tab1">
+              <p class="tab-placeholder">Tab 1 — image placeholder</p>
+            </div>
+            <div class="tab-content" id="tab-layout-tab2">
+              <p class="tab-placeholder">Tab 2 — image placeholder</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="design-flow" data-group="design" style="align-items:flex-start;justify-content:flex-start;">
+        <div class="panel-inner" style="max-width:none;margin:0;display:flex;flex-direction:column;">
+          <div class="page-header">
+            <p class="page-title">Setup Flow</p>
+            <p class="page-desc">Content coming soon</p>
+          </div>
+          <div class="tab-card">
+            <div class="tab-bar">
+              <button class="tab-btn active" onclick="switchTab('flow', 'tab1')">Tab 1</button>
+              <button class="tab-btn" onclick="switchTab('flow', 'tab2')">Tab 2</button>
+            </div>
+            <div class="tab-content active" id="tab-flow-tab1">
+              <p class="tab-placeholder">Tab 1 — image placeholder</p>
+            </div>
+            <div class="tab-content" id="tab-flow-tab2">
+              <p class="tab-placeholder">Tab 2 — image placeholder</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="design-iteration" data-group="design" style="align-items:flex-start;justify-content:flex-start;">
+        <div class="panel-inner" style="max-width:none;margin:0;display:flex;flex-direction:column;">
+          <div class="page-header">
+            <p class="page-title">Iteration</p>
+            <p class="page-desc">Content coming soon</p>
+          </div>
+          <div class="tab-card">
+            <div class="tab-bar">
+              <button class="tab-btn active" onclick="switchTab('iteration', 'tab1')">Tab 1</button>
+              <button class="tab-btn" onclick="switchTab('iteration', 'tab2')">Tab 2</button>
+            </div>
+            <div class="tab-content active" id="tab-iteration-tab1">
+              <p class="tab-placeholder">Tab 1 — image placeholder</p>
+            </div>
+            <div class="tab-content" id="tab-iteration-tab2">
+              <p class="tab-placeholder">Tab 2 — image placeholder</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ LAUNCH ═══ -->
+      <section class="panel" id="launch-experiment" data-group="launch" style="align-items:flex-start;justify-content:flex-start;">
+        <div class="panel-inner" style="max-width:none;margin:0;display:flex;flex-direction:column;">
+          <div class="page-header">
+            <p class="page-title">Page UI</p>
+            <p class="page-desc">Content coming soon</p>
+          </div>
+          <div class="tab-card" style="flex:1;">
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="launch-upsells" data-group="launch" style="align-items:flex-start;justify-content:flex-start;">
+        <div class="panel-inner" style="max-width:none;margin:0;display:flex;flex-direction:column;">
+          <div class="page-header">
+            <p class="page-title">Prototype</p>
+            <p class="page-desc">Content coming soon</p>
+          </div>
+          <div class="tab-card" style="flex:1;">
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script>
+    const main = document.getElementById('main');
+    const panels = document.querySelectorAll('.panel');
+    const parentNavItems = document.querySelectorAll('.side-section > .nav-item');
+    const allNavItems = document.querySelectorAll('.nav-item');
+    const navSubs = document.querySelectorAll('.nav-sub');
+
+    // ── Show panel by id ──
+    function showPanel(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      panels.forEach(p => p.classList.remove('active'));
+      el.classList.add('active');
+
+      const group = el.dataset.group;
+      history.replaceState(null, '', '#' + id);
+
+      // Highlight parent nav items
+      parentNavItems.forEach(n => {
+        const nTarget = n.dataset.target;
+        const nPanel = document.getElementById(nTarget);
+        const nGroup = nPanel ? nPanel.dataset.group : null;
+        n.classList.toggle('active', nGroup === group);
+      });
+
+      // Show/hide sub-navs based on active group
+      navSubs.forEach(sub => {
+        const isActive = sub.dataset.parent === group;
+        if (isActive) {
+          sub.classList.add('open');
+          sub.style.maxHeight = sub.scrollHeight + 'px';
+          sub.style.opacity = '1';
+        } else {
+          sub.classList.remove('open');
+          sub.style.maxHeight = '0';
+          sub.style.opacity = '0';
+        }
+      });
+
+      // Highlight active sub-item
+      navSubs.forEach(sub => {
+        const navId = el.dataset.nav || id;
+        sub.querySelectorAll('.nav-item').forEach(si => {
+          si.classList.toggle('active', si.dataset.target === navId);
+        });
+      });
+    }
+
+    // ── Click nav item → show panel ──
+    allNavItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const target = item.dataset.target;
+        if (target) showPanel(target);
+      });
+    });
+
+    // ── Tab switching ──
+    function switchTab(slide, tab, clickedBtn) {
+      let section = document.getElementById('context-' + slide) || document.getElementById('design-' + slide) || document.getElementById(slide);
+      if (!section) return;
+      section.querySelectorAll('.tab-btn').forEach(btn => {
+        if (clickedBtn) {
+          btn.classList.toggle('active', btn === clickedBtn);
+        } else {
+          btn.classList.toggle('active', btn.textContent.toLowerCase().replace(/[\s-]/g, '').includes(tab));
+        }
+      });
+      section.querySelectorAll('.tab-content').forEach(tc => {
+        tc.classList.toggle('active', tc.id === 'tab-' + slide + '-' + tab);
+      });
+    }
+
+    // ── Restore from URL hash or show first panel ──
+    if (location.hash) {
+      showPanel(location.hash.slice(1));
+    } else {
+      showPanel(panels[0].id);
+    }
+  </script>
+
+</body>
+</html>

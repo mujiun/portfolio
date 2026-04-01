@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="icon" type="image/png" href="../portfolio/projects/favicons/mu.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Onboarding Guide for WhatsApp Partner Platforms — Mu Jiun Shie</title>
@@ -47,6 +48,8 @@
       justify-content: center;
       opacity: 0;
       transform: translateY(16px);
+      -webkit-font-smoothing: antialiased;
+      backface-visibility: hidden;
       transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
       pointer-events: none;
     }
@@ -662,7 +665,7 @@
       font-weight: 400;
       color: var(--ink3);
       line-height: 1.4;
-      padding-top: 16px;
+      padding-top: 4px;
       letter-spacing: 0.01em;
     }
 
@@ -803,7 +806,7 @@
       flex-direction: column;
       height: 100%;
       justify-content: center;
-      gap: 36px;
+      gap: 24px;
     }
 
     /* ── Funnel Diagram ── */
@@ -1336,6 +1339,65 @@
 
     .split-img .slide-carousel .carousel-track img.active {
       position: relative;
+    }
+
+    /* ── TABS ── */
+    .tab-card {
+      background: var(--surface);
+      border-radius: 12px;
+      overflow: hidden;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      max-height: 90vh;
+    }
+
+    .tab-bar {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tab-bar .tab-btn {
+      padding: 12px 24px;
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink2);
+      background: none;
+      border: none;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+    }
+
+    .tab-bar .tab-btn.active {
+      color: var(--accent);
+      font-weight: 600;
+      border-bottom-color: var(--accent);
+    }
+
+    .tab-bar .tab-btn:hover {
+      color: var(--ink);
+    }
+
+    .tab-content {
+      display: none;
+      flex: 1;
+      padding: 24px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tab-content.active {
+      display: flex;
+    }
+
+    .tab-content img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
     }
 
   </style>
@@ -2003,9 +2065,9 @@
       <section class="panel" id="launch-mvp" data-group="launch">
         <div class="panel-inner">
           <div class="single-col">
-            <div class="slide-img click-swap" onclick="this.classList.toggle('swapped')" style="max-height:calc(100vh - 120px);width:fit-content;margin:0 auto">
-              <img src="img_project/10/partner.jpg" alt="Partner" class="swap-a" style="max-height:calc(100vh - 120px);width:auto;object-fit:contain" />
-              <img src="img_project/10/mvp-1.jpg" alt="MVP Experience" class="swap-b" style="max-height:calc(100vh - 120px);width:auto;object-fit:contain" />
+            <div class="slide-img click-swap" onclick="this.classList.toggle('swapped')" style="max-height:calc(100vh - 120px);max-width:100%;margin:0 auto;background:none;">
+              <img src="img_project/10/partner.jpg" alt="Partner" class="swap-a" style="max-height:calc(100vh - 120px);max-width:100%;object-fit:contain" />
+              <img src="img_project/10/mvp-1.jpg" alt="MVP Experience" class="swap-b" style="max-height:calc(100vh - 120px);max-width:100%;object-fit:contain" />
             </div>
           </div>
         </div>
@@ -2014,9 +2076,9 @@
       <section class="panel" id="launch-future" data-group="launch">
         <div class="panel-inner">
           <div class="single-col">
-            <div class="slide-img click-swap" onclick="this.classList.toggle('swapped')" style="max-height:calc(100vh - 120px);width:fit-content;margin:0 auto">
-              <img src="img_project/10/partner.jpg" alt="Partner" class="swap-a" style="max-height:calc(100vh - 120px);width:auto;object-fit:contain" />
-              <img src="img_project/10/future-1.jpg" alt="Future" class="swap-b" style="max-height:calc(100vh - 120px);width:auto;object-fit:contain" />
+            <div class="slide-img click-swap" onclick="this.classList.toggle('swapped')" style="max-height:calc(100vh - 120px);max-width:100%;margin:0 auto;background:none;">
+              <img src="img_project/10/partner.jpg" alt="Partner" class="swap-a" style="max-height:calc(100vh - 120px);max-width:100%;object-fit:contain" />
+              <img src="img_project/10/future-1.jpg" alt="Future" class="swap-b" style="max-height:calc(100vh - 120px);max-width:100%;object-fit:contain" />
             </div>
           </div>
         </div>
@@ -2103,11 +2165,43 @@
         </div>
       </section>
 
+      <section class="panel" id="scale-overview" data-group="scale">
+        <div class="panel-inner" style="display:flex;flex-direction:column;justify-content:center;gap:40px;">
+          <div>
+            <h2 class="content-h2" style="margin-top:0">Ecosystem</h2>
+            <p class="content-p" style="max-width:none">Proven success for defined onboarding strategy, scaled to more solutions</p>
+          </div>
+          <div style="display:flex;gap:20px;">
+            <div style="flex:1;background:var(--surface);border-radius:var(--radius);padding:32px 28px;display:flex;flex-direction:column;gap:12px;">
+              <span style="font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;color:var(--ink2);">Step 1</span>
+              <p style="font-family:var(--font);font-size:22px;font-weight:700;color:var(--ink);line-height:1.2;">Define</p>
+              <p style="font-family:var(--font);font-size:15px;font-weight:400;color:var(--ink2);line-height:1.35;">Onboarding path with 6 tasks in clear sequence</p>
+            </div>
+            <div style="flex:1;background:var(--surface);border-radius:var(--radius);padding:32px 28px;display:flex;flex-direction:column;gap:12px;">
+              <span style="font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;color:var(--ink2);">Step 2</span>
+              <p style="font-family:var(--font);font-size:22px;font-weight:700;color:var(--ink);line-height:1.2;">Ship</p>
+              <p style="font-family:var(--font);font-size:15px;font-weight:400;color:var(--ink2);line-height:1.35;">Partner platforms first — top revenue driver</p>
+            </div>
+            <div style="flex:1;background:var(--surface);border-radius:var(--radius);padding:32px 28px;display:flex;flex-direction:column;gap:12px;">
+              <span style="font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;color:var(--ink2);">Step 3</span>
+              <p style="font-family:var(--font);font-size:22px;font-weight:700;color:var(--ink);line-height:1.2;">Validate</p>
+              <p style="font-family:var(--font);font-size:15px;font-weight:400;color:var(--ink2);line-height:1.35;">Measurable lift in completion and revenue</p>
+            </div>
+            <div style="flex:1;background:var(--surface);border-radius:var(--radius);padding:32px 28px;display:flex;flex-direction:column;gap:12px;">
+              <span style="font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;color:var(--ink2);">Step 4</span>
+              <p style="font-family:var(--font);font-size:22px;font-weight:700;color:var(--ink);line-height:1.2;">Scale</p>
+              <p style="font-family:var(--font);font-size:15px;font-weight:400;color:var(--ink2);line-height:1.35;">Extended to AI Chatbot and developer flows</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="panel" id="scale-ecosystem" data-group="scale">
         <div class="panel-inner" style="display:flex;flex-direction:column;justify-content:center;height:100%;gap:36px;max-width:none;width:100%">
           <div style="max-width:none">
             <h2 class="content-h2" style="margin-top:0">Ecosystem</h2>
-            <p class="content-p" style="max-width:none">Scaled <b>new onboarding strategy</b> to developer onboarding flow</p>
+            <p class="content-p" style="max-width:none">Scaled <b>new onboarding strategy</b> to developer onboarding flow and Meta AI Chatbot</p>
+            <p class="content-desc">Linear guidance, test free and paid products during onboarding</p>
           </div>
           <div style="display:flex;gap:12px;align-items:flex-start">
             <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:12px;opacity:0.25">
@@ -2135,25 +2229,70 @@
       </section>
 
       <section class="panel" id="scale-structure" data-group="scale">
-        <div class="panel-inner">
+        <div class="panel-inner" style="padding-top:40px;">
           <div class="single-col">
             <div>
               <h2 class="content-h2" style="margin-top:0">Implementation</h2>
-              <p class="content-p">Replaced current landing page with <b>linear guidance and clear navigation</b></p>
+              <p class="content-p">Developer onboarding flow: Landing with <b>linear guidance</b></p>
             </div>
-            <div class="slide-img"><img src="img_project/10/17.jpg" alt="Implementation Structure" /></div>
+            <div class="tab-card">
+              <div class="tab-bar">
+                <button class="tab-btn active" onclick="switchTab('scale-structure', 'before')">Before</button>
+                <button class="tab-btn" onclick="switchTab('scale-structure', 'after')">After</button>
+              </div>
+              <div class="tab-content active" id="tab-scale-structure-before" style="padding:24px;align-items:flex-start;justify-content:center;">
+                <div style="width:80%;margin:0 auto;max-height:100%;overflow-y:auto;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.12);"><img src="prototype/before/landing-page.png" alt="Overview Before" style="width:100%;display:block;border-radius:12px;" /></div>
+              </div>
+              <div class="tab-content" id="tab-scale-structure-after" style="padding:24px;align-items:flex-start;justify-content:center;">
+                <div style="width:95%;margin:0 auto;height:600px;overflow:hidden;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.12);"><iframe src="prototype/developer.html" style="width:133.33%;height:800px;border:none;transform:scale(0.75);transform-origin:top left;"></iframe></div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="panel" id="scale-adoption" data-group="scale" data-nav="scale-structure">
-        <div class="panel-inner">
+      <section class="panel" id="scale-config" data-group="scale" data-nav="scale-structure">
+        <div class="panel-inner" style="padding-top:40px;">
           <div class="single-col">
             <div>
               <h2 class="content-h2" style="margin-top:0">Implementation</h2>
-              <p class="content-p">Redesigned core configuration page with <b>testing for both free and paid products</b></p>
+              <p class="content-p">Developer onboarding flow: Test both <b>free and paid messaging</b> products</p>
             </div>
-            <div class="slide-img"><img src="img_project/10/17.jpg" alt="Implementation Adoption" /></div>
+            <div class="tab-card">
+              <div class="tab-bar">
+                <button class="tab-btn active" onclick="switchTab('scale-config', 'before')">Before</button>
+                <button class="tab-btn" onclick="switchTab('scale-config', 'after')">After</button>
+              </div>
+              <div class="tab-content active" id="tab-scale-config-before" style="padding:24px;align-items:flex-start;justify-content:center;">
+                <div style="width:80%;margin:0 auto;max-height:100%;overflow-y:auto;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.12);"><img src="prototype/before/api-setup.png" alt="Configuration Before" style="width:100%;display:block;border-radius:12px;" /></div>
+              </div>
+              <div class="tab-content" id="tab-scale-config-after" style="padding:24px;align-items:flex-start;justify-content:center;">
+                <div style="width:95%;margin:0 auto;height:600px;overflow:hidden;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.12);"><iframe src="prototype/developer-step2.html" style="width:133.33%;height:800px;border:none;transform:scale(0.75);transform-origin:top left;"></iframe></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="scale-ai" data-group="scale" data-nav="scale-structure">
+        <div class="panel-inner" style="padding-top:40px;">
+          <div class="single-col">
+            <div>
+              <h2 class="content-h2" style="margin-top:0">Implementation</h2>
+              <p class="content-p">Developer onboarding flow: Provide <b>onboarding guidance with Meta AI</b></p>
+            </div>
+            <div class="tab-card">
+              <div class="tab-bar">
+                <button class="tab-btn active" onclick="switchTab('scale-ai', 'before')">Before</button>
+                <button class="tab-btn" onclick="switchTab('scale-ai', 'after')">After</button>
+              </div>
+              <div class="tab-content active" id="tab-scale-ai-before" style="padding:24px;align-items:flex-start;justify-content:center;">
+                <div style="width:80%;margin:0 auto;max-height:100%;overflow-y:auto;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.12);"><img src="prototype/before/devdoc.png" alt="Dev Doc Before" style="width:100%;display:block;border-radius:12px;" /></div>
+              </div>
+              <div class="tab-content" id="tab-scale-ai-after" style="padding:24px;align-items:flex-start;justify-content:center;">
+                <div style="width:95%;margin:0 auto;height:600px;overflow:hidden;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.12);"><iframe src="prototype/developer.html" style="width:133.33%;height:800px;border:none;transform:scale(0.75);transform-origin:top left;"></iframe></div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -2162,6 +2301,15 @@
   </div>
 
   <script>
+    function switchTab(slide, tab) {
+      const section = document.getElementById(slide);
+      if (!section) return;
+      section.querySelectorAll('.tab-bar .tab-btn').forEach(btn => btn.classList.remove('active'));
+      section.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+      event.target.classList.add('active');
+      document.getElementById('tab-' + slide + '-' + tab).classList.add('active');
+    }
+
     const main = document.getElementById('main');
     const panels = document.querySelectorAll('.panel');
     const parentNavItems = document.querySelectorAll('.side-section > .nav-item');

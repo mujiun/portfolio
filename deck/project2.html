@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="icon" type="image/png" href="../portfolio/projects/favicons/mu.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>New Monetization Tool for Meta Business Inbox — Mu Jiun Shie</title>
+  <title>Meta Business Inbox Growth — Mu Jiun Shie</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@100..900&family=IBM+Plex+Mono:wght@400;500;600;700&display=block" rel="stylesheet" />
@@ -13,6 +14,7 @@
     .main {
       flex: 1;
       overflow-y: auto;
+      scroll-snap-type: y mandatory;
     }
 
     .project-title {
@@ -45,6 +47,7 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
+      scroll-snap-align: start;
     }
 
     .panel-inner {
@@ -55,6 +58,8 @@
       flex-direction: column;
       justify-content: center;
       margin: 0 auto;
+      min-height: 0;
+      overflow: hidden;
     }
 
     /* ── OVERVIEW: 2-col layout ── */
@@ -291,6 +296,28 @@
       transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
     }
 
+    .focus-bar.revealed .focus-bar-label { display: none !important; }
+    .focus-bar.revealed .focus-bar-detail { display: block !important; }
+
+    /* ── Focus bar staggered entrance ── */
+    .focus-bar-row {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .inbox-growth-focused .focus-bar-row { opacity: 1; transform: translateY(0); }
+    .inbox-growth-focused .focus-bar-row:nth-child(1) { transition-delay: 0.1s; }
+    .inbox-growth-focused .focus-bar-row:nth-child(2) { transition-delay: 0.25s; }
+    .inbox-growth-focused .focus-bar-row:nth-child(3) { transition-delay: 0.4s; }
+
+    /* ── Inbox focuses revealed state ── */
+    .inbox-growth-focused .inbox-step-card { padding: 20px !important; }
+    .inbox-growth-focused .inbox-step-title { font-size: 20px !important; }
+    .inbox-growth-focused .inbox-focuses-area {
+      max-height: 400px !important;
+      opacity: 1 !important;
+    }
+
     .divider-page.visible .divider-desc {
       opacity: 1;
       transform: translateY(0);
@@ -369,6 +396,124 @@
       justify-content: center;
       gap: 36px;
     }
+    .single-col:has(.tab-card) {
+      gap: 16px;
+    }
+
+    /* ── Process Diagram ── */
+    .process-diagram {
+      width: 100%;
+    }
+    .process-steps {
+      display: flex;
+      align-items: flex-start;
+      gap: 0;
+    }
+    .process-step {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .process-step-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+    .process-step-header { background: rgba(213,108,0,0.08); }
+    .process-step-num {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: var(--accent);
+    }
+    .process-step-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .process-arrow {
+      font-size: 20px;
+      color: var(--ink3);
+      flex-shrink: 0;
+      padding: 0 12px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+    }
+    .process-tasks {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 0 4px;
+    }
+    .process-task {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 8px 12px;
+      background: var(--surface);
+      border-radius: 6px;
+    }
+    .process-task-text {
+      font-size: 13px;
+      font-weight: 450;
+      color: var(--ink);
+    }
+    .process-task-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .process-tool {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 8px;
+      border-radius: 10px;
+      background: #fff;
+      color: var(--ink);
+      border: 1px solid var(--border);
+      width: fit-content;
+      flex-shrink: 0;
+    }
+    .process-tool img {
+      width: 12px;
+      height: 12px;
+      object-fit: contain;
+    }
+
+    .process-fullbar {
+      margin-top: 12px;
+      width: 100%;
+    }
+    .process-fullbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+    }
+    .process-fullbar-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .process-fullbar-inner:hover {
+      background: rgba(213,108,0,0.06);
+      border-color: var(--accent);
+    }
+    .process-fullbar-tools {
+      display: flex;
+      gap: 6px;
+    }
 
     .single-col .content-p {
       max-width: none;
@@ -384,9 +529,10 @@
 
     /* ── Feedback ── */
     .feedback {
-      margin-top: 24px;
+      margin-top: 8px;
       border-top: 1px solid var(--border);
-      padding-top: 16px;
+      padding-top: 8px;
+      flex-shrink: 0;
     }
     .feedback-title {
       font-family: var(--mono);
@@ -473,7 +619,10 @@
 
     /* ── Tab Card ── */
     .page-header {
-      margin-bottom: 20px;
+      margin-bottom: 12px;
+    }
+    .page-header:has(+ .tab-card) .page-title {
+      margin-bottom: 0;
     }
     .page-title {
       font-size: 22px;
@@ -488,13 +637,14 @@
       font-weight: 400;
       color: var(--ink2);
       line-height: 1.4;
-      max-width: 640px;
+      padding-top: 4px;
     }
     .tab-card {
       background: var(--surface);
       border-radius: 12px;
       overflow: hidden;
       flex: 1;
+      min-height: 0;
       display: flex;
       flex-direction: column;
     }
@@ -516,9 +666,9 @@
       margin-bottom: -1px;
     }
     .tab-btn.active {
-      color: var(--ink);
+      color: var(--accent);
       font-weight: 600;
-      border-bottom-color: var(--ink);
+      border-bottom-color: var(--accent);
     }
     .tab-btn:hover {
       color: var(--ink);
@@ -526,6 +676,7 @@
     .tab-content {
       display: none;
       flex: 1;
+      min-height: 0;
       padding: 24px;
       align-items: center;
       justify-content: center;
@@ -549,7 +700,7 @@
       flex-direction: column;
       height: 100%;
       overflow-y: auto;
-      padding: 60px 0 8px;
+      padding: 40px 0 8px;
       gap: 0;
       max-width: 960px;
     }
@@ -559,7 +710,7 @@
     }
 
     .prd-title {
-      font-size: 22px;
+      font-size: 32px;
       font-weight: 700;
       color: var(--ink);
       letter-spacing: -0.01em;
@@ -571,8 +722,8 @@
       display: flex;
       flex-direction: column;
       gap: 6px;
-      font-family: var(--mono);
-      font-size: 11px;
+      font-family: var(--sans);
+      font-size: 13px;
       color: var(--ink2);
     }
 
@@ -652,10 +803,12 @@
     }
 
     .prd-text {
-      font-size: 16px;
+      font-size: 20px;
       font-weight: 400;
       color: var(--ink);
-      line-height: 1.4;
+      line-height: 1.3;
+      padding-bottom: 4px;
+      letter-spacing: 0.003em;
     }
 
     .prd-text b {
@@ -664,7 +817,7 @@
 
     .prd-metrics {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
       gap: 10px;
       margin-top: 12px;
     }
@@ -676,7 +829,7 @@
     }
 
     .prd-metric-number {
-      font-size: 36px;
+      font-size: 40px;
       font-weight: 600;
       color: var(--ink);
       letter-spacing: -0.02em;
@@ -746,32 +899,16 @@
           <a class="nav-item" data-target="overview-role">My Role</a>
           <a class="nav-item" data-target="overview-impact">Impact</a>
         </div>
-      </div>
-      <hr style="border:none;border-top:1px solid var(--border);margin:12px 16px;">
-      <div class="side-section">
-        <p class="side-label">Co-work with AI</p>
 
-        <a class="nav-item" data-target="context-divider">Context</a>
-        <div class="nav-sub" data-parent="context">
-          <a class="nav-item" data-target="context-onepager">One-Pager</a>
-          <a class="nav-item" data-target="context-current">Current Experience</a>
-          <a class="nav-item" data-target="context-learnings">Learnings</a>
+        <a class="nav-item" data-target="ecosystem-divider">Ecosystem</a>
+        <div class="nav-sub" data-parent="inbox-growth">
+          <a class="nav-item" data-target="inbox-growth">Growth Strategy</a>
+          <a class="nav-item" data-target="inbox-family">Family of Apps</a>
         </div>
 
-        <a class="nav-item" data-target="design-divider">Design Exploration</a>
-        <div class="nav-sub" data-parent="design">
-          <a class="nav-item" data-target="design-baseline">Baseline</a>
-          <a class="nav-item" data-target="design-placement">Placement</a>
-          <a class="nav-item" data-target="design-layout">Tool Layout</a>
-          <a class="nav-item" data-target="design-flow">Setup Flow</a>
-          <a class="nav-item" data-target="design-iteration">Iteration</a>
-        </div>
-
-        <a class="nav-item" data-target="launch-divider">Launch</a>
-        <div class="nav-sub" data-parent="launch">
-          <a class="nav-item" data-target="launch-experiment">Experiment Setup</a>
-          <a class="nav-item" data-target="launch-upsells">Upsells</a>
-          <a class="nav-item" data-target="launch-metrics">Metrics</a>
+        <a class="nav-item" data-target="process-divider">Process</a>
+        <div class="nav-sub" data-parent="process">
+          <a class="nav-item" data-target="process-ai-tools">AI Tools</a>
         </div>
       </div>
     </nav>
@@ -779,7 +916,7 @@
     <!-- ── MAIN CONTENT ── -->
     <div class="main" id="main">
 
-      <p class="project-title"><span class="page-counter" id="pageCounter">1/20</span> • New Monetization Tool</p>
+      <p class="project-title"><span class="page-counter" id="pageCounter">1/20</span> • Meta Business Inbox Growth</p>
 
       <!-- ═══ OVERVIEW ═══ -->
       <section class="panel" id="overview-project" data-group="overview">
@@ -790,8 +927,8 @@
               <div class="overview-layer active" id="layer-overview">
                 <div class="overview-header">
                   <p class="overview-company">Meta · Business Inbox</p>
-                  <h1 class="overview-title">New Monetization Tool for Meta Business Inbox</h1>
-                  <p class="overview-subtitle">Ambiguous Concept, AI-Accelerated, MVP</p>
+                  <h1 class="overview-title">Meta Business Inbox Growth</h1>
+                  <p class="overview-subtitle">Co-work with AI, 3 focuses on product strategy</p>
                 </div>
               </div>
 
@@ -846,370 +983,201 @@
       <section class="panel" id="overview-role" data-group="overview" style="display:none"></section>
       <section class="panel" id="overview-impact" data-group="overview" style="display:none"></section>
 
-      <!-- ═══ CONTEXT ═══ -->
-      <section class="panel" id="context-divider" data-group="context">
+      <!-- ═══ ECOSYSTEM ═══ -->
+      <section class="panel" id="ecosystem-divider" data-group="inbox-growth">
         <div class="panel-inner divider-page">
-          <p class="divider-title">Context</p>
-          <p class="divider-desc">Why this matters</p>
+          <p class="divider-title">Ecosystem</p>
+          <p class="divider-desc">Learning about products and user journey</p>
         </div>
       </section>
 
-      <section class="panel no-snap" id="context-onepager" data-group="context" style="align-items:flex-start;justify-content:flex-start;">
-        <div class="panel-inner" style="max-width:none;margin:0;">
-          <div class="prd">
+      <section class="panel" id="inbox-growth" data-group="inbox-growth">
+        <div class="panel-inner" style="display:flex;flex-direction:column;justify-content:center;gap:24px;">
+          <!-- Title area — transitions between states -->
+          <div>
+            <h2 class="content-h2 inbox-title" style="margin-top:0;transition:all 0.4s ease;">Business Journey</h2>
+            <p class="content-p inbox-subtitle" style="max-width:none;transition:all 0.4s ease;">Business end-to-end journey for tool adoption</p>
+          </div>
+          <!-- Journey steps — always visible, padding shrinks -->
+          <div class="inbox-steps" style="display:flex;align-items:center;gap:12px;transition:all 0.4s ease;">
+            <div style="flex:1;background:var(--surface);border-radius:var(--radius);padding:28px;text-align:center;transition:padding 0.4s ease;" class="inbox-step-card">
+              <p style="font-size:20px;font-weight:600;color:var(--ink);margin-bottom:6px;transition:font-size 0.4s ease;" class="inbox-step-title">Discover</p>
+              <p style="font-size:14px;color:var(--ink2);">Find the tool</p>
+            </div>
+            <span style="font-size:24px;color:var(--ink3);flex-shrink:0;">→</span>
+            <div style="flex:1;background:var(--surface);border-radius:var(--radius);padding:28px;text-align:center;transition:padding 0.4s ease;" class="inbox-step-card">
+              <p style="font-size:20px;font-weight:600;color:var(--ink);margin-bottom:6px;transition:font-size 0.4s ease;" class="inbox-step-title">Onboard</p>
+              <p style="font-size:14px;color:var(--ink2);">Set up the tool</p>
+            </div>
+            <span style="font-size:24px;color:var(--ink3);flex-shrink:0;">→</span>
+            <div style="flex:1;background:var(--surface);border-radius:var(--radius);padding:28px;text-align:center;transition:padding 0.4s ease;" class="inbox-step-card">
+              <p style="font-size:20px;font-weight:600;color:var(--ink);margin-bottom:6px;transition:font-size 0.4s ease;" class="inbox-step-title">Activate</p>
+              <p style="font-size:14px;color:var(--ink2);">First value moment</p>
+            </div>
+            <span style="font-size:24px;color:var(--ink3);flex-shrink:0;">→</span>
+            <div style="flex:1;background:var(--surface);border-radius:var(--radius);padding:28px;text-align:center;transition:padding 0.4s ease;" class="inbox-step-card">
+              <p style="font-size:20px;font-weight:600;color:var(--ink);margin-bottom:6px;transition:font-size 0.4s ease;" class="inbox-step-title">Retain</p>
+              <p style="font-size:14px;color:var(--ink2);">Ongoing usage</p>
+            </div>
+          </div>
+          <!-- Focus bars — grid-aligned to journey columns -->
+          <div class="inbox-focuses-area" style="display:grid;grid-template-columns:1fr 24px 1fr 24px 1fr 24px 1fr;gap:10px 0;max-height:0;opacity:0;overflow:hidden;transition:max-height 0.45s ease,opacity 0.35s ease;">
+            <!-- Focus 1: Discover → Activate -->
+            <div class="focus-bar-row" style="grid-column:1/6;">
+              <div onclick="this.classList.toggle('revealed')" class="focus-bar" style="width:100%;background:rgba(10,120,190,0.10);border-radius:8px;padding:12px 20px;cursor:pointer;transition:all 0.3s ease;">
+                <p class="focus-bar-label" style="font-size:15px;font-weight:500;color:#0A78BE;">Focus 1</p>
+                <p class="focus-bar-detail" style="font-size:15px;font-weight:400;color:#0A78BE;display:none;">Focus 1 · <b>Upsells &amp; Onboarding</b></p>
+              </div>
+            </div>
+            <!-- Focus 2: Activate → Retain -->
+            <div class="focus-bar-row" style="grid-column:5/8;">
+              <div onclick="this.classList.toggle('revealed')" class="focus-bar" style="width:100%;background:rgba(0,107,78,0.10);border-radius:8px;padding:12px 20px;cursor:pointer;transition:all 0.3s ease;">
+                <p class="focus-bar-label" style="font-size:15px;font-weight:500;color:#006b4e;">Focus 2</p>
+                <p class="focus-bar-detail" style="font-size:15px;font-weight:400;color:#006b4e;display:none;">Focus 2 · <b>Modular System</b></p>
+              </div>
+            </div>
+            <!-- Focus 3: Discover → Retain (full span) -->
+            <div class="focus-bar-row" style="grid-column:1/8;">
+              <div onclick="this.classList.toggle('revealed')" class="focus-bar" style="width:100%;background:rgba(213,108,0,0.10);border-radius:8px;padding:12px 20px;cursor:pointer;transition:all 0.3s ease;">
+                <p class="focus-bar-label" style="font-size:15px;font-weight:500;color:#D56C00;">Focus 3</p>
+                <p class="focus-bar-detail" style="font-size:15px;font-weight:400;color:#D56C00;display:none;">Focus 3 · <b>New Tool</b></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            <!-- Header -->
-            <div class="prd-header">
-              <p class="prd-title">Bulk Messaging Tool for Meta Business Inbox</p>
-              <div class="prd-meta">
-                <div class="prd-meta-row">
-                  <span class="prd-meta-label">POCs</span>
-                  <span class="prd-meta-value"><span>(PD) Mu Jiun Shie</span> <span>(CD) Sarah Chen</span> <span>(PM) David Park</span> <span>(Eng) Kevin Liu</span></span>
+      <section class="panel" id="inbox-family" data-group="inbox-growth" data-nav="inbox-family">
+        <div class="panel-inner">
+          <div class="single-col">
+            <div>
+              <h2 class="content-h2" style="margin-top:0">Family of Apps</h2>
+              <div style="position:relative;min-height:52px;">
+                <div class="foa-state foa-state-0" style="transition:opacity 0.35s ease;">
+                  <p class="content-p">Meta has <b>5 business inbox</b> apps/surfaces serving <b>400M businesses</b> worldwide</p>
+                  <p class="page-desc">Inbox tools are free — Meta earns revenue when businesses buy ads to drive conversations</p>
                 </div>
-                <div class="prd-meta-row">
-                  <span class="prd-meta-label">Progress</span>
-                  <span class="prd-meta-value">
-                    <span class="prd-step done">Understand</span><span class="prd-step-arrow">→</span>
-                    <span class="prd-step done">Concept</span><span class="prd-step-arrow">→</span>
-                    <span class="prd-step active">MVP Design</span><span class="prd-step-arrow">→</span>
-                    <span class="prd-step">Development</span><span class="prd-step-arrow">→</span>
-                    <span class="prd-step">Dogfood</span><span class="prd-step-arrow">→</span>
-                    <span class="prd-step">Launch</span>
+                <div class="foa-state foa-state-1" style="position:absolute;top:0;left:0;right:0;opacity:0;transition:opacity 0.35s ease;">
+                  <p class="content-p">Desktop inbox is the primary surface for advanced features and <b>new tool pilots</b></p>
+                  <p class="page-desc">Considering audience profile and development cost</p>
+                </div>
+              </div>
+            </div>
+            <div style="position:relative;">
+              <div class="slide-img foa-img foa-img-0" style="transition:opacity 0.35s ease;"><img src="img_project/14/FoA.jpg" alt="Family of Apps" /></div>
+              <div class="slide-img foa-img foa-img-1" style="position:absolute;top:0;left:0;right:0;opacity:0;transition:opacity 0.35s ease;"><img src="img_project/14/FoA2.jpg" alt="Family of Apps" /></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ═══ PROCESS ═══ -->
+      <section class="panel" id="process-divider" data-group="process">
+        <div class="panel-inner divider-page">
+          <p class="divider-title">Process</p>
+          <p class="divider-desc">Working with AI for product development cycle</p>
+        </div>
+      </section>
+
+      <section class="panel" id="process-ai-tools" data-group="process" data-nav="process-ai-tools">
+        <div class="panel-inner">
+          <div class="single-col" style="gap:24px;">
+            <div>
+              <h2 class="content-h2" style="margin-top:0">AI Tools</h2>
+              <p class="content-p">Cut design delivery <b>from 3 months to 1 month</b> with AI-powered workflows</p>
+            </div>
+
+            <!-- Step Diagram -->
+            <div class="process-diagram">
+              <!-- Step Headers -->
+              <div class="process-steps">
+                <div class="process-step">
+                  <div class="process-step-header">
+                    <span class="process-step-num">01</span>
+                    <span class="process-step-name">Understand</span>
+                    <span style="font-size:13px;font-weight:450;color:var(--ink2);margin-left:auto;">1 week</span>
+                  </div>
+                  <div class="process-tasks">
+                    <div class="process-task">
+                      <span class="process-task-text">Gather insights</span>
+                      <div class="process-task-tools"><span class="process-tool"><img src="images/logo/metalogo2.png" alt="">Internal AIs</span></div>
+                    </div>
+                    <div class="process-task">
+                      <span class="process-task-text">Draft PRD</span>
+                      <div class="process-task-tools"><span class="process-tool"><img src="images/logo/claude-color.png" alt="">Claude Code</span></div>
+                    </div>
+                    <div class="process-task">
+                      <span class="process-task-text">Collect reference</span>
+                      <div class="process-task-tools"><span class="process-tool"><img src="images/logo/Figma-logo.svg" alt="">Figma</span></div>
+                    </div>
+                    <div class="process-task">
+                      <span class="process-task-text">Dogfood to build empathy</span>
+                      <div class="process-task-tools"><span class="process-tool"><svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="5" r="3"/><path d="M2.5 14a5.5 5.5 0 0111 0z"/></svg>Human effort</span></div>
+                    </div>
+                  </div>
+                </div>
+
+                <span class="process-arrow">→</span>
+
+                <div class="process-step">
+                  <div class="process-step-header">
+                    <span class="process-step-num">02</span>
+                    <span class="process-step-name">Design Exploration</span>
+                    <span style="font-size:13px;font-weight:450;color:var(--ink2);margin-left:auto;">2-3 weeks</span>
+                  </div>
+                  <div class="process-tasks">
+                    <div class="process-task">
+                      <span class="process-task-text">Create a baseline</span>
+                      <div class="process-task-tools"><span class="process-tool"><img src="images/logo/Figma-logo.svg" alt="">Figma</span></div>
+                    </div>
+                    <div class="process-task">
+                      <span class="process-task-text">Explore tool IA and placement</span>
+                      <div class="process-task-tools"><span class="process-tool"><img src="images/logo/Figma-logo.svg" alt="">Figma Make</span><span class="process-tool"><img src="images/logo/claude-color.png" alt="">Claude Code</span><span class="process-tool"><img src="images/logo/Visual_Studio_Code_1.35_icon.svg.png" alt="">VS Code</span></div>
+                    </div>
+                    <div class="process-task">
+                      <span class="process-task-text">Build prototype</span>
+                      <div class="process-task-tools"><span class="process-tool"><img src="images/logo/claude-color.png" alt="">Claude Code</span><span class="process-tool"><img src="images/logo/Visual_Studio_Code_1.35_icon.svg.png" alt="">VS Code</span></div>
+                    </div>
+                    <div class="process-task">
+                      <span class="process-task-text">Design shareout / critique</span>
+                      <div class="process-task-tools"><span class="process-tool"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6.5"/><path d="M8 1.5C8 1.5 5 5 5 8s3 6.5 3 6.5M8 1.5C8 1.5 11 5 11 8s-3 6.5-3 6.5M1.5 8h13"/></svg>Html Prototype</span></div>
+                    </div>
+                  </div>
+                </div>
+
+                <span class="process-arrow">→</span>
+
+                <div class="process-step">
+                  <div class="process-step-header">
+                    <span class="process-step-num">03</span>
+                    <span class="process-step-name">Delivery</span>
+                  </div>
+                  <div class="process-tasks">
+                    <div class="process-task">
+                      <span class="process-task-text">Share final design with Engineer</span>
+                      <div class="process-task-tools"><span class="process-tool"><img src="images/logo/Figma-logo.svg" alt="">Figma</span><span class="process-tool"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6.5"/><path d="M8 1.5C8 1.5 5 5 5 8s3 6.5 3 6.5M8 1.5C8 1.5 11 5 11 8s-3 6.5-3 6.5M1.5 8h13"/></svg>Html Prototype</span></div>
+                    </div>
+                    <div class="process-task">
+                      <span class="process-task-text">Land diff for small bugs</span>
+                      <div class="process-task-tools"><span class="process-tool"><img src="images/logo/claude-color.png" alt="">Claude Code</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Full-process bar -->
+              <div class="process-fullbar">
+                <a class="process-fullbar-inner" href="inbox-ai-workflow.html" style="text-decoration:none;">
+                  <span class="process-fullbar-label">Html page covers whole process</span>
+                  <span class="process-fullbar-tools">
+                    <span class="process-tool"><img src="images/logo/claude-color.png" alt="">Claude Code</span>
+                    <span class="process-tool"><img src="images/logo/Visual_Studio_Code_1.35_icon.svg.png" alt="">VS Code</span>
                   </span>
-                </div>
-                <div class="prd-meta-row">
-                  <span class="prd-meta-label">Review</span>
-                  <span class="prd-meta-value">
-                    <span class="prd-check">[&thinsp;] Design Review</span>
-                    <span class="prd-check">[&thinsp;] Content Review</span>
-                    <span class="prd-check">[&thinsp;] Pillar Review</span>
-                    <span class="prd-check">[V] Legal Review</span>
-                  </span>
-                </div>
+                </a>
               </div>
             </div>
 
-            <div class="prd-body">
-
-              <!-- Today's Problem -->
-              <div class="prd-card">
-                <p class="prd-section-title">Today's Problem</p>
-                <p class="prd-text">Businesses have <b>no way to message existing customers at scale</b> through Meta Business Inbox. They can only reply one by one — so most leads <b>never get a follow-up</b>, and businesses turn to third-party tools instead.</p>
-                <div class="prd-metrics">
-                  <div class="prd-metric">
-                    <p class="prd-metric-number">63%</p>
-                    <p class="prd-metric-label">conversations with no business follow-up within 24 hours</p>
-                  </div>
-                  <div class="prd-metric">
-                    <p class="prd-metric-number">2.4×</p>
-                    <p class="prd-metric-label">higher conversion when businesses follow up same day</p>
-                  </div>
-                  <div class="prd-metric">
-                    <p class="prd-metric-number">41%</p>
-                    <p class="prd-metric-label">of advertisers use third-party tools for re-engagement</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Proposal -->
-              <div class="prd-card">
-                <p class="prd-section-title">Proposal</p>
-                <p class="prd-text">Build a <b>bulk messaging tool</b> within Meta Business Inbox that enables businesses to easily re-engage existing customers through targeted follow-ups — driving conversations to conversion without leaving the platform.</p>
-              </div>
-
-              <!-- Target Metrics -->
-              <div class="prd-card">
-                <p class="prd-section-title">Target Metrics</p>
-                <div class="prd-target-metrics">
-                  <div class="prd-target">
-                    <p class="prd-target-number">12M+</p>
-                    <p class="prd-target-label">target businesses with active inbox conversations</p>
-                  </div>
-                  <div class="prd-target">
-                    <p class="prd-target-number">8%</p>
-                    <p class="prd-target-label">adoption rate within first 6 months</p>
-                  </div>
-                  <div class="prd-target">
-                    <p class="prd-target-number">$200M+</p>
-                    <p class="prd-target-label">incremental annual revenue</p>
-                  </div>
-                  <div class="prd-target">
-                    <p class="prd-target-number">3.2×</p>
-                    <p class="prd-target-label">message response rate vs. current baseline</p>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-            <!-- Feedback -->
-            <div class="feedback">
-              <p class="feedback-title">Feedback</p>
-              <div class="feedback-composer">
-                <input class="feedback-input" id="feedbackInput-onepager" type="text" placeholder="Leave a comment..." />
-                <button class="feedback-btn" onclick="addFeedback('onepager')">Add</button>
-              </div>
-              <div class="feedback-list" id="feedbackList-onepager"></div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      <section class="panel no-snap" id="context-current" data-group="context" style="align-items:flex-start;justify-content:flex-start;">
-        <div class="panel-inner" style="max-width:none;margin:0;display:flex;flex-direction:column;padding-top:60px;">
-          <div class="page-header">
-            <p class="page-title">Current Experience</p>
-            <p class="page-desc">Businesses have no way to message existing customers at scale through Meta Business Inbox. They can only reply one by one — so most leads never get a follow-up.</p>
-          </div>
-          <div class="tab-card">
-            <div class="tab-bar">
-              <button class="tab-btn active" onclick="switchTab('current', 'core')">Core Surface</button>
-              <button class="tab-btn" onclick="switchTab('current', 'automation')">Automation Tools</button>
-              <button class="tab-btn" onclick="switchTab('current', 'multiselect')">Multi-Select</button>
-            </div>
-            <div class="tab-content active" id="tab-current-core">
-              <p class="tab-placeholder">Core Surface — image placeholder</p>
-            </div>
-            <div class="tab-content" id="tab-current-automation">
-              <p class="tab-placeholder">Automation Tools — image placeholder</p>
-            </div>
-            <div class="tab-content" id="tab-current-multiselect">
-              <p class="tab-placeholder">Multi-Select — image placeholder</p>
-            </div>
-          </div>
-
-          <!-- Feedback -->
-          <div class="feedback">
-            <p class="feedback-title">Feedback</p>
-            <div class="feedback-composer">
-              <input class="feedback-input" id="feedbackInput-current" type="text" placeholder="Leave a comment..." />
-              <button class="feedback-btn" onclick="addFeedback('current')">Add</button>
-            </div>
-            <div class="feedback-list" id="feedbackList-current"></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel no-snap" id="context-learnings" data-group="context" style="align-items:flex-start;justify-content:flex-start;">
-        <div class="panel-inner" style="max-width:none;margin:0;display:flex;flex-direction:column;padding-top:60px;">
-          <div class="page-header">
-            <p class="page-title">Learnings</p>
-            <p class="page-desc">Native broadcast tool was tested before but saw low adoption — likely because admins lack the authority, budget, or habit to send marketing messages through an ad tool.</p>
-          </div>
-          <div class="tab-card">
-            <div class="tab-bar">
-              <button class="tab-btn active" onclick="switchTab('learnings', 'bc1')">Broadcast Tool #1</button>
-              <button class="tab-btn" onclick="switchTab('learnings', 'bc2')">Broadcast Tool #2</button>
-              <button class="tab-btn" onclick="switchTab('learnings', 'bulk')">Bulk Message Tool</button>
-            </div>
-            <div class="tab-content active" id="tab-learnings-bc1">
-              <p class="tab-placeholder">Broadcast Tool #1 — image placeholder</p>
-            </div>
-            <div class="tab-content" id="tab-learnings-bc2">
-              <p class="tab-placeholder">Broadcast Tool #2 — image placeholder</p>
-            </div>
-            <div class="tab-content" id="tab-learnings-bulk">
-              <p class="tab-placeholder">Bulk Message Tool — image placeholder</p>
-            </div>
-          </div>
-
-          <!-- Feedback -->
-          <div class="feedback">
-            <p class="feedback-title">Feedback</p>
-            <div class="feedback-composer">
-              <input class="feedback-input" id="feedbackInput-learnings" type="text" placeholder="Leave a comment..." />
-              <button class="feedback-btn" onclick="addFeedback('learnings')">Add</button>
-            </div>
-            <div class="feedback-list" id="feedbackList-learnings"></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ═══ DESIGN EXPLORATION ═══ -->
-      <section class="panel no-snap" id="design-divider" data-group="design">
-        <div class="panel-inner divider-page">
-          <p class="divider-title">Design Exploration</p>
-          <p class="divider-desc">Exploring directions</p>
-        </div>
-      </section>
-
-      <section class="panel no-snap" id="design-baseline" data-group="design" style="align-items:flex-start;justify-content:flex-start;">
-        <div class="panel-inner" style="max-width:none;margin:0;display:flex;flex-direction:column;padding-top:60px;">
-          <div class="page-header">
-            <p class="page-title">Baseline</p>
-            <p class="page-desc">Used Figma to build the first version as a baseline for AI to continue exploring.</p>
-          </div>
-          <div class="tab-card" style="flex:1;">
-            <iframe style="border:none;width:100%;height:100%;" src="https://embed.figma.com/proto/c8NWwnMGCJQNR1Wqnry82R/2026-Portfolio?page-id=380%3A7265&node-id=416-16511&viewport=18%2C-122%2C0.06&t=FP9ydiC8YLc5uuDV-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=416%3A16511&embed-host=share" allowfullscreen></iframe>
-          </div>
-          <div class="feedback">
-            <p class="feedback-title">Feedback</p>
-            <div class="feedback-composer">
-              <input class="feedback-input" id="feedbackInput-baseline" type="text" placeholder="Leave a comment..." />
-              <button class="feedback-btn" onclick="addFeedback('baseline')">Add</button>
-            </div>
-            <div class="feedback-list" id="feedbackList-baseline"></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel no-snap" id="design-placement" data-group="design" style="align-items:flex-start;justify-content:flex-start;">
-        <div class="panel-inner" style="max-width:none;margin:0;display:flex;flex-direction:column;padding-top:60px;">
-          <div class="page-header">
-            <p class="page-title">Placement</p>
-            <p class="page-desc">Content coming soon</p>
-          </div>
-          <div class="tab-card">
-            <div class="tab-bar">
-              <button class="tab-btn active" onclick="switchTab('placement', 'tab1')">Tab 1</button>
-              <button class="tab-btn" onclick="switchTab('placement', 'tab2')">Tab 2</button>
-            </div>
-            <div class="tab-content active" id="tab-placement-tab1">
-              <p class="tab-placeholder">Tab 1 — image placeholder</p>
-            </div>
-            <div class="tab-content" id="tab-placement-tab2">
-              <p class="tab-placeholder">Tab 2 — image placeholder</p>
-            </div>
-          </div>
-          <div class="feedback">
-            <p class="feedback-title">Feedback</p>
-            <div class="feedback-composer">
-              <input class="feedback-input" id="feedbackInput-placement" type="text" placeholder="Leave a comment..." />
-              <button class="feedback-btn" onclick="addFeedback('placement')">Add</button>
-            </div>
-            <div class="feedback-list" id="feedbackList-placement"></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel no-snap" id="design-layout" data-group="design" style="align-items:flex-start;justify-content:flex-start;">
-        <div class="panel-inner" style="max-width:none;margin:0;display:flex;flex-direction:column;padding-top:60px;">
-          <div class="page-header">
-            <p class="page-title">Tool Layout</p>
-            <p class="page-desc">Content coming soon</p>
-          </div>
-          <div class="tab-card">
-            <div class="tab-bar">
-              <button class="tab-btn active" onclick="switchTab('layout', 'tab1')">Tab 1</button>
-              <button class="tab-btn" onclick="switchTab('layout', 'tab2')">Tab 2</button>
-            </div>
-            <div class="tab-content active" id="tab-layout-tab1">
-              <p class="tab-placeholder">Tab 1 — image placeholder</p>
-            </div>
-            <div class="tab-content" id="tab-layout-tab2">
-              <p class="tab-placeholder">Tab 2 — image placeholder</p>
-            </div>
-          </div>
-          <div class="feedback">
-            <p class="feedback-title">Feedback</p>
-            <div class="feedback-composer">
-              <input class="feedback-input" id="feedbackInput-layout" type="text" placeholder="Leave a comment..." />
-              <button class="feedback-btn" onclick="addFeedback('layout')">Add</button>
-            </div>
-            <div class="feedback-list" id="feedbackList-layout"></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel no-snap" id="design-flow" data-group="design" style="align-items:flex-start;justify-content:flex-start;">
-        <div class="panel-inner" style="max-width:none;margin:0;display:flex;flex-direction:column;padding-top:60px;">
-          <div class="page-header">
-            <p class="page-title">Setup Flow</p>
-            <p class="page-desc">Content coming soon</p>
-          </div>
-          <div class="tab-card">
-            <div class="tab-bar">
-              <button class="tab-btn active" onclick="switchTab('flow', 'tab1')">Tab 1</button>
-              <button class="tab-btn" onclick="switchTab('flow', 'tab2')">Tab 2</button>
-            </div>
-            <div class="tab-content active" id="tab-flow-tab1">
-              <p class="tab-placeholder">Tab 1 — image placeholder</p>
-            </div>
-            <div class="tab-content" id="tab-flow-tab2">
-              <p class="tab-placeholder">Tab 2 — image placeholder</p>
-            </div>
-          </div>
-          <div class="feedback">
-            <p class="feedback-title">Feedback</p>
-            <div class="feedback-composer">
-              <input class="feedback-input" id="feedbackInput-flow" type="text" placeholder="Leave a comment..." />
-              <button class="feedback-btn" onclick="addFeedback('flow')">Add</button>
-            </div>
-            <div class="feedback-list" id="feedbackList-flow"></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel no-snap" id="design-iteration" data-group="design" style="align-items:flex-start;justify-content:flex-start;">
-        <div class="panel-inner" style="max-width:none;margin:0;display:flex;flex-direction:column;padding-top:60px;">
-          <div class="page-header">
-            <p class="page-title">Iteration</p>
-            <p class="page-desc">Content coming soon</p>
-          </div>
-          <div class="tab-card">
-            <div class="tab-bar">
-              <button class="tab-btn active" onclick="switchTab('iteration', 'tab1')">Tab 1</button>
-              <button class="tab-btn" onclick="switchTab('iteration', 'tab2')">Tab 2</button>
-            </div>
-            <div class="tab-content active" id="tab-iteration-tab1">
-              <p class="tab-placeholder">Tab 1 — image placeholder</p>
-            </div>
-            <div class="tab-content" id="tab-iteration-tab2">
-              <p class="tab-placeholder">Tab 2 — image placeholder</p>
-            </div>
-          </div>
-          <div class="feedback">
-            <p class="feedback-title">Feedback</p>
-            <div class="feedback-composer">
-              <input class="feedback-input" id="feedbackInput-iteration" type="text" placeholder="Leave a comment..." />
-              <button class="feedback-btn" onclick="addFeedback('iteration')">Add</button>
-            </div>
-            <div class="feedback-list" id="feedbackList-iteration"></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ═══ LAUNCH ═══ -->
-      <section class="panel no-snap" id="launch-divider" data-group="launch">
-        <div class="panel-inner divider-page">
-          <p class="divider-title">Launch</p>
-          <p class="divider-desc">Shipping to the world</p>
-        </div>
-      </section>
-
-      <section class="panel no-snap" id="launch-experiment" data-group="launch">
-        <div class="panel-inner">
-          <div class="single-col">
-            <div>
-              <h2 class="content-h2" style="margin-top:0">Experiment Setup</h2>
-              <p class="content-p">Content coming soon</p>
-            </div>
-            <div class="slide-img"><img src="images/placeholder.png" alt="Experiment Setup" /></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel no-snap" id="launch-upsells" data-group="launch">
-        <div class="panel-inner">
-          <div class="single-col">
-            <div>
-              <h2 class="content-h2" style="margin-top:0">Upsells</h2>
-              <p class="content-p">Content coming soon</p>
-            </div>
-            <div class="slide-img"><img src="images/placeholder.png" alt="Upsells" /></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel no-snap" id="launch-metrics" data-group="launch">
-        <div class="panel-inner">
-          <div class="single-col">
-            <div>
-              <h2 class="content-h2" style="margin-top:0">Metrics</h2>
-              <p class="content-p">Content coming soon</p>
-            </div>
-            <div class="slide-img"><img src="images/placeholder.png" alt="Metrics" /></div>
           </div>
         </div>
       </section>
@@ -1252,14 +1220,137 @@
       history.replaceState(null, '', '#overview-' + which);
     }
 
+    // ── Inbox stacked panel navigation ──
+    const inboxPanel = document.getElementById('inbox-growth');
+    const inboxStates = ['inbox-state-journey', 'inbox-state-focuses'];
+    let inboxIdx = 0;
+
+    function setInboxState(idx) {
+      inboxIdx = idx;
+      const panel = document.getElementById('inbox-growth');
+      const titleEl = panel.querySelector('.inbox-title');
+      const subtitleEl = panel.querySelector('.inbox-subtitle');
+      if (idx === 1) {
+        panel.classList.add('inbox-growth-focused');
+        titleEl.textContent = 'Growth Strategy';
+        subtitleEl.textContent = 'My product strategy to grow business adoption';
+      } else {
+        panel.classList.remove('inbox-growth-focused');
+        titleEl.textContent = 'Business Journey';
+        subtitleEl.textContent = 'Business end-to-end journey for tool adoption';
+      }
+      // Update sub-nav highlight
+      navSubs.forEach(sub => {
+        if (sub.dataset.parent === 'inbox-growth') {
+          const items = sub.querySelectorAll('.nav-item');
+          const navTargets = ['inbox-growth', 'inbox-focuses'];
+          items.forEach(si => si.classList.toggle('active', si.dataset.target === navTargets[idx]));
+        }
+      });
+      const hashName = idx === 0 ? 'inbox-growth' : 'inbox-focuses';
+      history.replaceState(null, '', '#' + hashName);
+      updatePageCounter();
+    }
+
+    let inboxWheelCooldown = false;
+    inboxPanel.addEventListener('wheel', (e) => {
+      if (inboxWheelCooldown) return;
+      const rect = inboxPanel.getBoundingClientRect();
+      const mainRect = main.getBoundingClientRect();
+      const isVisible = rect.top >= mainRect.top - 10 && rect.top <= mainRect.top + 10;
+      if (!isVisible) return;
+
+      if (e.deltaY > 0) {
+        if (inboxIdx < inboxStates.length - 1) {
+          e.preventDefault();
+          inboxWheelCooldown = true;
+          setTimeout(() => inboxWheelCooldown = false, 600);
+          setInboxState(inboxIdx + 1);
+        }
+      } else if (e.deltaY < 0) {
+        if (inboxIdx > 0) {
+          e.preventDefault();
+          inboxWheelCooldown = true;
+          setTimeout(() => inboxWheelCooldown = false, 600);
+          setInboxState(inboxIdx - 1);
+        } else {
+          e.preventDefault();
+          inboxWheelCooldown = true;
+          setTimeout(() => inboxWheelCooldown = false, 600);
+          setOverviewLayer(overviewLayers[overviewLayers.length - 1]);
+          main.scrollTo({ top: overviewPanel.offsetTop, behavior: 'smooth' });
+        }
+      }
+    }, { passive: false });
+
+    // ── Family of Apps stacked panel ──
+    const foaPanel = document.getElementById('inbox-family');
+    const foaStates = 2;
+    let foaIdx = 0;
+
+    function setFoaState(idx) {
+      foaIdx = idx;
+      foaPanel.querySelectorAll('.foa-state').forEach((el, i) => {
+        el.style.opacity = i === idx ? '1' : '0';
+        el.style.position = i === idx ? 'relative' : 'absolute';
+      });
+      foaPanel.querySelectorAll('.foa-img').forEach((el, i) => {
+        el.style.opacity = i === idx ? '1' : '0';
+        el.style.position = i === idx ? 'relative' : 'absolute';
+      });
+      updatePageCounter();
+    }
+
+    let foaWheelCooldown = false;
+    foaPanel.addEventListener('wheel', (e) => {
+      if (foaWheelCooldown) return;
+      const rect = foaPanel.getBoundingClientRect();
+      const mainRect = main.getBoundingClientRect();
+      const isVisible = rect.top >= mainRect.top - 10 && rect.top <= mainRect.top + 10;
+      if (!isVisible) return;
+
+      if (e.deltaY > 0) {
+        if (foaIdx < foaStates - 1) {
+          e.preventDefault();
+          foaWheelCooldown = true;
+          setTimeout(() => foaWheelCooldown = false, 600);
+          setFoaState(foaIdx + 1);
+        }
+      } else if (e.deltaY < 0) {
+        if (foaIdx > 0) {
+          e.preventDefault();
+          foaWheelCooldown = true;
+          setTimeout(() => foaWheelCooldown = false, 600);
+          setFoaState(foaIdx - 1);
+        }
+      }
+    }, { passive: false });
+
     // ── Click nav item → scroll to panel or swap overview layer ──
     allNavItems.forEach(item => {
       item.addEventListener('click', () => {
         const target = item.dataset.target;
+        if (target === 'overview-project') {
+          const el = document.getElementById('overview-project');
+          if (el) main.scrollTo({ top: el.offsetTop, behavior: 'smooth' });
+          setOverviewLayer('overview');
+          return;
+        }
         if (target && target.startsWith('overview-') && target !== 'overview-project') {
           const el = document.getElementById('overview-project');
           if (el) main.scrollTo({ top: el.offsetTop });
           setOverviewLayer(target.replace('overview-', ''));
+          return;
+        }
+        // Handle inbox sub-nav clicks
+        if (target === 'inbox-focuses') {
+          main.scrollTo({ top: inboxPanel.offsetTop, behavior: 'smooth' });
+          setInboxState(1);
+          return;
+        }
+        if (target === 'inbox-growth') {
+          main.scrollTo({ top: inboxPanel.offsetTop, behavior: 'smooth' });
+          setInboxState(0);
           return;
         }
         const el = document.getElementById(target);
@@ -1273,7 +1364,9 @@
     // ── Scroll within overview panel → swap layers ──
     const overviewPanel = document.getElementById('overview-project');
 
+    let overviewWheelCooldown = false;
     overviewPanel.addEventListener('wheel', (e) => {
+      if (overviewWheelCooldown) return;
       const rect = overviewPanel.getBoundingClientRect();
       const mainRect = main.getBoundingClientRect();
       const isVisible = rect.top >= mainRect.top - 10 && rect.top <= mainRect.top + 10;
@@ -1281,6 +1374,8 @@
 
       if (e.deltaY > 0) {
         e.preventDefault();
+        overviewWheelCooldown = true;
+        setTimeout(() => overviewWheelCooldown = false, 600);
         if (overviewLayerIdx < overviewLayers.length - 1) {
           setOverviewLayer(overviewLayers[overviewLayerIdx + 1]);
         } else {
@@ -1290,11 +1385,14 @@
         }
       } else if (e.deltaY < 0 && overviewLayerIdx > 0) {
         e.preventDefault();
+        overviewWheelCooldown = true;
+        setTimeout(() => overviewWheelCooldown = false, 600);
         setOverviewLayer(overviewLayers[overviewLayerIdx - 1]);
       }
     }, { passive: false });
 
     // ── Keyboard arrow keys ──
+    let keyCooldown = false;
     document.addEventListener('keydown', (e) => {
       if (e.key === 'r' || e.key === 'R') {
         main.scrollTo({ top: overviewPanel.offsetTop, behavior: 'smooth' });
@@ -1302,14 +1400,19 @@
         return;
       }
       if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+      e.preventDefault();
+      if (keyCooldown) return;
+      keyCooldown = true;
+      setTimeout(() => keyCooldown = false, 400);
 
-      const rect = overviewPanel.getBoundingClientRect();
       const mainRect = main.getBoundingClientRect();
-      const isOverview = rect.top >= mainRect.top - 10 && rect.top <= mainRect.top + 10;
+
+      // Check if overview panel is active
+      const ovRect = overviewPanel.getBoundingClientRect();
+      const isOverview = ovRect.top >= mainRect.top - 10 && ovRect.top <= mainRect.top + 10;
 
       if (isOverview) {
         if (e.key === 'ArrowDown') {
-          e.preventDefault();
           if (overviewLayerIdx < overviewLayers.length - 1) {
             setOverviewLayer(overviewLayers[overviewLayerIdx + 1]);
           } else {
@@ -1318,30 +1421,92 @@
             if (target) main.scrollTo({ top: target.offsetTop, behavior: 'smooth' });
           }
         } else if (e.key === 'ArrowUp' && overviewLayerIdx > 0) {
-          e.preventDefault();
           setOverviewLayer(overviewLayers[overviewLayerIdx - 1]);
         }
-      } else {
-        e.preventDefault();
-        const idx = currentVisiblePanelIdx;
-        if (e.key === 'ArrowDown' && idx < visiblePanels.length - 1) {
-          const target = visiblePanels[idx + 1];
-          const beh = target.classList.contains('no-snap') ? 'instant' : 'smooth';
-          main.scrollTo({ top: target.offsetTop, behavior: beh });
+        return;
+      }
+
+      // Check if inbox stacked panel is active
+      const inboxRect = inboxPanel.getBoundingClientRect();
+      const isInbox = inboxRect.top >= mainRect.top - 10 && inboxRect.top <= mainRect.top + 10;
+      if (isInbox) {
+        if (e.key === 'ArrowDown') {
+          if (inboxIdx < inboxStates.length - 1) {
+            setInboxState(inboxIdx + 1);
+          } else {
+            let target = inboxPanel.nextElementSibling;
+            while (target && target.style.display === 'none') target = target.nextElementSibling;
+            if (target) main.scrollTo({ top: target.offsetTop, behavior: 'smooth' });
+          }
         } else if (e.key === 'ArrowUp') {
-          if (idx > 0) {
-            const target = visiblePanels[idx - 1];
-            const beh = target.classList.contains('no-snap') ? 'instant' : 'smooth';
-            main.scrollTo({ top: target.offsetTop, behavior: beh });
+          if (inboxIdx > 0) {
+            setInboxState(inboxIdx - 1);
+          } else {
+            // Go to previous visible panel
+            const inboxVIdx = visiblePanels.indexOf(inboxPanel);
+            if (inboxVIdx > 0) {
+              const target = visiblePanels[inboxVIdx - 1];
+              main.scrollTo({ top: target.offsetTop, behavior: 'smooth' });
+            }
           }
         }
+        return;
+      }
+
+      // Check if FoA panel is active
+      const foaRect = foaPanel.getBoundingClientRect();
+      const isFoa = foaRect.top >= mainRect.top - 10 && foaRect.top <= mainRect.top + 10;
+      if (isFoa) {
+        if (e.key === 'ArrowDown') {
+          if (foaIdx < foaStates - 1) {
+            setFoaState(foaIdx + 1);
+          } else {
+            let target = foaPanel.nextElementSibling;
+            while (target && target.style.display === 'none') target = target.nextElementSibling;
+            if (target) main.scrollTo({ top: target.offsetTop, behavior: 'smooth' });
+          }
+        } else if (e.key === 'ArrowUp') {
+          if (foaIdx > 0) {
+            setFoaState(foaIdx - 1);
+          } else {
+            const foaVIdx = visiblePanels.indexOf(foaPanel);
+            if (foaVIdx > 0) {
+              const target = visiblePanels[foaVIdx - 1];
+              main.scrollTo({ top: target.offsetTop, behavior: 'smooth' });
+            }
+          }
+        }
+        return;
+      }
+
+      // Generic panel navigation
+      const idx = currentVisiblePanelIdx;
+      if (e.key === 'ArrowDown' && idx < visiblePanels.length - 1) {
+        const target = visiblePanels[idx + 1];
+        // If landing on overview, set to first layer
+        if (target === overviewPanel) setOverviewLayer('overview');
+        const beh = target.classList.contains('no-snap') ? 'instant' : 'smooth';
+        main.scrollTo({ top: target.offsetTop, behavior: beh });
+      } else if (e.key === 'ArrowUp' && idx > 0) {
+        const target = visiblePanels[idx - 1];
+        // If landing on overview, set to last layer
+        if (target === overviewPanel) setOverviewLayer(overviewLayers[overviewLayers.length - 1]);
+        // If landing on inbox, set to last state
+        if (target === inboxPanel) setInboxState(inboxStates.length - 1);
+        // If landing on FoA, set to last state
+        if (target === foaPanel) setFoaState(foaStates - 1);
+        const beh = target.classList.contains('no-snap') ? 'instant' : 'smooth';
+        main.scrollTo({ top: target.offsetTop, behavior: beh });
       }
     });
 
     // ── Page counter ──
     const pageCounter = document.getElementById('pageCounter');
     const visiblePanels = Array.from(panels).filter(p => p.style.display !== 'none');
-    const totalPages = overviewLayers.length + visiblePanels.length;
+    const inboxPanelIdx = visiblePanels.indexOf(inboxPanel);
+    const foaPanelIdx = visiblePanels.indexOf(foaPanel);
+    // +1 for inbox sub-state, +1 for foa sub-state
+    const totalPages = overviewLayers.length + visiblePanels.length + (inboxStates.length - 1) + (foaStates - 1);
 
     let currentVisiblePanelIdx = 0;
     let activeGroup = 'overview';
@@ -1349,10 +1514,19 @@
     function updatePageCounter() {
       let page;
       const idx = currentVisiblePanelIdx;
+      let extra = 0;
       if (idx === 0) {
         page = overviewLayerIdx + 1;
       } else {
-        page = overviewLayers.length + idx;
+        extra = overviewLayers.length - 1; // overview extra states
+        if (idx >= inboxPanelIdx) extra += (inboxStates.length - 1);
+        if (idx >= foaPanelIdx) extra += (foaStates - 1);
+        page = idx + 1 + extra;
+        if (idx === inboxPanelIdx) page = overviewLayers.length + idx + inboxIdx;
+        else if (idx === foaPanelIdx) page = overviewLayers.length + idx + (inboxStates.length - 1) + foaIdx;
+        else if (idx > foaPanelIdx) page = overviewLayers.length + idx + (inboxStates.length - 1) + (foaStates - 1);
+        else if (idx > inboxPanelIdx) page = overviewLayers.length + idx + (inboxStates.length - 1);
+        else page = overviewLayers.length + idx;
       }
       pageCounter.textContent = page + '/' + totalPages;
     }
@@ -1426,11 +1600,15 @@
     });
 
     // ── Tab switching ──
-    function switchTab(slide, tab) {
+    function switchTab(slide, tab, clickedBtn) {
       const section = document.getElementById('context-' + slide) || document.getElementById(slide);
       if (!section) return;
       section.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.textContent.toLowerCase().replace(/[\s-]/g, '').includes(tab));
+        if (clickedBtn) {
+          btn.classList.toggle('active', btn === clickedBtn);
+        } else {
+          btn.classList.toggle('active', btn.textContent.toLowerCase().replace(/[\s-]/g, '').includes(tab));
+        }
       });
       section.querySelectorAll('.tab-content').forEach(tc => {
         tc.classList.toggle('active', tc.id === 'tab-' + slide + '-' + tab);
@@ -1467,6 +1645,9 @@
           if (el) main.scrollTo({ top: el.offsetTop });
           setOverviewLayer(layer);
         }
+      } else if (hash === 'inbox-focuses') {
+        main.scrollTo({ top: inboxPanel.offsetTop });
+        setInboxState(1);
       } else {
         const el = document.getElementById(hash);
         if (el) main.scrollTo({ top: el.offsetTop });
