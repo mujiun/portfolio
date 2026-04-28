@@ -809,14 +809,23 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 600px) {
+      html {
+        overflow: hidden;
+        min-height: 100%;
+        height: 100%;
+      }
+      body {
+        height: 100%;
+        overflow: hidden;
+      }
       header { padding: 14px 16px; }
       nav { display: none; }
       .menu-toggle { display: flex; }
-      .center-stage { padding: 28px 16px 20px; }
+      .center-stage { padding: 28px 16px 20px; overflow-y: auto; }
       .center-stage .sub { font-size: 14px; max-width: 340px; }
       .icebreakers { gap: 6px; }
       .ice-btn { font-size: 12px; padding: 7px 12px; }
-      .chat-wrap { padding: 0 10px 110px; }
+      .chat-wrap { padding: 0 10px 110px; overflow-y: auto; -webkit-overflow-scrolling: touch; }
       .messages { padding-top: 20px; }
       .msg { gap: 8px; margin-bottom: 14px; }
       .avatar { width: 28px; height: 28px; font-size: 11px; }
@@ -826,7 +835,7 @@
       .card-img img { height: auto; }
       .carousel-arrow { width: 28px; height: 28px; }
       .carousel-wrap::after { width: 20px; }
-      .carousel { padding-right: 16px; }
+      .carousel { padding-right: 16px; touch-action: pan-x; }
       .input-area { padding: 12px 12px 20px; }
       .input-field { min-height: 46px; padding: 11px 14px; font-size: 14px; }
       .send-btn { width: 44px; height: 44px; }
