@@ -3,7 +3,7 @@
 <head>
   <link rel="icon" type="image/png" href="projects/favicons/mu.png">
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Mu Jiun Shie — Sr. Product Designer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -34,38 +34,30 @@
       --radius: 16px;
       --radius-sm: 8px;
       --radius-pill: 999px;
-    }
-
-    html {
-      height: 100%;
+      --header-h: 61px;
+      --input-h: 82px;
     }
 
     html, body {
+      margin: 0;
+      padding: 0;
       font-family: var(--font);
       background: var(--bg);
       color: var(--ink);
       -webkit-font-smoothing: antialiased;
     }
 
-    body {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      overflow: hidden;
-    }
-
     /* ── HEADER ── */
     header {
+      position: sticky;
+      top: 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 20px 32px;
       border-bottom: 1px solid var(--border2);
       background: var(--bg);
-      position: sticky;
-      top: 0;
       z-index: 100;
-      backdrop-filter: blur(8px);
     }
 
     .logo {
@@ -141,7 +133,7 @@
       top: 0;
       right: 0;
       width: 220px;
-      height: 100vh;
+      height: 100%;
       background: var(--bg);
       box-shadow: -4px 0 24px rgba(0,0,0,0.1);
       z-index: 105;
@@ -188,7 +180,7 @@
 
     /* ── CENTER STAGE (landing) ── */
     .center-stage {
-      flex: 1;
+      min-height: calc(100dvh - 150px);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -213,13 +205,8 @@
       letter-spacing: -0.025em;
     }
 
-    .rotate-line {
-      display: none;
-    }
-
-    .rotate-line.active {
-      display: inline;
-    }
+    .rotate-line { display: none; }
+    .rotate-line.active { display: inline; }
 
     .rotate-line .typed-text {
       border-right: 2px solid var(--accent);
@@ -329,23 +316,15 @@
 
     /* ── CHAT CONTAINER ── */
     .chat-wrap {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
       max-width: 960px;
       width: 100%;
       margin: 0 auto;
-      padding: 0 20px 96px;
-      overflow-y: auto;
+      padding: 0 20px 120px;
     }
 
-    /* ── MESSAGES ── */
     .messages {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
       padding-top: 48px;
+      padding-bottom: 20px;
     }
 
     .msg {
@@ -441,6 +420,14 @@
       40% { transform: translateY(-6px); }
     }
 
+    /* ── MSG CONTENT ── */
+    .msg-content {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
     /* ── PROJECT CAROUSEL ── */
     .carousel-wrap {
       width: 100%;
@@ -460,15 +447,6 @@
     }
 
     .carousel::-webkit-scrollbar { display: none; }
-
-    .msg-content {
-      flex: 1;
-      min-width: 0;
-      max-width: 100%;
-      display: flex;
-      flex-direction: column;
-      overflow: clip;
-    }
 
     .project-card {
       flex-shrink: 0;
@@ -723,12 +701,6 @@
       border: none;
     }
 
-    @media (max-width: 600px) {
-      .modal-overlay { padding: 0; background: var(--bg); }
-      .modal { border-radius: 0; height: 100vh; max-width: 100%; width: 100%; box-shadow: none; }
-      .modal-header { padding: 12px 16px; }
-    }
-
     /* ── INPUT BAR ── */
     .input-area {
       position: fixed;
@@ -738,8 +710,6 @@
       padding: 16px 20px 24px;
       z-index: 50;
     }
-
-    /* Input always fixed at bottom, even on landing */
 
     .input-inner {
       max-width: 960px;
@@ -811,11 +781,11 @@
       header { padding: 14px 16px; }
       nav { display: none; }
       .menu-toggle { display: flex; }
-      .center-stage { padding: 28px 16px 20px; overflow-y: auto; }
+      .center-stage { padding: 28px 16px 20px; }
       .center-stage .sub { font-size: 14px; max-width: 340px; }
       .icebreakers { gap: 6px; }
       .ice-btn { font-size: 12px; padding: 7px 12px; }
-      .chat-wrap { padding: 0 10px 110px; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+      .chat-wrap { padding: 0 10px 100px; }
       .messages { padding-top: 20px; }
       .msg { gap: 8px; margin-bottom: 14px; }
       .avatar { width: 28px; height: 28px; font-size: 11px; }
@@ -825,10 +795,13 @@
       .card-img img { height: auto; }
       .carousel-arrow { width: 28px; height: 28px; }
       .carousel-wrap::after { width: 20px; }
-      .carousel { padding-right: 16px; touch-action: pan-x; }
+      .carousel { padding-right: 16px; }
       .input-area { padding: 12px 12px 20px; }
       .input-field { min-height: 46px; padding: 11px 14px; font-size: 14px; }
       .send-btn { width: 44px; height: 44px; }
+      .modal-overlay { padding: 0; background: var(--bg); }
+      .modal { border-radius: 0; height: 100%; max-width: 100%; width: 100%; box-shadow: none; }
+      .modal-header { padding: 12px 16px; }
     }
   </style>
 </head>
@@ -859,7 +832,7 @@
 
   <!-- CENTER STAGE (landing) -->
   <div class="center-stage" id="centerStage">
-    <p class="greeting">Hi&#x1F44B;&#x1F3FC; I'm <strong>Mu</strong>, Sr. Product Designer<br><span class="rotate-line active">@ Meta — Monetization, BizAI</span><span class="rotate-line">Based in 🇺🇸🌴 San Francisco Bay Area</span><span class="rotate-line">Build products for ads, businesses, and developers</span></p>
+    <p class="greeting">Hi&#x1F44B;&#x1F3FC; I'm <strong>Mu</strong>, Sr. Product Designer<br><span class="rotate-line active">@ Meta — Monetization, BizAI</span><span class="rotate-line">Based in &#x1F1FA;&#x1F1F8;&#x1F334; San Francisco Bay Area</span><span class="rotate-line">Build products for ads, businesses, and developers</span></p>
     <p class="sub">What do you want to learn about Mu?</p>
     <div class="icebreakers" id="landingIcebreakers"></div>
   </div>
@@ -872,7 +845,7 @@
   <!-- INPUT BAR -->
   <div class="input-area" id="inputArea" style="display:block">
     <div class="input-inner">
-      <textarea class="input-field" id="userInput" placeholder="Ask me anything…" rows="1"></textarea>
+      <textarea class="input-field" id="userInput" placeholder="Ask me anything..." rows="1"></textarea>
       <button class="send-btn" id="sendBtn" aria-label="Send">
         <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
       </button>
@@ -884,7 +857,7 @@
     <div class="modal">
       <div class="modal-header">
         <span class="modal-title" id="modalTitle"></span>
-        <button class="modal-close" id="modalClose">×</button>
+        <button class="modal-close" id="modalClose">&times;</button>
       </div>
       <div class="modal-body">
         <iframe id="modalIframe" src="" title="Project"></iframe>
@@ -912,12 +885,10 @@
       modalTitle.textContent = title;
       modalIframe.src = url;
       modalOverlay.classList.add('open');
-      document.body.style.overflow = 'hidden';
     }
 
     function closeModal() {
       modalOverlay.classList.remove('open');
-      document.body.style.overflow = '';
       setTimeout(() => { modalIframe.src = ''; }, 250);
     }
 
@@ -991,7 +962,7 @@
 
       setTimeout(() => {
         centerStage.style.display = 'none';
-        chatWrap.style.display = 'flex';
+        chatWrap.style.display = 'block';
         document.body.classList.remove('on-landing');
         restartBtn.style.display = '';
       }, 300);
@@ -1054,7 +1025,7 @@
             }
           });
         }
-        const arrow = p.comingSoon ? '' : '<span class="card-arrow">→</span>';
+        const arrow = p.comingSoon ? '' : '<span class="card-arrow">&rarr;</span>';
         const pill = p.comingSoon ? '<span class="coming-soon-pill">Coming Soon</span>' : '';
         card.innerHTML = `
           <div class="card-img">
@@ -1094,8 +1065,8 @@
     }
 
     function scrollToBottom() {
-      setTimeout(() => { chatWrap.scrollTop = chatWrap.scrollHeight; }, 50);
-      setTimeout(() => { chatWrap.scrollTop = chatWrap.scrollHeight; }, 400);
+      setTimeout(() => { window.scrollTo(0, document.body.scrollHeight); }, 50);
+      setTimeout(() => { window.scrollTo(0, document.body.scrollHeight); }, 400);
     }
 
     function appendMsg(type, contentFn) {
@@ -1166,12 +1137,10 @@
         appendMsg('ai', container => {
           container.appendChild(renderBubble(resp.text));
           if (resp.showProjects !== null) {
-            // Surface different projects first so users see fresh results
             const indices = [...resp.showProjects];
             if (lastShownIndices.length > 0) {
               const fresh = indices.filter(i => !lastShownIndices.includes(i));
               const overlap = indices.filter(i => lastShownIndices.includes(i));
-              // Reverse the overlap so the order looks different
               const reordered = [...fresh, ...overlap.reverse()];
               container.appendChild(renderCarousel(reordered));
             } else {
@@ -1251,7 +1220,6 @@
       const isOpen = mobileMenu.classList.contains('open');
       mobileMenu.classList.toggle('open');
       menuBackdrop.classList.toggle('open');
-      document.body.style.overflow = isOpen ? '' : 'hidden';
     }
 
     menuToggle.addEventListener('click', toggleMenu);
@@ -1316,7 +1284,6 @@
         });
       }
 
-      // Init first line
       lines[0].classList.add('active');
       cycle();
     })();
