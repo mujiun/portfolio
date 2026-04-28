@@ -511,4 +511,29 @@ a.hide:hover > img { display: block; width: 500px; background: white; position: 
 .amazon1 .alist-15 { top: -1530px; }
 .amazon1 .alist-15 img { top: -100px; }
 
+/* ── NEW-LAYOUT MOBILE ── */
+@media (max-width: 768px) {
+  body.new-layout .side-nav {
+    display: none;
+  }
+
+  body.new-layout .main-content {
+    margin-left: 0;
+    width: 100%;
+    padding: 0 16px;
+  }
+
+  body.new-layout {
+    flex-direction: column;
+  }
+
+  body.new-layout .main-content .head {
+    padding-top: 20px;
+  }
+
+  body.new-layout h1 {
+    font-size: 28px;
+  }
+}
+
 /*# sourceMappingURL=mu.css.map */
