@@ -39,10 +39,8 @@
     }
 
     html, body {
-      height: 100%;
       margin: 0;
       padding: 0;
-      overflow: hidden;
       font-family: var(--font);
       background: var(--bg);
       color: var(--ink);
@@ -51,13 +49,12 @@
 
     /* ── HEADER ── */
     header {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: var(--header-h);
+      position: sticky;
+      top: 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 32px;
+      padding: 20px 32px;
       border-bottom: 1px solid var(--border2);
       background: var(--bg);
       z-index: 100;
@@ -183,18 +180,13 @@
 
     /* ── CENTER STAGE (landing) ── */
     .center-stage {
-      position: fixed;
-      top: var(--header-h);
-      left: 0; right: 0;
-      bottom: var(--input-h);
+      min-height: calc(100dvh - 150px);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 40px 20px;
+      padding: 40px 20px 100px;
       text-align: center;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
       transition: opacity 0.3s ease, transform 0.3s ease;
     }
 
@@ -324,19 +316,13 @@
 
     /* ── CHAT CONTAINER ── */
     .chat-wrap {
-      position: fixed;
-      top: var(--header-h);
-      left: 0; right: 0;
-      bottom: var(--input-h);
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      padding: 0 20px;
-    }
-
-    .messages {
       max-width: 960px;
       width: 100%;
       margin: 0 auto;
+      padding: 0 20px 120px;
+    }
+
+    .messages {
       padding-top: 48px;
       padding-bottom: 20px;
     }
@@ -719,7 +705,6 @@
     .input-area {
       position: fixed;
       bottom: 0; left: 0; right: 0;
-      height: var(--input-h);
       background: var(--bg);
       border-top: 1px solid var(--border2);
       padding: 16px 20px 24px;
@@ -793,11 +778,7 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 600px) {
-      :root {
-        --header-h: 53px;
-        --input-h: 72px;
-      }
-      header { padding: 0 16px; }
+      header { padding: 14px 16px; }
       nav { display: none; }
       .menu-toggle { display: flex; }
       .center-stage { padding: 28px 16px 20px; }
@@ -1084,8 +1065,8 @@
     }
 
     function scrollToBottom() {
-      setTimeout(() => { chatWrap.scrollTop = chatWrap.scrollHeight; }, 50);
-      setTimeout(() => { chatWrap.scrollTop = chatWrap.scrollHeight; }, 400);
+      setTimeout(() => { window.scrollTo(0, document.body.scrollHeight); }, 50);
+      setTimeout(() => { window.scrollTo(0, document.body.scrollHeight); }, 400);
     }
 
     function appendMsg(type, contentFn) {
