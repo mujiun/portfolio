@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="icon" type="image/png" href="projects/favicons/mu.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mu Jiun Shie — Sr. Product Designer</title>
@@ -108,6 +109,82 @@
       color: var(--accent);
       border-color: var(--accent);
       background: var(--accent-light);
+    }
+
+    /* ── HAMBURGER MENU (mobile) ── */
+    .menu-toggle {
+      display: none;
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--bg);
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 110;
+    }
+
+    .menu-toggle svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--ink);
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 220px;
+      height: 100vh;
+      background: var(--bg);
+      box-shadow: -4px 0 24px rgba(0,0,0,0.1);
+      z-index: 105;
+      padding: 72px 20px 32px;
+      flex-direction: column;
+      gap: 4px;
+      transform: translateX(100%);
+      transition: transform 0.25s ease;
+    }
+
+    .mobile-menu.open {
+      display: flex;
+      transform: translateX(0);
+    }
+
+    .mobile-menu a {
+      font-family: var(--font);
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink2);
+      text-decoration: none;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      transition: all 0.15s ease;
+    }
+
+    .mobile-menu a:hover,
+    .mobile-menu a.active {
+      color: var(--accent);
+      background: var(--accent-light);
+    }
+
+    .menu-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.3);
+      z-index: 104;
+    }
+
+    .menu-backdrop.open {
+      display: block;
     }
 
     /* ── CENTER STAGE (landing) ── */
@@ -379,10 +456,20 @@
       scroll-snap-type: x mandatory;
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
+      touch-action: pan-x;
       padding-bottom: 10px;
+      padding-right: 24px;
     }
 
     .carousel::-webkit-scrollbar { display: none; }
+
+    .msg-content {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
 
     .project-card {
       flex-shrink: 0;
@@ -400,12 +487,17 @@
       cursor: pointer;
     }
 
-    .project-card:hover {
+    .project-card:hover:not(.coming-soon) {
       border-color: var(--accent);
     }
 
-    .project-card:hover .card-title {
+    .project-card:hover:not(.coming-soon) .card-title {
       color: var(--accent);
+    }
+
+    .project-card.coming-soon {
+      cursor: default;
+      pointer-events: none;
     }
 
     .card-img {
@@ -415,6 +507,20 @@
       overflow: hidden;
     }
 
+    .coming-soon-pill {
+      position: absolute;
+      bottom: 8px;
+      left: 14px;
+      font-size: 11px;
+      font-weight: 500;
+      color: #fff;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(4px);
+      padding: 4px 8px;
+      border-radius: 999px;
+      z-index: 1;
+    }
+
     .card-img img {
       width: 100%;
       height: 100%;
@@ -422,7 +528,7 @@
       transition: transform 0.4s ease;
     }
 
-    .project-card:hover .card-img img {
+    .project-card:hover:not(.coming-soon) .card-img img {
       transform: scale(1.06);
     }
 
@@ -463,7 +569,7 @@
       letter-spacing: 0.03em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 0px;
+      margin-bottom: 4px;
     }
 
     .card-title {
@@ -472,7 +578,6 @@
       font-weight: 650;
       color: var(--ink);
       margin-bottom: 6px;
-      line-height: 1.35;
       letter-spacing: -0.01em;
     }
 
@@ -493,7 +598,7 @@
       display: inline-block;
     }
 
-    .project-card:hover .card-arrow { transform: translateX(3px); }
+    .project-card:hover:not(.coming-soon) .card-arrow { transform: translateX(3px); }
 
     .carousel-wrap::after {
       content: '';
@@ -504,6 +609,34 @@
       pointer-events: none;
       z-index: 2;
     }
+
+    .carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 3;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: opacity 0.2s, background 0.15s;
+    }
+
+    .carousel-arrow:hover {
+      background: var(--surface);
+    }
+
+    .carousel-arrow--left { left: 6px; }
+    .carousel-arrow--right { right: 6px; }
+
+    .carousel-arrow.hidden { opacity: 0; pointer-events: none; }
 
     /* ── PROJECT MODAL ── */
     .modal-overlay {
@@ -593,8 +726,9 @@
     }
 
     @media (max-width: 600px) {
-      .modal-overlay { padding: 0; }
-      .modal { border-radius: 0; height: 100vh; max-width: 100%; }
+      .modal-overlay { padding: 0; background: var(--bg); }
+      .modal { border-radius: 0; height: 100vh; max-width: 100%; width: 100%; box-shadow: none; }
+      .modal-header { padding: 12px 16px; }
     }
 
     /* ── INPUT BAR ── */
@@ -676,12 +810,27 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 600px) {
-      header { padding: 16px 20px; }
-      nav a { display: none; }
-      .center-stage { padding: 32px 16px 24px; }
-      .chat-wrap { padding: 0 12px 120px; }
-      .messages { padding-top: 28px; }
-      .project-card { width: 210px; }
+      header { padding: 14px 16px; }
+      nav { display: none; }
+      .menu-toggle { display: flex; }
+      .center-stage { padding: 28px 16px 20px; }
+      .center-stage .sub { font-size: 14px; max-width: 340px; }
+      .icebreakers { gap: 6px; }
+      .ice-btn { font-size: 12px; padding: 7px 12px; }
+      .chat-wrap { padding: 0 10px 110px; }
+      .messages { padding-top: 20px; }
+      .msg { gap: 8px; margin-bottom: 14px; }
+      .avatar { width: 28px; height: 28px; font-size: 11px; }
+      .avatar.mu { font-size: 13px; }
+      .bubble { max-width: 92%; padding: 10px 14px; font-size: 14px; }
+      .project-card { width: 240px; }
+      .card-img img { height: auto; }
+      .carousel-arrow { width: 28px; height: 28px; }
+      .carousel-wrap::after { width: 20px; }
+      .carousel { padding-right: 16px; }
+      .input-area { padding: 12px 12px 20px; }
+      .input-field { min-height: 46px; padding: 11px 14px; font-size: 14px; }
+      .send-btn { width: 44px; height: 44px; }
     }
   </style>
 </head>
@@ -696,7 +845,19 @@
       <a href="resume.html">About</a>
       <a href="https://www.linkedin.com/in/mshie/" target="_blank">LinkedIn</a>
     </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+      <svg viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+    </button>
   </header>
+
+  <!-- Mobile slide-out menu -->
+  <div class="menu-backdrop" id="menuBackdrop"></div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" class="active">Chat</a>
+    <a href="projects.html">Projects</a>
+    <a href="resume.html">About</a>
+    <a href="https://www.linkedin.com/in/mshie/" target="_blank">LinkedIn</a>
+  </div>
 
   <!-- CENTER STAGE (landing) -->
   <div class="center-stage" id="centerStage">
@@ -776,15 +937,15 @@
       { label: 'Works at Meta', topic: 'meta' },
       { label: 'Superpower', topic: 'philosophy' },
       { label: 'Business tools', topic: 'business'  },
-      { label: 'Ad products', topic: 'ad'  },
+      { label: 'Monetization', topic: 'ad'  },
       { label: 'Framework', topic: 'framework'  },
       { label: 'Get in touch', topic: 'contact'  },
     ];
 
     const RESPONSES = {
       meta: {
-        text: `At Meta I'm a <strong>Senior Product Designer</strong> on Business Messaging — I've launched 20+ features across Instagram, WhatsApp, and Ads Manager, unlocking $400M+ in annual revenue potential. Here's some of my work:`,
-        showProjects: [0, 1, 2, 3],
+        text: `At Meta I'm a <strong>Senior Product Designer</strong> on <strong>Monetization and BizAI</strong> — I've delivered 20+ launches across Meta business inbox, ad tools, and partner platforms to grow Messenger, Instagram, and WhatsApp business messaging and unlock $400M+ annual revenue potential. Here's some of my work:`,
+        showProjects: [0, 1, 2, 3, 4, 5],
       },
       philosophy: {
         text: `A few things that set me apart:\n\n<strong>Turning ambiguity into clarity</strong> — I use structured analysis (dogfooding, UXR, data) to cut through complexity and find the real problem to solve.\n\n<strong>Building simple systems for complex products</strong> — I create modular, scalable solutions that unify fragmented tools — like consolidating 7 WhatsApp flows into one system, boosting adoption 1.6x.\n\n<strong>Moving fast with high craft</strong> — I excel at rapid Figma prototyping and have contributed to 10+ design sprints. I ship MVPs while defining long-term strategy.\n\n<strong>Driving alignment across 10+ teams</strong> — I lead cross-functional efforts with engineering, PM, and design to connect dots and deliver bigger product impact.`,
@@ -792,18 +953,18 @@
       },
       business: {
         text: `Enterprise and business-facing tools I've designed:`,
-        showProjects: [0, 1, 2],
+        showProjects: [0, 1, 2, 3, 4],
       },
       ad: {
-        text: `Ad products I've worked on:`,
-        showProjects: [3, 4],
+        text: `Monetization products I've worked on:`,
+        showProjects: [2, 5, 6],
       },
       framework: {
         text: `Here's a framework I use across projects — <strong>Design Systems for Everyone</strong>. It's a cross-company playbook covering token architecture, component governance, and how to drive adoption across engineering and PM teams.`,
-        showProjects: [0, 1],
+        showProjects: [0, 3],
       },
       contact: {
-        text: `I'd love to connect — whether it's about new opportunities, collaborations, or just swapping notes on design challenges.\n\n<strong>Email</strong> → <a href="mailto:mujiunshie@gmail.com" style="color:var(--accent)">mujiunshie@gmail.com</a>\n<strong>LinkedIn</strong> → <a href="https://www.linkedin.com/in/mshie/" target="_blank" style="color:var(--accent)">linkedin.com/in/mshie</a>\n<strong>Portfolio</strong> → <a href="https://mu-jn.com" target="_blank" style="color:var(--accent)">mu-jn.com</a>`,
+        text: `I'd love to connect — whether it's about new opportunities, collaborations, or just swapping notes on design challenges.\n\n<strong>Email</strong> → <a href="mailto:mujiunshie@gmail.com" style="color:var(--accent)">mujiunshie@gmail.com</a>\n<strong>LinkedIn</strong> → <a href="https://www.linkedin.com/in/mshie/" target="_blank" style="color:var(--accent)">linkedin.com/in/mshie</a>\n<strong>Resume</strong> → <a href="https://docs.google.com/document/d/1mhO_mh-6vCfPAqny4-cmR1dMHNSZcfHj/edit?usp=sharing&ouid=106499366159636919455&rtpof=true&sd=true" target="_blank" style="color:var(--accent)">View Resume</a>`,
         showProjects: null,
       },
     };
@@ -885,29 +1046,52 @@
       const list = indices ? indices.map(i => PROJECTS[i]) : PROJECTS;
       list.forEach(p => {
         const card = document.createElement('div');
-        card.className = 'project-card';
-        card.style.cursor = 'pointer';
-        card.addEventListener('click', () => {
-          if (p.external) {
-            window.open(p.url, '_blank');
-          } else {
-            openModal(p.url, p.title);
-          }
-        });
+        card.className = p.comingSoon ? 'project-card coming-soon' : 'project-card';
+        if (!p.comingSoon) {
+          card.addEventListener('click', () => {
+            if (p.external) {
+              window.open(p.url, '_blank');
+            } else {
+              openModal(p.url, p.title);
+            }
+          });
+        }
+        const arrow = p.comingSoon ? '' : '<span class="card-arrow">→</span>';
+        const pill = p.comingSoon ? '<span class="coming-soon-pill">Coming Soon</span>' : '';
         card.innerHTML = `
           <div class="card-img">
+            ${pill}
             <img src="${p.img}" alt="${p.title}" loading="lazy" />
           </div>
           <div class="card-body">
             <div class="card-company">${p.company}</div>
-            <div class="card-title">${p.title} <span class="card-arrow">→</span></div>
+            <div class="card-title">${p.title} ${arrow}</div>
             <div class="card-summary">${p.summary}</div>
           </div>
         `;
         track.appendChild(card);
       });
 
+      const leftArrow = document.createElement('button');
+      leftArrow.className = 'carousel-arrow carousel-arrow--left hidden';
+      leftArrow.innerHTML = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2L4 7l5 5"/></svg>';
+      leftArrow.addEventListener('click', () => { track.scrollBy({ left: -696, behavior: 'smooth' }); });
+
+      const rightArrow = document.createElement('button');
+      rightArrow.className = 'carousel-arrow carousel-arrow--right';
+      rightArrow.innerHTML = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2l5 5-5 5"/></svg>';
+      rightArrow.addEventListener('click', () => { track.scrollBy({ left: 696, behavior: 'smooth' }); });
+
+      function updateArrows() {
+        leftArrow.classList.toggle('hidden', track.scrollLeft <= 0);
+        rightArrow.classList.toggle('hidden', track.scrollLeft >= track.scrollWidth - track.clientWidth - 1);
+      }
+      track.addEventListener('scroll', updateArrows);
+      setTimeout(updateArrows, 100);
+
       wrapper.appendChild(track);
+      wrapper.appendChild(leftArrow);
+      wrapper.appendChild(rightArrow);
       return wrapper;
     }
 
@@ -921,10 +1105,7 @@
       msg.className = `msg ${type}`;
       const av = renderAvatar(type === 'ai' ? 'mu' : 'visitor');
       const inner = document.createElement('div');
-      inner.style.flex = '1';
-      inner.style.minWidth = '0';
-      inner.style.display = 'flex';
-      inner.style.flexDirection = 'column';
+      inner.className = 'msg-content';
       inner.style.alignItems = type === 'user' ? 'flex-end' : 'flex-start';
       contentFn(inner);
       if (type === 'user') { msg.appendChild(inner); }
@@ -974,6 +1155,9 @@
       return outer;
     }
 
+    // ── TRACK SHOWN PROJECTS ──
+    let lastShownIndices = [];
+
     // ── HANDLE ICE BREAKER ──
     function handleIce(topic, label) {
       appendMsg('user', container => container.appendChild(renderBubble(label)));
@@ -984,7 +1168,18 @@
         appendMsg('ai', container => {
           container.appendChild(renderBubble(resp.text));
           if (resp.showProjects !== null) {
-            container.appendChild(renderCarousel(resp.showProjects));
+            // Surface different projects first so users see fresh results
+            const indices = [...resp.showProjects];
+            if (lastShownIndices.length > 0) {
+              const fresh = indices.filter(i => !lastShownIndices.includes(i));
+              const overlap = indices.filter(i => lastShownIndices.includes(i));
+              // Reverse the overlap so the order looks different
+              const reordered = [...fresh, ...overlap.reverse()];
+              container.appendChild(renderCarousel(reordered));
+            } else {
+              container.appendChild(renderCarousel(indices));
+            }
+            lastShownIndices = resp.showProjects;
           }
           container.appendChild(renderChatIcebreakers(topic));
         });
@@ -1048,6 +1243,21 @@
       inputField.style.height = 'auto';
       inputField.style.height = Math.min(inputField.scrollHeight, 140) + 'px';
     });
+
+    // ── MOBILE MENU ──
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuBackdrop = document.getElementById('menuBackdrop');
+
+    function toggleMenu() {
+      const isOpen = mobileMenu.classList.contains('open');
+      mobileMenu.classList.toggle('open');
+      menuBackdrop.classList.toggle('open');
+      document.body.style.overflow = isOpen ? '' : 'hidden';
+    }
+
+    menuToggle.addEventListener('click', toggleMenu);
+    menuBackdrop.addEventListener('click', toggleMenu);
 
     // ── TYPING ROTATION ──
     (function() {

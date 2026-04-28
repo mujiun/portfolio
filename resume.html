@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="icon" type="image/png" href="projects/favicons/mu.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mu Jiun Shie — About</title>
@@ -316,14 +317,14 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 4px;
     }
 
     .job-bullets li {
       font-size: 16px;
       font-weight: 400;
       color: var(--ink);
-      line-height: 1.6;
+      line-height: 1.4;
       padding-left: 20px;
       position: relative;
     }
@@ -432,12 +433,105 @@
     ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
     /* ── RESPONSIVE ── */
+    /* ── HAMBURGER MENU (mobile) ── */
+    .menu-toggle {
+      display: none;
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 110;
+    }
+
+    .menu-toggle svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--ink);
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 220px;
+      height: 100vh;
+      background: var(--bg);
+      box-shadow: -4px 0 24px rgba(0,0,0,0.1);
+      z-index: 105;
+      padding: 72px 20px 32px;
+      flex-direction: column;
+      gap: 4px;
+      transform: translateX(100%);
+      transition: transform 0.25s ease;
+    }
+
+    .mobile-menu.open {
+      display: flex;
+      transform: translateX(0);
+    }
+
+    .mobile-menu a {
+      font-family: var(--font);
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink2);
+      text-decoration: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+      transition: all 0.15s ease;
+    }
+
+    .mobile-menu a:hover,
+    .mobile-menu a.active {
+      color: var(--accent);
+      background: var(--accent-light);
+    }
+
+    .menu-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.3);
+      z-index: 104;
+    }
+
+    .menu-backdrop.open {
+      display: block;
+    }
+
     @media (max-width: 600px) {
-      header { padding: 16px 20px; }
-      nav a { display: none; }
+      header { padding: 14px 16px; }
+      nav { display: none; }
+      .menu-toggle { display: flex; }
       .page { padding: 40px 20px 80px; }
       .hero-name { font-size: 32px; }
-      .job-company { font-size: 20px; }
+      .hero-headline { font-size: 17px; }
+      .job-toggle {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+      .job-toggle-left {
+        flex-wrap: wrap;
+        gap: 0;
+      }
+      .job-company { font-size: 18px; }
+      .job-role {
+        white-space: normal;
+        font-size: 16px;
+      }
+      .job-toggle-right { margin-left: 0; }
+      .job-date { font-size: 12px; }
       .info-grid { grid-template-columns: 1fr; gap: 32px; }
     }
   </style>
@@ -452,16 +546,27 @@
       <a href="resume.html" class="active">About</a>
       <a href="https://www.linkedin.com/in/mshie/" target="_blank">LinkedIn</a>
     </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+      <svg viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+    </button>
   </header>
+
+  <div class="menu-backdrop" id="menuBackdrop"></div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Chat</a>
+    <a href="projects.html">Projects</a>
+    <a href="resume.html" class="active">About</a>
+    <a href="https://www.linkedin.com/in/mshie/" target="_blank">LinkedIn</a>
+  </div>
 
   <div class="page">
 
     <!-- HERO -->
     <div class="hero">
       <h1 class="hero-name">Hi👋🏼 I'm <strong>Mu</strong>, Sr. Product Designer</h1>
-      <p class="hero-headline">8+ years in product design delivering <b>simple, scalable, user-focused</b> products <br><b>AI-native designer</b> building products 3–4× faster</p>
+      <p class="hero-headline">🌴&ensp;Based in San Francisco Bay Area · 8+ Years of Experience · AI-Native Product Builder<br>🚀&ensp;Product Growth for Monetization, Business Tools, and AI-Powered Experience</p>
       <div class="hero-links">
-        <a href="https://docs.google.com/document/d/1tAKrQeLZ3TPE_mDVejx2wmdKbb9UvKNu/edit" target="_blank">Download Resume <svg class="ext-icon" viewBox="0 0 14 14"><path d="M5 1h8v8M13 1L6 8"/></svg></a>
+        <a href="https://docs.google.com/document/d/1mhO_mh-6vCfPAqny4-cmR1dMHNSZcfHj/edit?usp=sharing&ouid=106499366159636919455&rtpof=true&sd=true" target="_blank">Download Resume <svg class="ext-icon" viewBox="0 0 14 14"><path d="M5 1h8v8M13 1L6 8"/></svg></a>
         <a href="https://www.linkedin.com/in/mshie/" target="_blank">LinkedIn <svg class="ext-icon" viewBox="0 0 14 14"><path d="M5 1h8v8M13 1L6 8"/></svg></a>
         <a href="mailto:mujiunshie@gmail.com">mujiunshie@gmail.com</a>
       </div>
@@ -477,7 +582,7 @@
           <div class="job-toggle-left">
             <p class="job-company">Meta</p>
             <span class="job-dot">·</span>
-            <p class="job-role">Senior Product Designer</p>
+            <p class="job-role">Monetization and BizAI</p>
           </div>
           <div class="job-toggle-right">
             <span class="job-date">Aug 2023 — Present · 2y 7m</span>
@@ -486,16 +591,16 @@
         </div>
         <div class="job-content">
           <div class="job-content-inner">
-            <p class="job-scope">Monetization, Business Messaging</p>
+            <p class="job-scope">Senior Product Designer</p>
             <ul class="job-bullets">
-              <li><strong>Launched 20+ features/experiments</strong> — Shaped strategy and solutions across platforms including messaging apps (Messenger/Instagram/WhatsApp), API integrations, ad tools (Ads Manager, Meta Business Suite) to unlock $400M+ annual revenue potential.</li>
-              <li><strong>Built simple, scalable solutions for complex, growing products</strong> — Developed modular systems to unify and simplify WhatsApp template creation tools (desktop, 7 flows) and Instagram messaging tools (mobile, 5 tools), boosting adoption rate by 1.6x.</li>
-              <li><strong>Clarified ambiguous problems through structured analysis</strong> — Used structured analysis (dogfooding, UXR, data) to turn ambiguity into clear problems to solve.</li>
-              <li><strong>Delivered solutions to streamline end-to-end journeys</strong> — Built 0→1 products connecting steps of third-party/API adoption, lifting activation rate from 12% to 57%.</li>
-              <li><strong>Secured leadership buy-in for 0→1 new bets</strong> — Structured presentation with compelling context and design mocks, shared in multiple forums to gain support.</li>
-              <li><strong>Shaped short and long-term solutions</strong> — Skilled at building MVPs for rapid execution while defining long-term strategy and success metrics for iteration.</li>
-              <li><strong>Executed fast-paced, high-output design ideation</strong> — Excelled in rapid Figma prototyping to conceptualize ideas and contributed to 10+ design sprints for roadmapping.</li>
-              <li><strong>Collaborated with cross-functional members and 10+ teams</strong> — Led large projects partnering with engineering, product managers, and product designers across teams to connect dots and bring a bigger impact on product.</li>
+              <li><strong>20+ launches</strong> — Shaped strategy and solutions across Meta business inbox, ad tools, and partner platforms to grow Messenger, Instagram, and WhatsApp business messaging and unlock $400M+ annual revenue potential.</li>
+              <li><strong>Cut project turnaround 3x with AI</strong> — Leveraged Claude Code, internal AI tools, and Figma Make to accelerate understanding and design exploration across complex product spaces.</li>
+              <li><strong>Developed modular systems for WhatsApp and Instagram tools</strong> — Unified WhatsApp template creation (desktop, 7 flows) and Instagram messaging tools (mobile, 5 tools) into scalable frameworks, boosting adoption 1.6x and reducing development cost.</li>
+              <li><strong>Led end-to-end strategy for WhatsApp API onboarding</strong> — Clarified the WhatsApp API end-to-end journey, identified opportunity in revamping onboarding, and turned ambiguity into a clear solution, unlocking $43M–$107M annual revenue potential.</li>
+              <li><strong>Grew funnel conversions 4x</strong> — Connected user problems to ready-to-use solutions and streamlined navigation to drive adoption across business tools.</li>
+              <li><strong>Drove 0→1 initiatives from insight to alignment</strong> — Gathered insights, rapidly ideated concepts, and delivered one-pagers and decks with clear problem framing to secure buy-in from leadership and partner teams.</li>
+              <li><strong>Shipped MVP designs rapidly using Figma and Claude Code</strong> — Delivered fast validation cycles while maintaining a roadmap for long-term improvements.</li>
+              <li><strong>Drove strategic partnerships across 10+ teams</strong> — Partnered with researchers, engineering, product managers, and designers to align goals and ship user-focused products.</li>
             </ul>
           </div>
         </div>
@@ -507,7 +612,7 @@
           <div class="job-toggle-left">
             <p class="job-company">Google</p>
             <span class="job-dot">·</span>
-            <p class="job-role">Interaction Designer</p>
+            <p class="job-role">Search Ads</p>
           </div>
           <div class="job-toggle-right">
             <span class="job-date">Nov 2021 — Jun 2023 · 1y 8m</span>
@@ -516,11 +621,11 @@
         </div>
         <div class="job-content">
           <div class="job-content-inner">
-            <p class="job-scope">Search Ads · Staffing via ScopusIT</p>
+            <p class="job-scope">Interaction Designer (Staffing via ScopusIT)</p>
             <ul class="job-bullets">
-              <li><strong>Launched 3 ad products/experiments</strong> — Identified opportunities and shipped new ad products for retail shopping, vehicle shopping, and a new vertical.</li>
-              <li><strong>Sped up product development process with rapid ideation</strong> — Accelerated project progress through rapid ideation, worked closely with the design manager to translate ambiguous needs into multiple product ideas through adaptability and fast execution.</li>
-              <li><strong>Delivered a new monetization product</strong> — Explored ad formats, content, and interactions for a new vertical, balancing user insights with cross-functional feedback.</li>
+              <li><strong>3 launches</strong> — Identified new opportunities for ad products across retail shopping, vehicle shopping, and a new vertical shown on Search results page.</li>
+              <li><strong>Translated ambiguous requirements into multiple product directions</strong> — Created rapid mockups to accelerate team alignment and time to launch.</li>
+              <li><strong>Defined ad formats and interactions for a new vertical</strong> — Balanced user insights with cross-functional feedback to shape a new monetization product.</li>
             </ul>
           </div>
         </div>
@@ -532,7 +637,7 @@
           <div class="job-toggle-left">
             <p class="job-company">Enovational</p>
             <span class="job-dot">·</span>
-            <p class="job-role">Product Designer</p>
+            <p class="job-role">Government Portal</p>
           </div>
           <div class="job-toggle-right">
             <span class="job-date">Jul 2020 — Oct 2021 · 1y 4m</span>
@@ -541,11 +646,10 @@
         </div>
         <div class="job-content">
           <div class="job-content-inner">
-            <p class="job-scope">Government Portal</p>
+            <p class="job-scope">Product Designer</p>
             <ul class="job-bullets">
-              <li><strong>Launched 10 features</strong> — Saved $65M for the Maryland government, streamlined 2M application reviews in 2020 by expanding form features, automating workflows, and designing a 0→1 license portal for a modern purchase experience.</li>
-              <li><strong>Convinced leadership on building a 0→1 product</strong> — Pitched and secured CEO buy-in to develop a wildlife license portal addressing critical user needs.</li>
-              <li><strong>Defined standards and best practices</strong> — Established design standards, presentation templates, and design documentation, resulting in improved work efficiency.</li>
+              <li><strong>10+ launches</strong> — Saved $65M for Maryland government, streamlined 2M application reviews in 2020 by designing form management, workflows, and a new portal.</li>
+              <li><strong>Secured CEO buy-in to lead a new contract</strong> — Designed a streamlined, modern wildlife license portal for discovery and purchase.</li>
             </ul>
           </div>
         </div>
@@ -555,9 +659,7 @@
       <div class="job">
         <div class="job-toggle">
           <div class="job-toggle-left">
-            <p class="job-company">Earlier Roles</p>
-            <span class="job-dot">·</span>
-            <p class="job-role">UX / Product Designer</p>
+            <p class="job-company">Others</p>
           </div>
           <div class="job-toggle-right">
             <span class="job-date">2015 — 2019 · 3y+</span>
@@ -605,6 +707,26 @@
     </div>
 
     <!-- SKILLS -->
+    <!-- TOOLS -->
+    <div class="section">
+      <p class="section-label section-label--spaced">Tools</p>
+      <div class="skill-tags">
+        <span class="skill-tag">Claude Code</span>
+        <span class="skill-tag">VS Code</span>
+        <span class="skill-tag">Cursor</span>
+        <span class="skill-tag">Manus</span>
+        <span class="skill-tag">Figma</span>
+        <span class="skill-tag">Figma Make</span>
+        <span class="skill-tag">GitHub</span>
+        <span class="skill-tag">HTML</span>
+        <span class="skill-tag">CSS</span>
+        <span class="skill-tag">SCSS</span>
+        <span class="skill-tag">JQuery</span>
+        <span class="skill-tag">Adobe Design Suite</span>
+      </div>
+    </div>
+
+    <!-- SKILLS -->
     <div class="section">
       <p class="section-label section-label--spaced">Skills</p>
       <div class="skill-tags">
@@ -627,17 +749,14 @@
       </div>
     </div>
 
-    <!-- TOOLS -->
+    <!-- SOCIAL IMPACT -->
     <div class="section">
-      <p class="section-label section-label--spaced">Daily Tools</p>
-      <div class="skill-tags">
-        <span class="skill-tag">Figma</span>
-        <span class="skill-tag">VS Code</span>
-        <span class="skill-tag">Claude Code</span>
-        <span class="skill-tag">Adobe</span>
-        <span class="skill-tag">HTML</span>
-        <span class="skill-tag">CSS</span>
-      </div>
+      <p class="section-label section-label--spaced">Social Impact</p>
+      <ul class="job-bullets">
+        <li><strong>Taiwan Association for Visually Impaired People</strong> — Design lead for accessible online library portal</li>
+        <li><strong>CMU Alumni Office Hour</strong> — Completed 20+ OH for design mentorship</li>
+        <li><strong>GUD design workshop</strong> — Guest speaker</li>
+      </ul>
     </div>
 
   </div>
@@ -671,6 +790,19 @@
         }
       });
     });
+
+    // Mobile menu
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuBackdrop = document.getElementById('menuBackdrop');
+    function toggleMenu() {
+      const isOpen = mobileMenu.classList.contains('open');
+      mobileMenu.classList.toggle('open');
+      menuBackdrop.classList.toggle('open');
+      document.body.style.overflow = isOpen ? '' : 'hidden';
+    }
+    menuToggle.addEventListener('click', toggleMenu);
+    menuBackdrop.addEventListener('click', toggleMenu);
   </script>
 </body>
 </html>

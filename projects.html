@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="icon" type="image/png" href="projects/favicons/mu.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mu Jiun Shie — Projects</title>
@@ -179,12 +180,17 @@
       flex-direction: column;
     }
 
-    .project-card:hover {
+    .project-card:hover:not(.coming-soon) {
       border-color: var(--accent);
     }
 
-    .project-card:hover .card-title {
+    .project-card:hover:not(.coming-soon) .card-title {
       color: var(--accent);
+    }
+
+    .project-card.coming-soon {
+      cursor: default;
+      pointer-events: none;
     }
 
     .card-img {
@@ -194,6 +200,20 @@
       overflow: hidden;
     }
 
+    .coming-soon-pill {
+      position: absolute;
+      bottom: 8px;
+      left: 14px;
+      font-size: 11px;
+      font-weight: 500;
+      color: #fff;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(4px);
+      padding: 4px 8px;
+      border-radius: 999px;
+      z-index: 1;
+    }
+
     .card-img img {
       width: 100%;
       height: 100%;
@@ -201,7 +221,7 @@
       transition: transform 0.4s ease;
     }
 
-    .project-card:hover .card-img img {
+    .project-card:hover:not(.coming-soon) .card-img img {
       transform: scale(1.04);
     }
 
@@ -218,7 +238,7 @@
       letter-spacing: 0.03em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 2px;
+      margin-bottom: 4px;
     }
 
     .card-title {
@@ -226,8 +246,7 @@
       font-size: 15px;
       font-weight: 600;
       color: var(--ink);
-      margin-bottom: 6px;
-      line-height: 1.35;
+      margin-bottom: 8px;
       letter-spacing: -0.0em;
       transition: color 0.18s ease;
     }
@@ -249,7 +268,7 @@
       display: inline-block;
     }
 
-    .project-card:hover .card-arrow { transform: translateX(3px); }
+    .project-card:hover:not(.coming-soon) .card-arrow { transform: translateX(3px); }
 
 
 
@@ -346,13 +365,90 @@
     ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
     /* ── RESPONSIVE ── */
+    /* ── HAMBURGER MENU (mobile) ── */
+    .menu-toggle {
+      display: none;
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 110;
+    }
+
+    .menu-toggle svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--ink);
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 220px;
+      height: 100vh;
+      background: var(--bg);
+      box-shadow: -4px 0 24px rgba(0,0,0,0.1);
+      z-index: 105;
+      padding: 72px 20px 32px;
+      flex-direction: column;
+      gap: 4px;
+      transform: translateX(100%);
+      transition: transform 0.25s ease;
+    }
+
+    .mobile-menu.open {
+      display: flex;
+      transform: translateX(0);
+    }
+
+    .mobile-menu a {
+      font-family: var(--font);
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink2);
+      text-decoration: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+      transition: all 0.15s ease;
+    }
+
+    .mobile-menu a:hover,
+    .mobile-menu a.active {
+      color: var(--accent);
+      background: var(--accent-light);
+    }
+
+    .menu-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.3);
+      z-index: 104;
+    }
+
+    .menu-backdrop.open {
+      display: block;
+    }
+
     @media (max-width: 600px) {
-      header { padding: 16px 20px; }
-      nav a { display: none; }
+      header { padding: 14px 16px; }
+      nav { display: none; }
+      .menu-toggle { display: flex; }
       .page { padding: 32px 16px 60px; }
       .project-grid { grid-template-columns: 1fr; }
-      .modal-overlay { padding: 0; }
-      .modal { border-radius: 0; height: 100vh; max-width: 100%; }
+      .modal-overlay { padding: 0; background: var(--bg); }
+      .modal { border-radius: 0; height: 100vh; max-width: 100%; width: 100%; box-shadow: none; }
     }
   </style>
 </head>
@@ -366,7 +462,18 @@
       <a href="resume.html">About</a>
       <a href="https://www.linkedin.com/in/mshie/" target="_blank">LinkedIn</a>
     </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+      <svg viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+    </button>
   </header>
+
+  <div class="menu-backdrop" id="menuBackdrop"></div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Chat</a>
+    <a href="projects.html" class="active">Projects</a>
+    <a href="resume.html">About</a>
+    <a href="https://www.linkedin.com/in/mshie/" target="_blank">LinkedIn</a>
+  </div>
 
   <div class="page">
     <h1 class="page-title">Projects</h1>
@@ -393,12 +500,12 @@
 
     const FILTERS = [
       { label: 'All', value: 'all' },
-      { label: 'Ad Products', value: 'ad' },
+      { label: 'Monetization', value: 'monetization' },
+      { label: 'Funnel Growth', value: 'funnel' },
       { label: 'Business Tools', value: 'business' },
       { label: 'API/Developer Tools', value: 'developer' },
       { label: 'Framework', value: 'framework' },
       { label: 'Consumer Products', value: 'consumer' },
-      { label: 'Visuals', value: 'visuals' },
     ];
 
     // ── RENDER FILTERS ──
@@ -427,20 +534,27 @@
       list.forEach(p => {
         const card = document.createElement('div');
         card.className = 'project-card';
-        card.addEventListener('click', () => {
-          if (p.external) {
-            window.open(p.url, '_blank');
-          } else {
-            openModal(p.url, p.title);
-          }
-        });
+        if (p.comingSoon) {
+          card.classList.add('coming-soon');
+        } else {
+          card.addEventListener('click', () => {
+            if (p.external) {
+              window.open(p.url, '_blank');
+            } else {
+              openModal(p.url, p.title);
+            }
+          });
+        }
+        const arrow = p.comingSoon ? '' : '<span class="card-arrow">→</span>';
+        const pill = p.comingSoon ? '<span class="coming-soon-pill">Coming Soon</span>' : '';
         card.innerHTML = `
           <div class="card-img">
+            ${pill}
             <img src="${p.img}" alt="${p.title}" loading="lazy" />
           </div>
           <div class="card-body">
             <div class="card-company">${p.company}</div>
-            <div class="card-title">${p.title} <span class="card-arrow">→</span></div>
+            <div class="card-title">${p.title} ${arrow}</div>
             <div class="card-summary">${p.summary}</div>
           </div>
         `;
@@ -476,6 +590,19 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeModal();
     });
+
+    // Mobile menu
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuBackdrop = document.getElementById('menuBackdrop');
+    function toggleMenu() {
+      const isOpen = mobileMenu.classList.contains('open');
+      mobileMenu.classList.toggle('open');
+      menuBackdrop.classList.toggle('open');
+      document.body.style.overflow = isOpen ? '' : 'hidden';
+    }
+    menuToggle.addEventListener('click', toggleMenu);
+    menuBackdrop.addEventListener('click', toggleMenu);
   </script>
 </body>
 </html>
