@@ -190,7 +190,6 @@
 
     .project-card.coming-soon {
       cursor: default;
-      pointer-events: none;
     }
 
     .card-img {
@@ -336,11 +335,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      padding: 0;
+      flex-shrink: 0;
       color: var(--ink2);
       transition: all 0.15s ease;
-      font-family: var(--font);
-      line-height: 1;
     }
 
     .modal-close:hover {
@@ -486,7 +484,7 @@
     <div class="modal">
       <div class="modal-header">
         <span class="modal-title" id="modalTitle"></span>
-        <button class="modal-close" id="modalClose">×</button>
+        <button class="modal-close" id="modalClose"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" style="margin-top:-1px"><line x1="2" y1="2" x2="10" y2="10"/><line x1="10" y1="2" x2="2" y2="10"/></svg></button>
       </div>
       <div class="modal-body">
         <iframe id="modalIframe" src="" title="Project"></iframe>
@@ -572,7 +570,8 @@
 
     function openModal(url, title) {
       modalTitle.textContent = title;
-      modalIframe.src = url;
+      const sep = url.includes('?') ? '&' : '?';
+      modalIframe.src = url + sep + 'embed=1';
       modalOverlay.classList.add('open');
       document.body.style.overflow = 'hidden';
     }
@@ -582,6 +581,18 @@
       document.body.style.overflow = '';
       setTimeout(() => { modalIframe.src = ''; }, 250);
     }
+
+    // Hide side-nav inside iframe on mobile
+    modalIframe.addEventListener('load', () => {
+      try {
+        const iframeDoc = modalIframe.contentDocument;
+        if (iframeDoc && window.innerWidth <= 768) {
+          const style = iframeDoc.createElement('style');
+          style.textContent = '.side-nav { display: none !important; } .main-content { margin-left: 0 !important; width: 100% !important; max-width: 100% !important; padding: 0 16px !important; }';
+          iframeDoc.head.appendChild(style);
+        }
+      } catch(e) {}
+    });
 
     modalClose.addEventListener('click', closeModal);
     modalOverlay.addEventListener('click', (e) => {
