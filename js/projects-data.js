@@ -12,20 +12,20 @@ const PROJECTS = [
     filters: ['business', 'developer', 'framework', 'funnel'],
   },
   {
-    url: 'projects/ig-inbox.html',
-    img: 'images/2025_4.jpg',
-    company: 'Meta · Instagram',
-    title: 'Modular System for Instagram Inbox Tools',
-    summary: 'Defined framework across 5 tools to increase business adoption.',
-    filters: ['business', 'framework'],
-  },
-  {
     url: 'projects/template-tool.html',
     img: 'images/2025_3.jpg',
     company: 'Meta · WhatsApp',
     title: 'Modular System for Template Creation Tools',
     summary: 'Defined framework for 7+ creation flows with 1.6x completion rates.',
     filters: ['business', 'developer'],
+  },
+  {
+    url: 'projects/ig-inbox.html',
+    img: 'images/2025_4.jpg',
+    company: 'Meta · Instagram',
+    title: 'Modular System for Instagram Inbox Tools',
+    summary: 'Defined framework across 5 tools to increase business adoption.',
+    filters: ['business', 'framework'],
   },
   {
     url: '',
