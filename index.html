@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@100..900&display=block" rel="stylesheet" />
+  <link rel="stylesheet" href="css/nav.css" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -38,6 +39,8 @@
       --input-h: 82px;
     }
 
+    html { overflow-y: scroll; scrollbar-gutter: stable; }
+
     html, body {
       margin: 0;
       padding: 0;
@@ -47,136 +50,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ── HEADER ── */
-    header {
-      position: sticky;
-      top: 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px 32px;
-      border-bottom: 1px solid var(--border2);
-      background: var(--bg);
-      z-index: 100;
-    }
-
-    .logo {
-      font-family: var(--font);
-      font-weight: 700;
-      font-size: 20px;
-      color: var(--ink);
-      text-decoration: none;
-      letter-spacing: -0.02em;
-    }
-
-    .logo span { color: var(--accent); }
-
-    nav {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-
-    nav a {
-      font-family: var(--font);
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--ink2);
-      text-decoration: none;
-      padding: 6px 14px;
-      border-radius: var(--radius-pill);
-      border: 1px solid transparent;
-      transition: all 0.18s ease;
-      letter-spacing: 0.01em;
-    }
-
-    nav a:hover {
-      color: var(--ink);
-      border-color: var(--border);
-      background: var(--surface2);
-    }
-
-    nav a.active {
-      color: var(--accent);
-      border-color: var(--accent);
-      background: var(--accent-light);
-    }
-
-    /* ── HAMBURGER MENU (mobile) ── */
-    .menu-toggle {
-      display: none;
-      width: 36px;
-      height: 36px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      background: var(--bg);
-      cursor: pointer;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      position: relative;
-      z-index: 110;
-    }
-
-    .menu-toggle svg {
-      width: 18px;
-      height: 18px;
-      stroke: var(--ink);
-      stroke-width: 2;
-      fill: none;
-      stroke-linecap: round;
-    }
-
-    .mobile-menu {
-      display: none;
-      position: fixed;
-      top: 0;
-      right: 0;
-      width: 220px;
-      height: 100%;
-      background: var(--bg);
-      box-shadow: -4px 0 24px rgba(0,0,0,0.1);
-      z-index: 105;
-      padding: 72px 20px 32px;
-      flex-direction: column;
-      gap: 4px;
-      transform: translateX(100%);
-      transition: transform 0.25s ease;
-    }
-
-    .mobile-menu.open {
-      display: flex;
-      transform: translateX(0);
-    }
-
-    .mobile-menu a {
-      font-family: var(--font);
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--ink2);
-      text-decoration: none;
-      padding: 10px 14px;
-      border-radius: var(--radius-sm);
-      transition: all 0.15s ease;
-    }
-
-    .mobile-menu a:hover,
-    .mobile-menu a.active {
-      color: var(--accent);
-      background: var(--accent-light);
-    }
-
-    .menu-backdrop {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.3);
-      z-index: 104;
-    }
-
-    .menu-backdrop.open {
-      display: block;
-    }
+    /* header/nav/menu styles in css/nav.css */
 
     /* ── CENTER STAGE (landing) ── */
     .center-stage {
@@ -777,9 +651,6 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 600px) {
-      header { padding: 14px 16px; }
-      nav { display: none; }
-      .menu-toggle { display: flex; }
       .center-stage { padding: 28px 16px 20px; }
       .center-stage .sub { font-size: 14px; max-width: 340px; }
       .icebreakers { gap: 6px; }
@@ -927,7 +798,7 @@
     const RESPONSES = {
       meta: {
         text: `At Meta I'm a <strong>Senior Product Designer</strong> on <strong>Monetization and BizAI</strong> — I've delivered 20+ launches across Meta business inbox, ad tools, and partner platforms to grow Messenger, Instagram, and WhatsApp business messaging and unlock $400M+ annual revenue potential. Here's some of my work:`,
-        showProjects: [0, 1, 2, 3, 4, 5],
+        showProjects: [0, 1, 3, 2, 4, 5],
       },
       philosophy: {
         text: `A few things that set me apart:\n\n<strong>Turning ambiguity into clarity</strong> — I use structured analysis (dogfooding, UXR, data) to cut through complexity and find the real problem to solve.\n\n<strong>Building simple systems for complex products</strong> — I create modular, scalable solutions that unify fragmented tools — like consolidating 7 WhatsApp flows into one system, boosting adoption 1.6x.\n\n<strong>Moving fast with high craft</strong> — I excel at rapid Figma prototyping and have contributed to 10+ design sprints. I ship MVPs while defining long-term strategy.\n\n<strong>Driving alignment across 10+ teams</strong> — I lead cross-functional efforts with engineering, PM, and design to connect dots and deliver bigger product impact.`,
@@ -935,15 +806,15 @@
       },
       business: {
         text: `Enterprise and business-facing tools I've designed:`,
-        showProjects: [0, 1, 2, 3, 4],
+        showProjects: [3, 4, 2, 1],
       },
       ad: {
         text: `Monetization products I've worked on:`,
-        showProjects: [2, 5, 6],
+        showProjects: [0, 5, 6],
       },
       framework: {
         text: `Here's a framework I use across projects — <strong>Design Systems for Everyone</strong>. It's a cross-company playbook covering token architecture, component governance, and how to drive adoption across engineering and PM teams.`,
-        showProjects: [0, 3],
+        showProjects: [2, 1, 0],
       },
       contact: {
         text: `I'd love to connect — whether it's about new opportunities, collaborations, or just swapping notes on design challenges.\n\n<strong>Email</strong> → <a href="mailto:mujiunshie@gmail.com" style="color:var(--accent)">mujiunshie@gmail.com</a>\n<strong>LinkedIn</strong> → <a href="https://www.linkedin.com/in/mshie/" target="_blank" style="color:var(--accent)">linkedin.com/in/mshie</a>\n<strong>Resume</strong> → <a href="https://docs.google.com/document/d/1mhO_mh-6vCfPAqny4-cmR1dMHNSZcfHj/edit?usp=sharing&ouid=106499366159636919455&rtpof=true&sd=true" target="_blank" style="color:var(--accent)">View Resume</a>`,
@@ -1150,15 +1021,7 @@
         appendMsg('ai', container => {
           container.appendChild(renderBubble(resp.text));
           if (resp.showProjects !== null) {
-            const indices = [...resp.showProjects];
-            if (lastShownIndices.length > 0) {
-              const fresh = indices.filter(i => !lastShownIndices.includes(i));
-              const overlap = indices.filter(i => lastShownIndices.includes(i));
-              const reordered = [...fresh, ...overlap.reverse()];
-              container.appendChild(renderCarousel(reordered));
-            } else {
-              container.appendChild(renderCarousel(indices));
-            }
+            container.appendChild(renderCarousel(resp.showProjects));
             lastShownIndices = resp.showProjects;
           }
           container.appendChild(renderChatIcebreakers(topic));
