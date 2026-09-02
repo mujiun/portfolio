@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+<head>
+  <link rel="icon" type="image/png" href="favicons/mu.png">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="UTF-8">
+    <title>WhatsApp API Setup Flow</title>
+
+    <!-- All -->
+    <meta property="og:title" content="Mujiun | UX Designer" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://mu-jn.com/" />
+    <meta property="og:image" content="http://mu-jn.com/images/og.jpg" />
+    <meta property="og:description" content="CMU MIIPS, Web/App Design" />
+    <link rel="apple-touch-icon" sizes="76x76" href="favicons/apple-icon-76x76.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
+    <link rel="manifest" href="favicons/manifest.json">
+    <link rel="mask-icon" href="favicons/safari-pinned-tab.svg" color="#000">
+    <meta name="theme-color" content="#000">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-112748057-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-158583225-1', {
+          'page_title' : 'setupguide.html',
+          'page_path': '/setupguide.html'
+        });
+    </script>
+    <!-- All -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/mu.css">
+    <link rel="stylesheet" href="css/venobox.css">
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="js/mumu.js"></script>
+    <script src="js/venobox.js"></script>
+    <script>
+        $(function(){
+            $('.gallery').venobox();
+        });
+    </script>
+    <style>
+      /* ── NEW PROJECT LAYOUT ── */
+      body.new-layout {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      body.new-layout .progress-container { display: none; }
+
+      /* Left nav */
+      body.new-layout .side-nav {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 240px;
+        height: 100vh;
+        padding: 40px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        z-index: 100;
+      }
+
+      body.new-layout .side-nav a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 12px;
+        font-weight: 400;
+        color: #35363A;
+        opacity: 0.5;
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 0;
+        line-height: 1.2;
+        transition: opacity 0.15s ease;
+      }
+
+      body.new-layout .side-nav a::before { display: none; }
+
+      body.new-layout .side-nav a:hover { opacity: 1; }
+
+      body.new-layout .side-nav a.active { opacity: 1; color: #35363A; }
+
+      body.new-layout .side-nav a.active::before { display: none; }
+
+      /* Hide old shortcut */
+      body.new-layout .shortcut { display: none !important; }
+
+      /* Main content area */
+      body.new-layout .main-content {
+        flex: 1;
+        max-width: 800px;
+        margin-left: calc(280px + (100vw - 280px - 800px) / 2);
+      }
+
+      body.new-layout .top {
+        margin: 0;
+        margin-bottom: 20px;
+      }
+
+      body.new-layout .top img {
+        max-height: none;
+        width: 100%;
+        display: block;
+        object-fit: cover;
+      }
+
+      body.new-layout .head {
+        text-align: left;
+      }
+
+      body.new-layout .head .text {
+        max-width: none;
+        text-align: left;
+      }
+
+      body.new-layout.article h1,
+      body.new-layout.article h2,
+      body.new-layout.article h3,
+      body.new-layout.article h5,
+      body.new-layout.article h6,
+      body.new-layout.article p,
+      body.new-layout.article .block,
+      body.new-layout.article .block-box,
+      body.new-layout.article ul,
+      body.new-layout.article ol,
+      body.new-layout.article table,
+      body.new-layout.article .head,
+      body.new-layout.article .head .text {
+        max-width: none;
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
+        text-align: left;
+      }
+
+      body.new-layout .main-content .head {
+        padding: 0;
+        padding-top: 40px;
+      }
+
+      body.new-layout .main-content .head .text {
+        max-width: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      body.new-layout .top {
+        margin: 0;
+      }
+
+      body.new-layout .top img {
+        margin: 0;
+      }
+
+      /* Override all centering from mu.css */
+      body.new-layout.article .content .g-0,
+      body.new-layout.article .content .g-1,
+      body.new-layout.article .content .g-1w,
+      body.new-layout.article .content .g-2,
+      body.new-layout.article .content .g-3,
+      body.new-layout.article .content .g-4,
+      body.new-layout.article .content .g-wide {
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
+        max-width: none;
+      }
+
+      body.new-layout.article .content {
+        margin-top: 40px;
+      }
+
+      body.new-layout.article .content .g-0 a,
+      body.new-layout.article .content .g-1 a,
+      body.new-layout.article .content .g-1w a {
+        display: block;
+      }
+
+      body.new-layout.article .g-1w,
+      body.new-layout.article .content .g-1w {
+        width: 108%;
+        max-width: none;
+        margin-left: -4%;
+        padding: 0;
+        border-radius: 12px;
+        overflow: hidden;
+        background: #F6F6F6;
+      }
+      body.new-layout.article .g-1w img {
+        border-radius: 6px;
+        display: block;
+      }
+
+      body.new-layout .divide {
+        padding-left: 0;
+        padding-right: 0;
+        padding-bottom: 0;
+      }
+
+      body.new-layout .divide.divbg1 {
+        background-color: transparent;
+        padding: 0;
+        border-radius: 12px;
+        font-family: 'IBM Plex Mono', monospace;
+      }
+
+      body.new-layout .divide.divbg1 .block-box span,
+      body.new-layout .divide.divbg1 .block-box div,
+      body.new-layout .divide.divbg1 .block-w1 span,
+      body.new-layout .divide.divbg1 .block-w1 div,
+      body.new-layout .divide.divbg1 .block-w2 span,
+      body.new-layout .divide.divbg1 .block-w2 div {
+        font-size: 13px;
+      }
+
+      body.new-layout .part {
+        margin-bottom: 40px;
+      }
+
+      body.new-layout .paragraph {
+        height: 20px;
+      }
+
+      body.new-layout.article .block-box {
+        padding: 0;
+        background-color: #F6F6F6;
+        border-radius: 12px;
+        display: flex;
+        gap: 20px;
+        font-family: 'IBM Plex Mono', monospace;
+      }
+
+      body.new-layout.article .block-box .block-w1,
+      body.new-layout.article .block-box .block-w2 {
+        width: 50%;
+        margin-right: 0;
+      }
+
+      body.new-layout.article table {
+        margin-left: 0;
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        font-size: 14px;
+        line-height: 1.5;
+        margin-top: 12px;
+        margin-bottom: 28px;
+        border: 1px solid #E7E7E7;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      body.new-layout.article table th,
+      body.new-layout.article table td {
+        padding: 12px 16px;
+        text-align: left;
+        border-bottom: 1px solid rgba(67,67,67,0.1);
+        vertical-align: top;
+        font-weight: 400;
+        font-size: 14px;
+      }
+
+      body.new-layout.article table th:first-child,
+      body.new-layout.article table td:first-child {
+        width: 100px;
+        white-space: nowrap;
+      }
+
+      body.new-layout.article table th:nth-child(2),
+      body.new-layout.article table td:nth-child(2),
+      body.new-layout.article table th:nth-child(3),
+      body.new-layout.article table td:nth-child(3) {
+        width: calc((100% - 100px) / 2);
+      }
+
+      body.new-layout.article table th,
+      body.new-layout.article table tr:first-child th {
+        font-size: 14px;
+        font-weight: 600;
+        color: #35363A;
+        padding-bottom: 12px;
+      }
+
+      body.new-layout.article table tr:last-child td {
+        border-bottom: none;
+      }
+
+      body.new-layout.article table td b {
+        font-weight: 600;
+        color: #35363A;
+      }
+
+      body.new-layout.article table.impact-table th:nth-child(2),
+      body.new-layout.article table.impact-table td:nth-child(2) {
+        width: auto;
+        white-space: normal;
+      }
+
+      body.new-layout.article table.impact-table th:nth-child(3),
+      body.new-layout.article table.impact-table td:nth-child(3),
+      body.new-layout.article table.impact-table th:nth-child(4),
+      body.new-layout.article table.impact-table td:nth-child(4) {
+        width: 76px;
+        text-align: right;
+        white-space: nowrap;
+      }
+
+      body.new-layout.article table.impact-table tr.impact-key td {
+        background: #FBF0E4;
+      }
+
+      body.new-layout p,
+      body.new-layout li,
+      body.new-layout .block-w1 div,
+      body.new-layout .block-w1 span,
+      body.new-layout .block-w2 div,
+      body.new-layout .block-w2 span {
+        font-size: 17px;
+        font-weight: 400;
+        line-height: 1.4;
+      }
+
+      body.new-layout .part ul {
+        list-style: disc;
+        padding-left: 1.5em;
+        padding-bottom: 20px;
+      }
+
+      body.new-layout.article p:has(+ ul) {
+        padding-bottom: 6px;
+      }
+
+      body.new-layout .block-box .box-label {
+        font-size: 12px;
+        font-weight: 700;
+        font-family: 'IBM Plex Mono', monospace;
+        color: #D56C00;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 6px;
+      }
+
+      body.new-layout .block-box .box-text,
+      body.new-layout .block-box p {
+        font-size: 13px;
+        font-weight: 400;
+        letter-spacing: -0.2px;
+        line-height: 1.4;
+        margin-bottom: 40px;
+      }
+
+      body.new-layout .block-box .box-text li {
+        font-size: 13px;
+        font-weight: 400;
+        letter-spacing: -0.2px;
+        line-height: 1.4;
+        margin-bottom: 0;
+      }
+
+      body.new-layout .box-text:last-child {
+        margin-bottom: 0;
+      }
+
+      body.new-layout b,
+      body.new-layout .mark {
+        font-weight: 600;
+        color: #D56C00;
+      }
+
+      body.new-layout h3 {
+        color: #35363A;
+        padding-top: 16px;
+        font-weight: 700;
+      }
+
+      body.new-layout h1 {
+        font-size: 40px;
+        line-height: 1.3em;
+        padding-bottom: 12px;
+      }
+
+      body.new-layout .part-title {
+        margin-bottom: 36px;
+        color: #35363A;
+      }
+
+      body.new-layout p.feedback {
+        padding: 0;
+        padding-bottom: 12px;
+        font-size: 14px;
+        color: #D56C00;
+      }
+
+      body.new-layout.article .block {
+        padding-top: 40px;
+      }
+
+      body.new-layout .part1 .block-box {
+        background-color: transparent;
+      }
+
+      body.new-layout .box-text ul {
+        list-style: disc;
+        padding-left: 1.2em;
+        padding-bottom: 0;
+      }
+
+      body.new-layout h6 {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 1.6em;
+        color: #888;
+      }
+
+      body.new-layout .content {
+        text-align: left;
+      }
+
+      body.new-layout .g-1w,
+      body.new-layout .g-0,
+      body.new-layout .g-1 {
+        text-align: left;
+      }
+
+      body.new-layout .g-1w img,
+      body.new-layout .g-0 img,
+      body.new-layout .g-1 img {
+        display: block;
+      }
+
+      body.new-layout .part-title {
+        text-align: left;
+      }
+
+      body.new-layout .divide {
+        text-align: left;
+      }
+
+      body.new-layout footer {
+        text-align: left;
+        margin-left: 0;
+      }
+
+      /* Responsive: mobile styles moved to css/mu.css */
+
+    </style>
+</head>
+
+<body class="article module new-layout">
+<div class="progress-container"><div class="progress-bar" id="myBar"></div></div>
+
+    <!-- Left side navigation -->
+    <nav class="side-nav">
+        <a href="#01">Overview</a>
+        <a href="#02">Context</a>
+        <a href="#03">Discover Problems</a>
+        <a href="#04">Define Scope</a>
+        <a href="#05">Shape Solutions</a>
+        <a href="#06">Impact &amp; Learning</a>
+    </nav>
+
+    <!-- Hide old shortcut -->
+    <div class="shortcut" style="display:none"></div>
+
+    <!-- Main content -->
+    <div class="main-content">
+    <div class="head">
+        <div class="text">
+            <h1>WhatsApp API Setup Flow</h1>
+            <h6>Information Architecture, Technical Complexity</h6>
+        </div>
+        <div class="block"><div class="part-title">Overview</div></div>
+        <div class="g-1w"><video src="images/14/video-dev.mp4" autoplay loop muted playsinline style="width:100%;border-radius:6px;display:block;transform:scale(1.1);"></video></div>
+    </div>
+
+
+    <!-- content -->
+    <div class="content fadeup">
+        <!-- Overview -->
+        <div class="part1" id="01">
+            <div class="part brief">
+                <div class="block-box">
+                <div class="block-w1">
+                    <span class="box-label">Problems</span>
+                    <div class="box-text">The setup was challenging — only 3.5% of developers finished it. The pages were confusing on:</div>
+
+                    <span class="box-label">Solutions</span>
+                    <div class="box-text">Rebuilt the setup flow around clarity, trust, and efficiency — restructuring the pages from the system's architecture to the user's mental model.</div>
+                </div>
+                <div class="block-w2">
+                    <div class="box-label">My Role</div>
+                    <div class="box-text">
+                    <ul>
+                        <li>Led strategy for setup flow revamp</li>
+                        <li>Partnered with 3 engineers and PM through the full cycle</li>
+                        <li>Scoped 5 pages to rebuild for clarity</li>
+                    </ul>
+                  </div>
+
+                    <span class="box-label">Impact</span>
+                    <div class="box-text">
+                      <ul>
+                          <li>Setup completion 3.5% &rarr; 12% (3.4x lift)</li>
+                          <li>Phone number registered +47%, paid message sent +20% (key revenue driver)</li>
+                      </ul>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Context -->
+        <div class="part2" id="02">
+            <div class="part">
+                <div class="block"><div class="part-title">Context</div></div>
+                <p><b>120k developers and partners</b> build their products with the WhatsApp API — a critical segment that <b>powers 80% of WhatsApp revenue</b>. Before they can send a single message, they have to complete a multi-step API setup.</p>
+                <div class="g-1w"><a class="gallery" href="images/14/20.jpg"><img src="images/14/20.jpg"></a></div>
+            </div>
+        </div>
+
+        <!-- Discover Problems -->
+        <div class="part3" id="03">
+            <div class="part">
+                <div class="block"><div class="part-title">Discover Problems</div></div>
+                <p>The setup was challenging — <b>only 3.5% of developers finished it</b>. The pages were confusing on:</p>
+                <ul>
+                    <li><b>Developer vs. partner docs</b> — unclear which applied to you</li>
+                    <li><b>Setup sequence</b> — no clear order to the steps</li>
+                    <li><b>Required vs. optional</b> — hard to tell what you actually needed</li>
+                </ul>
+                <p>Result: low completion rate (3.5%), long completion time (2–4 weeks), low guidance satisfaction.</p>
+                <div class="g-1w"><video src="images/14/dev-old-1.mp4" autoplay loop muted playsinline style="width:100%;border-radius:6px;display:block;"></video></div>
+            </div>
+        </div>
+
+        <!-- Define Scope -->
+        <div class="part4" id="04">
+            <div class="part">
+                <div class="block"><div class="part-title">Define Scope</div></div>
+                <p>To lift completion, I had to answer two questions:</p>
+                <ul>
+                    <li><b>Which flow do we build first?</b> The full journey was too big for an MVP.</li>
+                    <li><b>How should the pages be organized?</b> The old structure didn't match how users think.</li>
+                </ul>
+
+                <h3>Scoped with Engineering</h3>
+                <p>I reviewed the full journey and pages, then narrowed to two flows given system constraints. With the team, I chose the <b>developer flow (P0)</b> — weighing build effort, impact, and revenue risk — and deferred the partner flow.</p>
+                <div class="g-1w"><a class="gallery" href="images/14/05.png"><img src="images/14/05.png"></a></div>
+
+                <h3 style="margin-top:48px;">Restructured the Information Architecture</h3>
+                <p>The old pages were grouped by the <b>system's architecture</b> — account settings vs. environment (server-side) settings — so completing a single goal meant jumping across pages. I regrouped them around the <b>user's mental model</b>: try first, then commit.</p>
+                <table>
+                    <tr><th></th><th>Old pages</th><th>New pages</th></tr>
+                    <tr><td><b>Approach</b></td><td>System-oriented</td><td>Goal-oriented</td></tr>
+                    <tr><td><b>Grouped by</b></td><td>Where the config lives (Account / Environment)</td><td>What the user wants (Trial / Official number)</td></tr>
+                    <tr><td><b>Result</b></td><td>One goal split across pages</td><td>Each goal complete in one place</td></tr>
+                </table>
+                <div class="g-1w"><a class="gallery" href="images/14/06-2.png"><img src="images/14/06-2.png"></a></div>
+            </div>
+        </div>
+
+        <!-- Shape Solutions -->
+        <div class="part5" id="05">
+            <div class="part">
+                <div class="block"><div class="part-title">Shape Solutions</div></div>
+                <h3>Where I Focused</h3>
+                <p>I invested the most design time in the pages that shaped the whole experience — the left navigation, the landing page, and the two setup pages.</p>
+
+                <div class="paragraph"></div>
+
+                <h3>Left Navigation</h3>
+                <p>A new nested menu so users see their full path upfront — the two paths and the required pages, in order.</p>
+                <div class="g-1w"><a class="gallery" href="images/14/09.png"><img src="images/14/09.png"></a></div>
+            </div>
+
+            <div class="part">
+                <h3>Landing Page — Overview</h3>
+                <p>90% are first-time, often non-technical users. Instead of a wall of options, I gave them two things: a <b>linear guide</b> (sequence, outcomes, time estimates) and an <b>asset map</b> (the tools and docs they'll need, and how they connect).</p>
+                <div class="g-1w"><a class="gallery" href="images/14/22.jpg"><img src="images/14/22.jpg"></a></div>
+                <p style="margin-top:44px;">Discarded the common pattern of showing the linear guide and tool hub together — it overwhelmed the landing page.</p>
+                <div class="g-1w"><a class="gallery" href="images/14/26.jpg"><img src="images/14/26.jpg"></a></div>
+            </div>
+
+            <div class="part">
+                <h3>Setup Page #1 — Try First</h3>
+                <p>Users try before committing: claim a test number, run the sandbox, and mirror the official webhook flow. Claiming a test number before production setup rose from <b>15% to 62%</b>.</p>
+                <div class="g-1w"><a class="gallery" href="images/14/23.jpg"><img src="images/14/23.jpg"></a></div>
+                <p style="margin-top:44px;">Clarified the step for test number claim and send message.</p>
+                <div class="g-1w"><a class="gallery" href="images/14/27.jpg"><img src="images/14/27.jpg"></a></div>
+            </div>
+
+            <div class="part">
+                <h3>Setup Page #2 — Production Setup</h3>
+                <p>Users complete four tasks on one page — webhook, register phone number, add payment, and test integration — with defaults and auto-subscribe to reduce effort. With the clearer setup step, phone-number registration rose from <b>47.2% to 69.2% (+46.6%)</b>.</p>
+                <div class="g-1w"><a class="gallery" href="images/14/24.jpg"><img src="images/14/24.jpg"></a></div>
+                <p style="margin-top:44px;">Grouped all tasks for production setup in one page instead of multiple pages.</p>
+                <div class="g-1w"><a class="gallery" href="images/14/28.jpg"><img src="images/14/28.jpg"></a></div>
+            </div>
+
+            <div class="part">
+                <h3>Phone Number &amp; Payment</h3>
+                <p>Weighed combining vs. separating the phone-number and payment steps, and chose the layout that kept the page scannable without adding drop-off.</p>
+                <div class="g-1w"><a class="gallery" href="images/14/29.jpg"><img src="images/14/29.jpg"></a></div>
+            </div>
+
+            <div class="part">
+                <h3>Permanent Token</h3>
+                <p>The generate-token step was a common failure point — so I pushed engineering to build a one-tap solution.</p>
+                <div class="g-1w"><a class="gallery" href="images/14/30.jpg"><img src="images/14/30.jpg"></a></div>
+            </div>
+        </div>
+
+        <!-- Impact & Learning -->
+        <div class="part7" id="06">
+            <div class="part">
+                <div class="block"><div class="part-title">Impact &amp; Learning</div></div>
+                <h3>Impact</h3>
+                <p>Setup completion reached 12% once developers finished steps 2 and 3 — the point where they could send messages via the WhatsApp API from their platform.</p>
+                <table class="impact-table">
+                    <tr><th>Step</th><th>Metric</th><th>Result</th><th>Change</th></tr>
+                    <tr><td>Step 1</td><td>API Tryout</td><td>62.3%</td><td>&minus;6%</td></tr>
+                    <tr><td>Step 2</td><td>Webhook</td><td>35.7%</td><td>&mdash;</td></tr>
+                    <tr><td></td><td>Phone Number</td><td>69.2%</td><td>+46.6%</td></tr>
+                    <tr><td></td><td>Payment</td><td>13.5%</td><td>&mdash;</td></tr>
+                    <tr><td></td><td>Permanent Token</td><td>15.2%</td><td>&mdash;</td></tr>
+                    <tr><td>Step 3</td><td>Business Verification</td><td>11.6%</td><td>&mdash;</td></tr>
+                    <tr class="impact-key"><td>Step 2+3</td><td><b>API Setup Completion</b></td><td><b>12%</b></td><td><b>3.4x</b></td></tr>
+                    <tr><td>Post-setup</td><td>Paid Messaging Sent</td><td>5%</td><td>+20%</td></tr>
+                </table>
+
+                <h3 style="margin-top:40px;">Learning</h3>
+                <p>Matching the interface to the <b>user's mental model</b> — not the <b>system's architecture</b> — is what unlocked completion. Reorganizing the same setup around what users are trying to do (try first, then commit) moved the numbers more than any single screen.</p>
+            </div>
+
+            <div class="block"><div class="part-titleSub">END ###</div></div>
+        </div>
+    </div>
+
+<footer></footer>
+    </div><!-- /main-content -->
+
+<script>
+// Scroll spy for side nav
+(function() {
+  var navLinks = document.querySelectorAll('.side-nav a');
+  var sections = [];
+  navLinks.forEach(function(link) {
+    var id = link.getAttribute('href').replace('#', '');
+    var el = document.getElementById(id);
+    if (el) sections.push({ id: id, el: el, link: link });
+  });
+
+  function updateActive() {
+    var scrollPos = window.scrollY + 120;
+    var current = sections[0];
+    sections.forEach(function(s) {
+      if (s.el.offsetTop <= scrollPos) current = s;
+    });
+    navLinks.forEach(function(l) { l.classList.remove('active'); });
+    if (current) current.link.classList.add('active');
+  }
+
+  // Set first item active on load
+  if (navLinks.length) navLinks[0].classList.add('active');
+
+  window.addEventListener('scroll', updateActive);
+})();
+</script>
+</body>
+</html>

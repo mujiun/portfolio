@@ -538,3 +538,7 @@ a.hide:hover > img { display: block; width: 500px; background: white; position: 
 }
 
 /*# sourceMappingURL=mu.css.map */
+
+/* Disable image enlarge (venobox lightbox) across all project pages */
+a.gallery { pointer-events: none; cursor: default; }
+a.gallery img { cursor: default; }

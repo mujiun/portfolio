@@ -243,8 +243,8 @@
       background: var(--bg);
       border-radius: var(--radius);
       width: 100%;
-      max-width: 1280px;
-      height: 85vh;
+      max-width: 1440px;
+      height: 95vh;
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -367,7 +367,7 @@
 
     const FILTERS = [
       { label: 'All', value: 'all' },
-      { label: 'Monetization', value: 'monetization' },
+      { label: 'Insight Table', value: 'insight' },
       { label: 'Funnel Growth', value: 'funnel' },
       { label: 'Business Tools', value: 'business' },
       { label: 'API/Developer Tools', value: 'developer' },
@@ -408,7 +408,7 @@
             if (p.external) {
               window.open(p.url, '_blank');
             } else {
-              openModal(p.url, p.title);
+              openModal(p.url, p.title, slugOf(p));
             }
           });
         }
@@ -437,19 +437,31 @@
     const modalIframe  = document.getElementById('modalIframe');
     const modalClose   = document.getElementById('modalClose');
 
-    function openModal(url, title) {
+    const slugOf = p => ((p.url || '').split('/').pop().replace('.html', '')) || String(p.title).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+    function openModal(url, title, slug) {
       modalTitle.textContent = title;
       const sep = url.includes('?') ? '&' : '?';
       modalIframe.src = url + sep + 'embed=1';
       modalOverlay.classList.add('open');
       document.body.style.overflow = 'hidden';
+      if (slug) history.replaceState(null, '', '#' + slug);
     }
 
     function closeModal() {
       modalOverlay.classList.remove('open');
       document.body.style.overflow = '';
       setTimeout(() => { modalIframe.src = ''; }, 250);
+      history.replaceState(null, '', location.pathname + location.search);
     }
+
+    // Deep link: open a project if the URL has a matching #slug on load
+    (function openFromHash() {
+      const slug = decodeURIComponent(location.hash.replace('#', '')).trim();
+      if (!slug) return;
+      const p = PROJECTS.find(pr => !pr.comingSoon && !pr.external && slugOf(pr) === slug);
+      if (p) openModal(p.url, p.title, slug);
+    })();
 
     // Hide side-nav inside iframe on mobile
     modalIframe.addEventListener('load', () => {

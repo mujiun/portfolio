@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html prefix="og: http://ogp.me/ns#">
 <head>
+  <link rel="icon" type="image/png" href="favicons/mu.png">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="UTF-8">
@@ -71,40 +72,25 @@
         align-items: center;
         gap: 12px;
         font-family: 'IBM Plex Mono', monospace;
-        font-size: 14px;
+        font-size: 12px;
         font-weight: 400;
         color: #35363A;
+        opacity: 0.5;
         text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
         padding: 0;
-        line-height: 1.4;
-        transition: color 0.15s ease;
+        line-height: 1.2;
+        transition: opacity 0.15s ease;
       }
 
-      body.new-layout .side-nav a::before {
-        content: '';
-        display: inline-block;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background-color: #35363A;
-        opacity: 0.2;
-        flex-shrink: 0;
-        transition: background-color 0.15s ease, opacity 0.15s ease;
-      }
+      body.new-layout .side-nav a::before { display: none; }
 
-      body.new-layout .side-nav a:hover {
-        color: #35363A;
-      }
+      body.new-layout .side-nav a:hover { opacity: 1; }
 
-      body.new-layout .side-nav a.active {
-        color: #D56C00;
-        font-weight: 500;
-      }
+      body.new-layout .side-nav a.active { opacity: 1; color: #35363A; }
 
-      body.new-layout .side-nav a.active::before {
-        background-color: #D56C00;
-        opacity: 1;
-      }
+      body.new-layout .side-nav a.active::before { display: none; }
 
       /* Hide old shortcut */
       body.new-layout .shortcut { display: none !important; }
@@ -112,8 +98,8 @@
       /* Main content area */
       body.new-layout .main-content {
         flex: 1;
-        max-width: 700px;
-        margin-left: calc(280px + (100vw - 280px - 700px) / 2);
+        max-width: 800px;
+        margin-left: calc(280px + (100vw - 280px - 800px) / 2);
       }
 
       body.new-layout .top {
@@ -435,32 +421,7 @@
         margin-left: 0;
       }
 
-      /* Responsive: collapse nav on small screens */
-      @media (max-width: 768px) {
-        body.new-layout .side-nav {
-          position: relative;
-          width: 100%;
-          height: auto;
-          flex-direction: row;
-          flex-wrap: wrap;
-          padding: 16px 20px;
-          gap: 4px 16px;
-          border-bottom: 1px solid rgba(67,67,67,0.1);
-        }
-
-        body.new-layout .side-nav a {
-          font-size: 14px;
-        }
-
-        body.new-layout .main-content {
-          margin-left: 0;
-          width: 100%;
-        }
-
-        body.new-layout {
-          flex-direction: column;
-        }
-      }
+      /* Responsive: mobile styles moved to css/mu.css */
 
     </style>
 </head>
