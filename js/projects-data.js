@@ -7,8 +7,8 @@ const PROJECTS = [
     url: 'projects/setupguide.html',
     img: 'images/13.jpg',
     company: 'Meta · Business Tool',
-    title: 'Onboarding for WhatsApp Partner Platforms',
-    summary: 'Landed a new product leading to +9% onboarding completion and +19.7% revenue.',
+    title: 'Day 1 Adoption for WhatsApp Business',
+    summary: 'Defined an adoption framework that drove +9% adoption and +19.7% revenue.',
     filters: ['business', 'developer', 'framework', 'funnel'],
   },
   {
