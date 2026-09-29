@@ -39,12 +39,7 @@
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="js/mumu.js"></script>
     <script src="js/venobox.js"></script>
-    <script>
-        $(function(){
-            $('.gallery').venobox();
-        });
-    </script>
-    <style>
+        <style>
       /* ── NEW PROJECT LAYOUT ── */
       body.new-layout {
         display: flex;
@@ -669,6 +664,32 @@
   if (navLinks.length) navLinks[0].classList.add('active');
 
   window.addEventListener('scroll', updateActive);
+})();
+</script>
+
+<!-- Full-page image modal -->
+<div id="imgModal" role="dialog" aria-modal="true">
+  <button id="imgModalClose" aria-label="Close">&times;</button>
+  <img src="" alt="">
+</div>
+<style>
+  #imgModal { position: fixed; inset: 0; z-index: 9999; background: rgba(255,255,255,0.98); display: none; align-items: center; justify-content: center; cursor: zoom-out; }
+  #imgModal.open { display: flex; }
+  #imgModal img { max-width: 94vw; max-height: 94vh; width: auto; height: auto; border-radius: 8px; box-shadow: 0 12px 48px rgba(0,0,0,0.12); }
+  #imgModalClose { position: absolute; top: 20px; right: 24px; width: 40px; height: 40px; border: none; border-radius: 50%; background: rgba(0,0,0,0.05); color: #35363A; font-size: 22px; line-height: 40px; text-align: center; cursor: pointer; padding: 0; }
+  #imgModalClose:hover { background: rgba(0,0,0,0.1); }
+</style>
+<script>
+(function() {
+  var modal = document.getElementById('imgModal');
+  var mimg = modal.querySelector('img');
+  function open(src) { mimg.src = src; modal.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function close() { modal.classList.remove('open'); mimg.src = ''; document.body.style.overflow = ''; }
+  document.querySelectorAll('a.gallery').forEach(function(a) {
+    a.addEventListener('click', function(e) { e.preventDefault(); open(a.getAttribute('href')); });
+  });
+  modal.addEventListener('click', close);
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') close(); });
 })();
 </script>
 </body>
